@@ -1,9 +1,6 @@
-# node-rest-boilerplate
+# tick-service
 
-[![Hits-of-Code](https://hitsofcode.com/github/500lab/node-rest-boilerplate)](https://hitsofcode.com/view/github/500lab/node-rest-boilerplate)
-[![GitHub](https://img.shields.io/github/license/500lab/node-rest-boilerplate.svg)](https://github.com/500lab/node-rest-boilerplate/blob/master/LICENSE)
-
-> 🌏🚀 A Node.js boilerplate with RESTful, Prisma, PostgreSQL and awesome tools.
+🎉 Awesome service for ✔️ Tick.
 
 ## Features
 
@@ -20,40 +17,11 @@
 - [Docker](https://phoenixnap.com/kb/how-to-install-docker-on-ubuntu-18-04)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
-## How to use?
+## Quick start
 
-### Step 1: Clone this project and remove `.git` folder
-
-```sh
-$ git clone https://github.com/500lab/node-rest-boilerplate.git
-$ cd node-rest-boilerplate && rm -rf .git
-```
-
-### Step 2: Create .env file
-
-Please follow .env.example file.
-
-### Step 3: Launch Prisma and the connected database
-
-```sh
-$ sudo docker-compose up -d
-```
-
-### Step 4: Deploy the Prisma datamodel and generate Prisma client
-
-```sh
-$ yarn prisma:deploy
-```
-
-### Step 5: Install dependencies and run the project
-
-```sh
+```shell
 $ yarn
-$ yarn start:dev
+$ yarn start
 ```
 
-🙌 Awesome
-
-## License
-
-MIT © [cuongw](https://github.com/cuongw)
+Build with 🙌 and ❤️
