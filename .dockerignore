@@ -1,0 +1,15 @@
+node_modules/
+.git/
+coverage/
+
+.dockerignore
+Dockerfile
+
+.gitignore
+.env
+.eslintrc
+.editorconfig
+.prettierrc
+
+LICENSE.md
+README.md
