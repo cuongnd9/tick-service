@@ -1,0 +1,86 @@
+enum Role {
+  Free
+  Premium
+}
+
+type Account {
+  id: UUID! @id
+  username: String! @unique
+  password: String!
+  role: Role! @default(value: Free)
+  categories: [Category!]! @relation(name: "AccountCategories", onDelete: CASCADE)
+  tasks: [Task!]! @relation(name: "AccountTasks", onDelete: CASCADE)
+  steps: [Step!]! @relation(name: "AccountSteps", onDelete: CASCADE)
+  images: [Image!]! @relation(name: "AccountImages", onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Category {
+  id: UUID! @id
+  index: Int
+  name: String!
+  account: Account! @relation(name: "AccountCategories")
+  tasks: [Task!]! @relation(name: "CategoryTasks", onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+enum TaskStatus {
+  Todo
+  InProcess
+  Expired
+  Done
+}
+
+enum TaskPriority {
+  Highest
+  Hight
+  Medium
+  Low
+  Lowest
+}
+
+type Task {
+  id: UUID! @id
+  index: Int
+  title: String!
+  content: String
+  status: TaskStatus! @default(value: Todo)
+  priority: TaskPriority! @default(value: Medium)
+  isImportant: Boolean! @default(value: false)
+  dueDate: DateTime!
+  reminderDate: DateTime
+  doSendMail: Boolean! @default(value: false)
+  category: Category! @relation(name: "CategoryTasks")
+  account: Account! @relation(name: "AccountTasks")
+  steps: [Step!]! @relation(name: "TaskSteps", onDelete: CASCADE)
+  images: [Image!]! @relation(name: "TaskImages", onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+enum StepStatus {
+  Todo
+  Done
+}
+
+type Step {
+  id: UUID! @id
+  index: Int
+  title: String!
+  status: StepStatus @default(value: Todo)
+  task: Task! @relation(name: "TaskSteps")
+  account: Account! @relation(name: "AccountSteps")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Image {
+  id: UUID! @id
+  url: String!
+  task: Task! @relation(name: "TaskImages")
+  account: Account! @relation(name: "AccountImages")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
