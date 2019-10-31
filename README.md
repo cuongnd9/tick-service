@@ -25,4 +25,8 @@ $ yarn
 $ yarn start
 ```
 
+## Database diagram
+
+![Database digram](./images/database_diagram.png)
+
 Build with 🙌 and ❤️
