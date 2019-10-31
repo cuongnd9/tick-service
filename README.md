@@ -20,6 +20,7 @@
 ## Quick start
 
 ```shell
+$ sudo docker-compose up -d
 $ yarn
 $ yarn start
 ```
