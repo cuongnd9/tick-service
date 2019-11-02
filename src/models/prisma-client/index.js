@@ -9,7 +9,15 @@ var models = [
     embedded: false,
   },
   {
+    name: 'AccountStatus',
+    embedded: false,
+  },
+  {
     name: 'Account',
+    embedded: false,
+  },
+  {
+    name: 'User',
     embedded: false,
   },
   {
