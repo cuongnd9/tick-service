@@ -9,7 +9,18 @@ module.exports = {
         id: UUID!
         username: String!
         password: String!
+        email: String!
         role: Role!
+        status: AccountStatus
+        users(
+          where: UserWhereInput
+          orderBy: UserOrderByInput
+          skip: Int
+          after: String
+          before: String
+          first: Int
+          last: Int
+        ): [User!]
         categories(
           where: CategoryWhereInput
           orderBy: CategoryOrderByInput
@@ -60,7 +71,10 @@ module.exports = {
         id: UUID
         username: String!
         password: String!
+        email: String!
         role: Role
+        status: AccountStatus
+        users: UserCreateManyWithoutAccountInput
         categories: CategoryCreateManyWithoutAccountInput
         tasks: TaskCreateManyWithoutAccountInput
         steps: StepCreateManyWithoutAccountInput
@@ -87,11 +101,19 @@ module.exports = {
         connect: AccountWhereUniqueInput
       }
 
+      input AccountCreateOneWithoutUsersInput {
+        create: AccountCreateWithoutUsersInput
+        connect: AccountWhereUniqueInput
+      }
+
       input AccountCreateWithoutCategoriesInput {
         id: UUID
         username: String!
         password: String!
+        email: String!
         role: Role
+        status: AccountStatus
+        users: UserCreateManyWithoutAccountInput
         tasks: TaskCreateManyWithoutAccountInput
         steps: StepCreateManyWithoutAccountInput
         images: ImageCreateManyWithoutAccountInput
@@ -101,7 +123,10 @@ module.exports = {
         id: UUID
         username: String!
         password: String!
+        email: String!
         role: Role
+        status: AccountStatus
+        users: UserCreateManyWithoutAccountInput
         categories: CategoryCreateManyWithoutAccountInput
         tasks: TaskCreateManyWithoutAccountInput
         steps: StepCreateManyWithoutAccountInput
@@ -111,7 +136,10 @@ module.exports = {
         id: UUID
         username: String!
         password: String!
+        email: String!
         role: Role
+        status: AccountStatus
+        users: UserCreateManyWithoutAccountInput
         categories: CategoryCreateManyWithoutAccountInput
         tasks: TaskCreateManyWithoutAccountInput
         images: ImageCreateManyWithoutAccountInput
@@ -121,8 +149,24 @@ module.exports = {
         id: UUID
         username: String!
         password: String!
+        email: String!
         role: Role
+        status: AccountStatus
+        users: UserCreateManyWithoutAccountInput
         categories: CategoryCreateManyWithoutAccountInput
+        steps: StepCreateManyWithoutAccountInput
+        images: ImageCreateManyWithoutAccountInput
+      }
+
+      input AccountCreateWithoutUsersInput {
+        id: UUID
+        username: String!
+        password: String!
+        email: String!
+        role: Role
+        status: AccountStatus
+        categories: CategoryCreateManyWithoutAccountInput
+        tasks: TaskCreateManyWithoutAccountInput
         steps: StepCreateManyWithoutAccountInput
         images: ImageCreateManyWithoutAccountInput
       }
@@ -139,8 +183,12 @@ module.exports = {
         username_DESC
         password_ASC
         password_DESC
+        email_ASC
+        email_DESC
         role_ASC
         role_DESC
+        status_ASC
+        status_DESC
         createdAt_ASC
         createdAt_DESC
         updatedAt_ASC
@@ -151,9 +199,17 @@ module.exports = {
         id: UUID!
         username: String!
         password: String!
+        email: String!
         role: Role!
+        status: AccountStatus
         createdAt: DateTime!
         updatedAt: DateTime!
+      }
+
+      enum AccountStatus {
+        Pending
+        Active
+        Deactive
       }
 
       type AccountSubscriptionPayload {
@@ -177,7 +233,10 @@ module.exports = {
       input AccountUpdateInput {
         username: String
         password: String
+        email: String
         role: Role
+        status: AccountStatus
+        users: UserUpdateManyWithoutAccountInput
         categories: CategoryUpdateManyWithoutAccountInput
         tasks: TaskUpdateManyWithoutAccountInput
         steps: StepUpdateManyWithoutAccountInput
@@ -187,7 +246,9 @@ module.exports = {
       input AccountUpdateManyMutationInput {
         username: String
         password: String
+        email: String
         role: Role
+        status: AccountStatus
       }
 
       input AccountUpdateOneRequiredWithoutCategoriesInput {
@@ -218,10 +279,20 @@ module.exports = {
         connect: AccountWhereUniqueInput
       }
 
+      input AccountUpdateOneRequiredWithoutUsersInput {
+        create: AccountCreateWithoutUsersInput
+        update: AccountUpdateWithoutUsersDataInput
+        upsert: AccountUpsertWithoutUsersInput
+        connect: AccountWhereUniqueInput
+      }
+
       input AccountUpdateWithoutCategoriesDataInput {
         username: String
         password: String
+        email: String
         role: Role
+        status: AccountStatus
+        users: UserUpdateManyWithoutAccountInput
         tasks: TaskUpdateManyWithoutAccountInput
         steps: StepUpdateManyWithoutAccountInput
         images: ImageUpdateManyWithoutAccountInput
@@ -230,7 +301,10 @@ module.exports = {
       input AccountUpdateWithoutImagesDataInput {
         username: String
         password: String
+        email: String
         role: Role
+        status: AccountStatus
+        users: UserUpdateManyWithoutAccountInput
         categories: CategoryUpdateManyWithoutAccountInput
         tasks: TaskUpdateManyWithoutAccountInput
         steps: StepUpdateManyWithoutAccountInput
@@ -239,7 +313,10 @@ module.exports = {
       input AccountUpdateWithoutStepsDataInput {
         username: String
         password: String
+        email: String
         role: Role
+        status: AccountStatus
+        users: UserUpdateManyWithoutAccountInput
         categories: CategoryUpdateManyWithoutAccountInput
         tasks: TaskUpdateManyWithoutAccountInput
         images: ImageUpdateManyWithoutAccountInput
@@ -248,8 +325,23 @@ module.exports = {
       input AccountUpdateWithoutTasksDataInput {
         username: String
         password: String
+        email: String
         role: Role
+        status: AccountStatus
+        users: UserUpdateManyWithoutAccountInput
         categories: CategoryUpdateManyWithoutAccountInput
+        steps: StepUpdateManyWithoutAccountInput
+        images: ImageUpdateManyWithoutAccountInput
+      }
+
+      input AccountUpdateWithoutUsersDataInput {
+        username: String
+        password: String
+        email: String
+        role: Role
+        status: AccountStatus
+        categories: CategoryUpdateManyWithoutAccountInput
+        tasks: TaskUpdateManyWithoutAccountInput
         steps: StepUpdateManyWithoutAccountInput
         images: ImageUpdateManyWithoutAccountInput
       }
@@ -272,6 +364,11 @@ module.exports = {
       input AccountUpsertWithoutTasksInput {
         update: AccountUpdateWithoutTasksDataInput!
         create: AccountCreateWithoutTasksInput!
+      }
+
+      input AccountUpsertWithoutUsersInput {
+        update: AccountUpdateWithoutUsersDataInput!
+        create: AccountCreateWithoutUsersInput!
       }
 
       input AccountWhereInput {
@@ -317,10 +414,31 @@ module.exports = {
         password_not_starts_with: String
         password_ends_with: String
         password_not_ends_with: String
+        email: String
+        email_not: String
+        email_in: [String!]
+        email_not_in: [String!]
+        email_lt: String
+        email_lte: String
+        email_gt: String
+        email_gte: String
+        email_contains: String
+        email_not_contains: String
+        email_starts_with: String
+        email_not_starts_with: String
+        email_ends_with: String
+        email_not_ends_with: String
         role: Role
         role_not: Role
         role_in: [Role!]
         role_not_in: [Role!]
+        status: AccountStatus
+        status_not: AccountStatus
+        status_in: [AccountStatus!]
+        status_not_in: [AccountStatus!]
+        users_every: UserWhereInput
+        users_some: UserWhereInput
+        users_none: UserWhereInput
         categories_every: CategoryWhereInput
         categories_some: CategoryWhereInput
         categories_none: CategoryWhereInput
@@ -357,6 +475,7 @@ module.exports = {
       input AccountWhereUniqueInput {
         id: UUID
         username: String
+        email: String
       }
 
       type AggregateAccount {
@@ -376,6 +495,10 @@ module.exports = {
       }
 
       type AggregateTask {
+        count: Int!
+      }
+
+      type AggregateUser {
         count: Int!
       }
 
@@ -1003,6 +1126,16 @@ module.exports = {
         ): Task!
         deleteTask(where: TaskWhereUniqueInput!): Task
         deleteManyTasks(where: TaskWhereInput): BatchPayload!
+        createUser(data: UserCreateInput!): User!
+        updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+        updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+        upsertUser(
+          where: UserWhereUniqueInput!
+          create: UserCreateInput!
+          update: UserUpdateInput!
+        ): User!
+        deleteUser(where: UserWhereUniqueInput!): User
+        deleteManyUsers(where: UserWhereInput): BatchPayload!
       }
 
       enum MutationType {
@@ -1118,6 +1251,25 @@ module.exports = {
           first: Int
           last: Int
         ): TaskConnection!
+        user(where: UserWhereUniqueInput!): User
+        users(
+          where: UserWhereInput
+          orderBy: UserOrderByInput
+          skip: Int
+          after: String
+          before: String
+          first: Int
+          last: Int
+        ): [User]!
+        usersConnection(
+          where: UserWhereInput
+          orderBy: UserOrderByInput
+          skip: Int
+          after: String
+          before: String
+          first: Int
+          last: Int
+        ): UserConnection!
         node(id: ID!): Node
       }
 
@@ -1451,6 +1603,7 @@ module.exports = {
         image(where: ImageSubscriptionWhereInput): ImageSubscriptionPayload
         step(where: StepSubscriptionWhereInput): StepSubscriptionPayload
         task(where: TaskSubscriptionWhereInput): TaskSubscriptionPayload
+        user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
       }
 
       type Task {
@@ -2059,6 +2212,227 @@ module.exports = {
       }
 
       input TaskWhereUniqueInput {
+        id: UUID
+      }
+
+      type User {
+        id: UUID!
+        name: String!
+        account: Account!
+        createdAt: DateTime!
+        updatedAt: DateTime!
+      }
+
+      type UserConnection {
+        pageInfo: PageInfo!
+        edges: [UserEdge]!
+        aggregate: AggregateUser!
+      }
+
+      input UserCreateInput {
+        id: UUID
+        name: String!
+        account: AccountCreateOneWithoutUsersInput!
+      }
+
+      input UserCreateManyWithoutAccountInput {
+        create: [UserCreateWithoutAccountInput!]
+        connect: [UserWhereUniqueInput!]
+      }
+
+      input UserCreateWithoutAccountInput {
+        id: UUID
+        name: String!
+      }
+
+      type UserEdge {
+        node: User!
+        cursor: String!
+      }
+
+      enum UserOrderByInput {
+        id_ASC
+        id_DESC
+        name_ASC
+        name_DESC
+        createdAt_ASC
+        createdAt_DESC
+        updatedAt_ASC
+        updatedAt_DESC
+      }
+
+      type UserPreviousValues {
+        id: UUID!
+        name: String!
+        createdAt: DateTime!
+        updatedAt: DateTime!
+      }
+
+      input UserScalarWhereInput {
+        id: UUID
+        id_not: UUID
+        id_in: [UUID!]
+        id_not_in: [UUID!]
+        id_lt: UUID
+        id_lte: UUID
+        id_gt: UUID
+        id_gte: UUID
+        id_contains: UUID
+        id_not_contains: UUID
+        id_starts_with: UUID
+        id_not_starts_with: UUID
+        id_ends_with: UUID
+        id_not_ends_with: UUID
+        name: String
+        name_not: String
+        name_in: [String!]
+        name_not_in: [String!]
+        name_lt: String
+        name_lte: String
+        name_gt: String
+        name_gte: String
+        name_contains: String
+        name_not_contains: String
+        name_starts_with: String
+        name_not_starts_with: String
+        name_ends_with: String
+        name_not_ends_with: String
+        createdAt: DateTime
+        createdAt_not: DateTime
+        createdAt_in: [DateTime!]
+        createdAt_not_in: [DateTime!]
+        createdAt_lt: DateTime
+        createdAt_lte: DateTime
+        createdAt_gt: DateTime
+        createdAt_gte: DateTime
+        updatedAt: DateTime
+        updatedAt_not: DateTime
+        updatedAt_in: [DateTime!]
+        updatedAt_not_in: [DateTime!]
+        updatedAt_lt: DateTime
+        updatedAt_lte: DateTime
+        updatedAt_gt: DateTime
+        updatedAt_gte: DateTime
+        AND: [UserScalarWhereInput!]
+        OR: [UserScalarWhereInput!]
+        NOT: [UserScalarWhereInput!]
+      }
+
+      type UserSubscriptionPayload {
+        mutation: MutationType!
+        node: User
+        updatedFields: [String!]
+        previousValues: UserPreviousValues
+      }
+
+      input UserSubscriptionWhereInput {
+        mutation_in: [MutationType!]
+        updatedFields_contains: String
+        updatedFields_contains_every: [String!]
+        updatedFields_contains_some: [String!]
+        node: UserWhereInput
+        AND: [UserSubscriptionWhereInput!]
+        OR: [UserSubscriptionWhereInput!]
+        NOT: [UserSubscriptionWhereInput!]
+      }
+
+      input UserUpdateInput {
+        name: String
+        account: AccountUpdateOneRequiredWithoutUsersInput
+      }
+
+      input UserUpdateManyDataInput {
+        name: String
+      }
+
+      input UserUpdateManyMutationInput {
+        name: String
+      }
+
+      input UserUpdateManyWithoutAccountInput {
+        create: [UserCreateWithoutAccountInput!]
+        delete: [UserWhereUniqueInput!]
+        connect: [UserWhereUniqueInput!]
+        set: [UserWhereUniqueInput!]
+        disconnect: [UserWhereUniqueInput!]
+        update: [UserUpdateWithWhereUniqueWithoutAccountInput!]
+        upsert: [UserUpsertWithWhereUniqueWithoutAccountInput!]
+        deleteMany: [UserScalarWhereInput!]
+        updateMany: [UserUpdateManyWithWhereNestedInput!]
+      }
+
+      input UserUpdateManyWithWhereNestedInput {
+        where: UserScalarWhereInput!
+        data: UserUpdateManyDataInput!
+      }
+
+      input UserUpdateWithoutAccountDataInput {
+        name: String
+      }
+
+      input UserUpdateWithWhereUniqueWithoutAccountInput {
+        where: UserWhereUniqueInput!
+        data: UserUpdateWithoutAccountDataInput!
+      }
+
+      input UserUpsertWithWhereUniqueWithoutAccountInput {
+        where: UserWhereUniqueInput!
+        update: UserUpdateWithoutAccountDataInput!
+        create: UserCreateWithoutAccountInput!
+      }
+
+      input UserWhereInput {
+        id: UUID
+        id_not: UUID
+        id_in: [UUID!]
+        id_not_in: [UUID!]
+        id_lt: UUID
+        id_lte: UUID
+        id_gt: UUID
+        id_gte: UUID
+        id_contains: UUID
+        id_not_contains: UUID
+        id_starts_with: UUID
+        id_not_starts_with: UUID
+        id_ends_with: UUID
+        id_not_ends_with: UUID
+        name: String
+        name_not: String
+        name_in: [String!]
+        name_not_in: [String!]
+        name_lt: String
+        name_lte: String
+        name_gt: String
+        name_gte: String
+        name_contains: String
+        name_not_contains: String
+        name_starts_with: String
+        name_not_starts_with: String
+        name_ends_with: String
+        name_not_ends_with: String
+        account: AccountWhereInput
+        createdAt: DateTime
+        createdAt_not: DateTime
+        createdAt_in: [DateTime!]
+        createdAt_not_in: [DateTime!]
+        createdAt_lt: DateTime
+        createdAt_lte: DateTime
+        createdAt_gt: DateTime
+        createdAt_gte: DateTime
+        updatedAt: DateTime
+        updatedAt_not: DateTime
+        updatedAt_in: [DateTime!]
+        updatedAt_not_in: [DateTime!]
+        updatedAt_lt: DateTime
+        updatedAt_lte: DateTime
+        updatedAt_gt: DateTime
+        updatedAt_gte: DateTime
+        AND: [UserWhereInput!]
+        OR: [UserWhereInput!]
+        NOT: [UserWhereInput!]
+      }
+
+      input UserWhereUniqueInput {
         id: UUID
       }
 
