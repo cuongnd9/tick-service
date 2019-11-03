@@ -1797,7 +1797,7 @@ module.exports = {
 
       enum TaskPriority {
         Highest
-        Hight
+        High
         Medium
         Low
         Lowest
@@ -2218,6 +2218,8 @@ module.exports = {
       type User {
         id: UUID!
         name: String!
+        bio: String
+        dob: DateTime
         account: Account!
         createdAt: DateTime!
         updatedAt: DateTime!
@@ -2232,6 +2234,8 @@ module.exports = {
       input UserCreateInput {
         id: UUID
         name: String!
+        bio: String
+        dob: DateTime
         account: AccountCreateOneWithoutUsersInput!
       }
 
@@ -2243,6 +2247,8 @@ module.exports = {
       input UserCreateWithoutAccountInput {
         id: UUID
         name: String!
+        bio: String
+        dob: DateTime
       }
 
       type UserEdge {
@@ -2255,6 +2261,10 @@ module.exports = {
         id_DESC
         name_ASC
         name_DESC
+        bio_ASC
+        bio_DESC
+        dob_ASC
+        dob_DESC
         createdAt_ASC
         createdAt_DESC
         updatedAt_ASC
@@ -2264,6 +2274,8 @@ module.exports = {
       type UserPreviousValues {
         id: UUID!
         name: String!
+        bio: String
+        dob: DateTime
         createdAt: DateTime!
         updatedAt: DateTime!
       }
@@ -2297,6 +2309,28 @@ module.exports = {
         name_not_starts_with: String
         name_ends_with: String
         name_not_ends_with: String
+        bio: String
+        bio_not: String
+        bio_in: [String!]
+        bio_not_in: [String!]
+        bio_lt: String
+        bio_lte: String
+        bio_gt: String
+        bio_gte: String
+        bio_contains: String
+        bio_not_contains: String
+        bio_starts_with: String
+        bio_not_starts_with: String
+        bio_ends_with: String
+        bio_not_ends_with: String
+        dob: DateTime
+        dob_not: DateTime
+        dob_in: [DateTime!]
+        dob_not_in: [DateTime!]
+        dob_lt: DateTime
+        dob_lte: DateTime
+        dob_gt: DateTime
+        dob_gte: DateTime
         createdAt: DateTime
         createdAt_not: DateTime
         createdAt_in: [DateTime!]
@@ -2338,15 +2372,21 @@ module.exports = {
 
       input UserUpdateInput {
         name: String
+        bio: String
+        dob: DateTime
         account: AccountUpdateOneRequiredWithoutUsersInput
       }
 
       input UserUpdateManyDataInput {
         name: String
+        bio: String
+        dob: DateTime
       }
 
       input UserUpdateManyMutationInput {
         name: String
+        bio: String
+        dob: DateTime
       }
 
       input UserUpdateManyWithoutAccountInput {
@@ -2368,6 +2408,8 @@ module.exports = {
 
       input UserUpdateWithoutAccountDataInput {
         name: String
+        bio: String
+        dob: DateTime
       }
 
       input UserUpdateWithWhereUniqueWithoutAccountInput {
@@ -2410,6 +2452,28 @@ module.exports = {
         name_not_starts_with: String
         name_ends_with: String
         name_not_ends_with: String
+        bio: String
+        bio_not: String
+        bio_in: [String!]
+        bio_not_in: [String!]
+        bio_lt: String
+        bio_lte: String
+        bio_gt: String
+        bio_gte: String
+        bio_contains: String
+        bio_not_contains: String
+        bio_starts_with: String
+        bio_not_starts_with: String
+        bio_ends_with: String
+        bio_not_ends_with: String
+        dob: DateTime
+        dob_not: DateTime
+        dob_in: [DateTime!]
+        dob_not_in: [DateTime!]
+        dob_lt: DateTime
+        dob_lte: DateTime
+        dob_gt: DateTime
+        dob_gte: DateTime
         account: AccountWhereInput
         createdAt: DateTime
         createdAt_not: DateTime
