@@ -278,7 +278,7 @@ export type StepOrderByInput =
   | 'updatedAt_ASC'
   | 'updatedAt_DESC';
 
-export type StepStatus = 'Todo' | 'Done';
+export type TaskPriority = 'Highest' | 'High' | 'Medium' | 'Low' | 'Lowest';
 
 export type TaskOrderByInput =
   | 'id_ASC'
@@ -324,15 +324,19 @@ export type AccountOrderByInput =
   | 'updatedAt_ASC'
   | 'updatedAt_DESC';
 
-export type TaskPriority = 'Highest' | 'Hight' | 'Medium' | 'Low' | 'Lowest';
-
 export type TaskStatus = 'Todo' | 'InProcess' | 'Expired' | 'Done';
+
+export type StepStatus = 'Todo' | 'Done';
 
 export type UserOrderByInput =
   | 'id_ASC'
   | 'id_DESC'
   | 'name_ASC'
   | 'name_DESC'
+  | 'bio_ASC'
+  | 'bio_DESC'
+  | 'dob_ASC'
+  | 'dob_DESC'
   | 'createdAt_ASC'
   | 'createdAt_DESC'
   | 'updatedAt_ASC'
@@ -557,6 +561,23 @@ export interface UserUpdateWithWhereUniqueWithoutAccountInput {
   data: UserUpdateWithoutAccountDataInput;
 }
 
+export interface StepSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<StepWhereInput>;
+  AND?: Maybe<StepSubscriptionWhereInput[] | StepSubscriptionWhereInput>;
+  OR?: Maybe<StepSubscriptionWhereInput[] | StepSubscriptionWhereInput>;
+  NOT?: Maybe<StepSubscriptionWhereInput[] | StepSubscriptionWhereInput>;
+}
+
+export interface UserUpdateWithoutAccountDataInput {
+  name?: Maybe<String>;
+  bio?: Maybe<String>;
+  dob?: Maybe<DateTimeInput>;
+}
+
 export interface ImageSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
@@ -566,21 +587,6 @@ export interface ImageSubscriptionWhereInput {
   AND?: Maybe<ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput>;
   OR?: Maybe<ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput>;
   NOT?: Maybe<ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput>;
-}
-
-export interface UserUpdateWithoutAccountDataInput {
-  name?: Maybe<String>;
-}
-
-export interface CategorySubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<CategoryWhereInput>;
-  AND?: Maybe<CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput>;
-  OR?: Maybe<CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput>;
-  NOT?: Maybe<CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput>;
 }
 
 export interface UserUpsertWithWhereUniqueWithoutAccountInput {
@@ -629,6 +635,28 @@ export interface UserScalarWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
+  bio?: Maybe<String>;
+  bio_not?: Maybe<String>;
+  bio_in?: Maybe<String[] | String>;
+  bio_not_in?: Maybe<String[] | String>;
+  bio_lt?: Maybe<String>;
+  bio_lte?: Maybe<String>;
+  bio_gt?: Maybe<String>;
+  bio_gte?: Maybe<String>;
+  bio_contains?: Maybe<String>;
+  bio_not_contains?: Maybe<String>;
+  bio_starts_with?: Maybe<String>;
+  bio_not_starts_with?: Maybe<String>;
+  bio_ends_with?: Maybe<String>;
+  bio_not_ends_with?: Maybe<String>;
+  dob?: Maybe<DateTimeInput>;
+  dob_not?: Maybe<DateTimeInput>;
+  dob_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  dob_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  dob_lt?: Maybe<DateTimeInput>;
+  dob_lte?: Maybe<DateTimeInput>;
+  dob_gt?: Maybe<DateTimeInput>;
+  dob_gte?: Maybe<DateTimeInput>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -652,6 +680,8 @@ export interface UserScalarWhereInput {
 
 export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
+  bio?: Maybe<String>;
+  dob?: Maybe<DateTimeInput>;
 }
 
 export interface UserUpdateManyWithWhereNestedInput {
@@ -673,10 +703,14 @@ export interface AccountUpdateWithoutUsersDataInput {
 
 export interface UserUpdateManyDataInput {
   name?: Maybe<String>;
+  bio?: Maybe<String>;
+  dob?: Maybe<DateTimeInput>;
 }
 
 export interface UserUpdateInput {
   name?: Maybe<String>;
+  bio?: Maybe<String>;
+  dob?: Maybe<DateTimeInput>;
   account?: Maybe<AccountUpdateOneRequiredWithoutUsersInput>;
 }
 
@@ -712,6 +746,8 @@ export interface CategoryUpdateWithWhereUniqueWithoutAccountInput {
 export interface UserCreateInput {
   id?: Maybe<UUID>;
   name: String;
+  bio?: Maybe<String>;
+  dob?: Maybe<DateTimeInput>;
   account: AccountCreateOneWithoutUsersInput;
 }
 
@@ -962,6 +998,8 @@ export interface TaskUpdateWithoutStepsDataInput {
 export interface UserCreateWithoutAccountInput {
   id?: Maybe<UUID>;
   name: String;
+  bio?: Maybe<String>;
+  dob?: Maybe<DateTimeInput>;
 }
 
 export interface CategoryUpdateOneRequiredWithoutTasksInput {
@@ -1245,7 +1283,23 @@ export interface ImageUpdateWithWhereUniqueWithoutAccountInput {
   data: ImageUpdateWithoutAccountDataInput;
 }
 
-export interface TaskWhereInput {
+export interface UserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+}
+
+export interface ImageUpdateWithoutAccountDataInput {
+  url?: Maybe<String>;
+  task?: Maybe<TaskUpdateOneRequiredWithoutImagesInput>;
+}
+
+export interface AccountWhereInput {
   id?: Maybe<UUID>;
   id_not?: Maybe<UUID>;
   id_in?: Maybe<UUID[] | UUID>;
@@ -1260,72 +1314,65 @@ export interface TaskWhereInput {
   id_not_starts_with?: Maybe<UUID>;
   id_ends_with?: Maybe<UUID>;
   id_not_ends_with?: Maybe<UUID>;
-  index?: Maybe<Int>;
-  index_not?: Maybe<Int>;
-  index_in?: Maybe<Int[] | Int>;
-  index_not_in?: Maybe<Int[] | Int>;
-  index_lt?: Maybe<Int>;
-  index_lte?: Maybe<Int>;
-  index_gt?: Maybe<Int>;
-  index_gte?: Maybe<Int>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  content?: Maybe<String>;
-  content_not?: Maybe<String>;
-  content_in?: Maybe<String[] | String>;
-  content_not_in?: Maybe<String[] | String>;
-  content_lt?: Maybe<String>;
-  content_lte?: Maybe<String>;
-  content_gt?: Maybe<String>;
-  content_gte?: Maybe<String>;
-  content_contains?: Maybe<String>;
-  content_not_contains?: Maybe<String>;
-  content_starts_with?: Maybe<String>;
-  content_not_starts_with?: Maybe<String>;
-  content_ends_with?: Maybe<String>;
-  content_not_ends_with?: Maybe<String>;
-  status?: Maybe<TaskStatus>;
-  status_not?: Maybe<TaskStatus>;
-  status_in?: Maybe<TaskStatus[] | TaskStatus>;
-  status_not_in?: Maybe<TaskStatus[] | TaskStatus>;
-  priority?: Maybe<TaskPriority>;
-  priority_not?: Maybe<TaskPriority>;
-  priority_in?: Maybe<TaskPriority[] | TaskPriority>;
-  priority_not_in?: Maybe<TaskPriority[] | TaskPriority>;
-  isImportant?: Maybe<Boolean>;
-  isImportant_not?: Maybe<Boolean>;
-  dueDate?: Maybe<DateTimeInput>;
-  dueDate_not?: Maybe<DateTimeInput>;
-  dueDate_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  dueDate_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  dueDate_lt?: Maybe<DateTimeInput>;
-  dueDate_lte?: Maybe<DateTimeInput>;
-  dueDate_gt?: Maybe<DateTimeInput>;
-  dueDate_gte?: Maybe<DateTimeInput>;
-  reminderDate?: Maybe<DateTimeInput>;
-  reminderDate_not?: Maybe<DateTimeInput>;
-  reminderDate_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  reminderDate_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  reminderDate_lt?: Maybe<DateTimeInput>;
-  reminderDate_lte?: Maybe<DateTimeInput>;
-  reminderDate_gt?: Maybe<DateTimeInput>;
-  reminderDate_gte?: Maybe<DateTimeInput>;
-  doSendMail?: Maybe<Boolean>;
-  doSendMail_not?: Maybe<Boolean>;
-  category?: Maybe<CategoryWhereInput>;
-  account?: Maybe<AccountWhereInput>;
+  username?: Maybe<String>;
+  username_not?: Maybe<String>;
+  username_in?: Maybe<String[] | String>;
+  username_not_in?: Maybe<String[] | String>;
+  username_lt?: Maybe<String>;
+  username_lte?: Maybe<String>;
+  username_gt?: Maybe<String>;
+  username_gte?: Maybe<String>;
+  username_contains?: Maybe<String>;
+  username_not_contains?: Maybe<String>;
+  username_starts_with?: Maybe<String>;
+  username_not_starts_with?: Maybe<String>;
+  username_ends_with?: Maybe<String>;
+  username_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  role?: Maybe<Role>;
+  role_not?: Maybe<Role>;
+  role_in?: Maybe<Role[] | Role>;
+  role_not_in?: Maybe<Role[] | Role>;
+  status?: Maybe<AccountStatus>;
+  status_not?: Maybe<AccountStatus>;
+  status_in?: Maybe<AccountStatus[] | AccountStatus>;
+  status_not_in?: Maybe<AccountStatus[] | AccountStatus>;
+  users_every?: Maybe<UserWhereInput>;
+  users_some?: Maybe<UserWhereInput>;
+  users_none?: Maybe<UserWhereInput>;
+  categories_every?: Maybe<CategoryWhereInput>;
+  categories_some?: Maybe<CategoryWhereInput>;
+  categories_none?: Maybe<CategoryWhereInput>;
+  tasks_every?: Maybe<TaskWhereInput>;
+  tasks_some?: Maybe<TaskWhereInput>;
+  tasks_none?: Maybe<TaskWhereInput>;
   steps_every?: Maybe<StepWhereInput>;
   steps_some?: Maybe<StepWhereInput>;
   steps_none?: Maybe<StepWhereInput>;
@@ -1348,76 +1395,9 @@ export interface TaskWhereInput {
   updatedAt_lte?: Maybe<DateTimeInput>;
   updatedAt_gt?: Maybe<DateTimeInput>;
   updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<TaskWhereInput[] | TaskWhereInput>;
-  OR?: Maybe<TaskWhereInput[] | TaskWhereInput>;
-  NOT?: Maybe<TaskWhereInput[] | TaskWhereInput>;
-}
-
-export interface ImageUpdateWithoutAccountDataInput {
-  url?: Maybe<String>;
-  task?: Maybe<TaskUpdateOneRequiredWithoutImagesInput>;
-}
-
-export interface CategoryWhereInput {
-  id?: Maybe<UUID>;
-  id_not?: Maybe<UUID>;
-  id_in?: Maybe<UUID[] | UUID>;
-  id_not_in?: Maybe<UUID[] | UUID>;
-  id_lt?: Maybe<UUID>;
-  id_lte?: Maybe<UUID>;
-  id_gt?: Maybe<UUID>;
-  id_gte?: Maybe<UUID>;
-  id_contains?: Maybe<UUID>;
-  id_not_contains?: Maybe<UUID>;
-  id_starts_with?: Maybe<UUID>;
-  id_not_starts_with?: Maybe<UUID>;
-  id_ends_with?: Maybe<UUID>;
-  id_not_ends_with?: Maybe<UUID>;
-  index?: Maybe<Int>;
-  index_not?: Maybe<Int>;
-  index_in?: Maybe<Int[] | Int>;
-  index_not_in?: Maybe<Int[] | Int>;
-  index_lt?: Maybe<Int>;
-  index_lte?: Maybe<Int>;
-  index_gt?: Maybe<Int>;
-  index_gte?: Maybe<Int>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  account?: Maybe<AccountWhereInput>;
-  tasks_every?: Maybe<TaskWhereInput>;
-  tasks_some?: Maybe<TaskWhereInput>;
-  tasks_none?: Maybe<TaskWhereInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<CategoryWhereInput[] | CategoryWhereInput>;
-  OR?: Maybe<CategoryWhereInput[] | CategoryWhereInput>;
-  NOT?: Maybe<CategoryWhereInput[] | CategoryWhereInput>;
+  AND?: Maybe<AccountWhereInput[] | AccountWhereInput>;
+  OR?: Maybe<AccountWhereInput[] | AccountWhereInput>;
+  NOT?: Maybe<AccountWhereInput[] | AccountWhereInput>;
 }
 
 export interface TaskUpdateOneRequiredWithoutImagesInput {
@@ -1456,6 +1436,28 @@ export interface UserWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
+  bio?: Maybe<String>;
+  bio_not?: Maybe<String>;
+  bio_in?: Maybe<String[] | String>;
+  bio_not_in?: Maybe<String[] | String>;
+  bio_lt?: Maybe<String>;
+  bio_lte?: Maybe<String>;
+  bio_gt?: Maybe<String>;
+  bio_gte?: Maybe<String>;
+  bio_contains?: Maybe<String>;
+  bio_not_contains?: Maybe<String>;
+  bio_starts_with?: Maybe<String>;
+  bio_not_starts_with?: Maybe<String>;
+  bio_ends_with?: Maybe<String>;
+  bio_not_ends_with?: Maybe<String>;
+  dob?: Maybe<DateTimeInput>;
+  dob_not?: Maybe<DateTimeInput>;
+  dob_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  dob_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  dob_lt?: Maybe<DateTimeInput>;
+  dob_lte?: Maybe<DateTimeInput>;
+  dob_gt?: Maybe<DateTimeInput>;
+  dob_gte?: Maybe<DateTimeInput>;
   account?: Maybe<AccountWhereInput>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
@@ -1757,15 +1759,66 @@ export interface ImageUpdateWithoutTaskDataInput {
   account?: Maybe<AccountUpdateOneRequiredWithoutImagesInput>;
 }
 
-export interface StepSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<StepWhereInput>;
-  AND?: Maybe<StepSubscriptionWhereInput[] | StepSubscriptionWhereInput>;
-  OR?: Maybe<StepSubscriptionWhereInput[] | StepSubscriptionWhereInput>;
-  NOT?: Maybe<StepSubscriptionWhereInput[] | StepSubscriptionWhereInput>;
+export interface CategoryWhereInput {
+  id?: Maybe<UUID>;
+  id_not?: Maybe<UUID>;
+  id_in?: Maybe<UUID[] | UUID>;
+  id_not_in?: Maybe<UUID[] | UUID>;
+  id_lt?: Maybe<UUID>;
+  id_lte?: Maybe<UUID>;
+  id_gt?: Maybe<UUID>;
+  id_gte?: Maybe<UUID>;
+  id_contains?: Maybe<UUID>;
+  id_not_contains?: Maybe<UUID>;
+  id_starts_with?: Maybe<UUID>;
+  id_not_starts_with?: Maybe<UUID>;
+  id_ends_with?: Maybe<UUID>;
+  id_not_ends_with?: Maybe<UUID>;
+  index?: Maybe<Int>;
+  index_not?: Maybe<Int>;
+  index_in?: Maybe<Int[] | Int>;
+  index_not_in?: Maybe<Int[] | Int>;
+  index_lt?: Maybe<Int>;
+  index_lte?: Maybe<Int>;
+  index_gt?: Maybe<Int>;
+  index_gte?: Maybe<Int>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  account?: Maybe<AccountWhereInput>;
+  tasks_every?: Maybe<TaskWhereInput>;
+  tasks_some?: Maybe<TaskWhereInput>;
+  tasks_none?: Maybe<TaskWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<CategoryWhereInput[] | CategoryWhereInput>;
+  OR?: Maybe<CategoryWhereInput[] | CategoryWhereInput>;
+  NOT?: Maybe<CategoryWhereInput[] | CategoryWhereInput>;
 }
 
 export interface AccountUpdateOneRequiredWithoutImagesInput {
@@ -1965,15 +2018,112 @@ export interface TaskUpdateManyDataInput {
   doSendMail?: Maybe<Boolean>;
 }
 
-export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+export interface TaskWhereInput {
+  id?: Maybe<UUID>;
+  id_not?: Maybe<UUID>;
+  id_in?: Maybe<UUID[] | UUID>;
+  id_not_in?: Maybe<UUID[] | UUID>;
+  id_lt?: Maybe<UUID>;
+  id_lte?: Maybe<UUID>;
+  id_gt?: Maybe<UUID>;
+  id_gte?: Maybe<UUID>;
+  id_contains?: Maybe<UUID>;
+  id_not_contains?: Maybe<UUID>;
+  id_starts_with?: Maybe<UUID>;
+  id_not_starts_with?: Maybe<UUID>;
+  id_ends_with?: Maybe<UUID>;
+  id_not_ends_with?: Maybe<UUID>;
+  index?: Maybe<Int>;
+  index_not?: Maybe<Int>;
+  index_in?: Maybe<Int[] | Int>;
+  index_not_in?: Maybe<Int[] | Int>;
+  index_lt?: Maybe<Int>;
+  index_lte?: Maybe<Int>;
+  index_gt?: Maybe<Int>;
+  index_gte?: Maybe<Int>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  content?: Maybe<String>;
+  content_not?: Maybe<String>;
+  content_in?: Maybe<String[] | String>;
+  content_not_in?: Maybe<String[] | String>;
+  content_lt?: Maybe<String>;
+  content_lte?: Maybe<String>;
+  content_gt?: Maybe<String>;
+  content_gte?: Maybe<String>;
+  content_contains?: Maybe<String>;
+  content_not_contains?: Maybe<String>;
+  content_starts_with?: Maybe<String>;
+  content_not_starts_with?: Maybe<String>;
+  content_ends_with?: Maybe<String>;
+  content_not_ends_with?: Maybe<String>;
+  status?: Maybe<TaskStatus>;
+  status_not?: Maybe<TaskStatus>;
+  status_in?: Maybe<TaskStatus[] | TaskStatus>;
+  status_not_in?: Maybe<TaskStatus[] | TaskStatus>;
+  priority?: Maybe<TaskPriority>;
+  priority_not?: Maybe<TaskPriority>;
+  priority_in?: Maybe<TaskPriority[] | TaskPriority>;
+  priority_not_in?: Maybe<TaskPriority[] | TaskPriority>;
+  isImportant?: Maybe<Boolean>;
+  isImportant_not?: Maybe<Boolean>;
+  dueDate?: Maybe<DateTimeInput>;
+  dueDate_not?: Maybe<DateTimeInput>;
+  dueDate_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  dueDate_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  dueDate_lt?: Maybe<DateTimeInput>;
+  dueDate_lte?: Maybe<DateTimeInput>;
+  dueDate_gt?: Maybe<DateTimeInput>;
+  dueDate_gte?: Maybe<DateTimeInput>;
+  reminderDate?: Maybe<DateTimeInput>;
+  reminderDate_not?: Maybe<DateTimeInput>;
+  reminderDate_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  reminderDate_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  reminderDate_lt?: Maybe<DateTimeInput>;
+  reminderDate_lte?: Maybe<DateTimeInput>;
+  reminderDate_gt?: Maybe<DateTimeInput>;
+  reminderDate_gte?: Maybe<DateTimeInput>;
+  doSendMail?: Maybe<Boolean>;
+  doSendMail_not?: Maybe<Boolean>;
+  category?: Maybe<CategoryWhereInput>;
+  account?: Maybe<AccountWhereInput>;
+  steps_every?: Maybe<StepWhereInput>;
+  steps_some?: Maybe<StepWhereInput>;
+  steps_none?: Maybe<StepWhereInput>;
+  images_every?: Maybe<ImageWhereInput>;
+  images_some?: Maybe<ImageWhereInput>;
+  images_none?: Maybe<ImageWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<TaskWhereInput[] | TaskWhereInput>;
+  OR?: Maybe<TaskWhereInput[] | TaskWhereInput>;
+  NOT?: Maybe<TaskWhereInput[] | TaskWhereInput>;
 }
 
 export interface AccountUpsertWithoutCategoriesInput {
@@ -2053,105 +2203,15 @@ export interface StepUpdateManyMutationInput {
   status?: Maybe<StepStatus>;
 }
 
-export interface AccountWhereInput {
-  id?: Maybe<UUID>;
-  id_not?: Maybe<UUID>;
-  id_in?: Maybe<UUID[] | UUID>;
-  id_not_in?: Maybe<UUID[] | UUID>;
-  id_lt?: Maybe<UUID>;
-  id_lte?: Maybe<UUID>;
-  id_gt?: Maybe<UUID>;
-  id_gte?: Maybe<UUID>;
-  id_contains?: Maybe<UUID>;
-  id_not_contains?: Maybe<UUID>;
-  id_starts_with?: Maybe<UUID>;
-  id_not_starts_with?: Maybe<UUID>;
-  id_ends_with?: Maybe<UUID>;
-  id_not_ends_with?: Maybe<UUID>;
-  username?: Maybe<String>;
-  username_not?: Maybe<String>;
-  username_in?: Maybe<String[] | String>;
-  username_not_in?: Maybe<String[] | String>;
-  username_lt?: Maybe<String>;
-  username_lte?: Maybe<String>;
-  username_gt?: Maybe<String>;
-  username_gte?: Maybe<String>;
-  username_contains?: Maybe<String>;
-  username_not_contains?: Maybe<String>;
-  username_starts_with?: Maybe<String>;
-  username_not_starts_with?: Maybe<String>;
-  username_ends_with?: Maybe<String>;
-  username_not_ends_with?: Maybe<String>;
-  password?: Maybe<String>;
-  password_not?: Maybe<String>;
-  password_in?: Maybe<String[] | String>;
-  password_not_in?: Maybe<String[] | String>;
-  password_lt?: Maybe<String>;
-  password_lte?: Maybe<String>;
-  password_gt?: Maybe<String>;
-  password_gte?: Maybe<String>;
-  password_contains?: Maybe<String>;
-  password_not_contains?: Maybe<String>;
-  password_starts_with?: Maybe<String>;
-  password_not_starts_with?: Maybe<String>;
-  password_ends_with?: Maybe<String>;
-  password_not_ends_with?: Maybe<String>;
-  email?: Maybe<String>;
-  email_not?: Maybe<String>;
-  email_in?: Maybe<String[] | String>;
-  email_not_in?: Maybe<String[] | String>;
-  email_lt?: Maybe<String>;
-  email_lte?: Maybe<String>;
-  email_gt?: Maybe<String>;
-  email_gte?: Maybe<String>;
-  email_contains?: Maybe<String>;
-  email_not_contains?: Maybe<String>;
-  email_starts_with?: Maybe<String>;
-  email_not_starts_with?: Maybe<String>;
-  email_ends_with?: Maybe<String>;
-  email_not_ends_with?: Maybe<String>;
-  role?: Maybe<Role>;
-  role_not?: Maybe<Role>;
-  role_in?: Maybe<Role[] | Role>;
-  role_not_in?: Maybe<Role[] | Role>;
-  status?: Maybe<AccountStatus>;
-  status_not?: Maybe<AccountStatus>;
-  status_in?: Maybe<AccountStatus[] | AccountStatus>;
-  status_not_in?: Maybe<AccountStatus[] | AccountStatus>;
-  users_every?: Maybe<UserWhereInput>;
-  users_some?: Maybe<UserWhereInput>;
-  users_none?: Maybe<UserWhereInput>;
-  categories_every?: Maybe<CategoryWhereInput>;
-  categories_some?: Maybe<CategoryWhereInput>;
-  categories_none?: Maybe<CategoryWhereInput>;
-  tasks_every?: Maybe<TaskWhereInput>;
-  tasks_some?: Maybe<TaskWhereInput>;
-  tasks_none?: Maybe<TaskWhereInput>;
-  steps_every?: Maybe<StepWhereInput>;
-  steps_some?: Maybe<StepWhereInput>;
-  steps_none?: Maybe<StepWhereInput>;
-  images_every?: Maybe<ImageWhereInput>;
-  images_some?: Maybe<ImageWhereInput>;
-  images_none?: Maybe<ImageWhereInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<AccountWhereInput[] | AccountWhereInput>;
-  OR?: Maybe<AccountWhereInput[] | AccountWhereInput>;
-  NOT?: Maybe<AccountWhereInput[] | AccountWhereInput>;
+export interface CategorySubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<CategoryWhereInput>;
+  AND?: Maybe<CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput>;
+  OR?: Maybe<CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput>;
+  NOT?: Maybe<CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput>;
 }
 
 export interface TaskCreateOneWithoutImagesInput {
@@ -2166,6 +2226,8 @@ export interface NodeNode {
 export interface UserPreviousValues {
   id: UUID;
   name: String;
+  bio?: String;
+  dob?: DateTimeOutput;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -2173,6 +2235,8 @@ export interface UserPreviousValues {
 export interface UserPreviousValuesPromise extends Promise<UserPreviousValues>, Fragmentable {
   id: () => Promise<UUID>;
   name: () => Promise<String>;
+  bio: () => Promise<String>;
+  dob: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -2182,6 +2246,8 @@ export interface UserPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<UUID>>;
   name: () => Promise<AsyncIterator<String>>;
+  bio: () => Promise<AsyncIterator<String>>;
+  dob: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -2798,6 +2864,145 @@ export interface CategoryEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
+export interface User {
+  id: UUID;
+  name: String;
+  bio?: String;
+  dob?: DateTimeOutput;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+}
+
+export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<UUID>;
+  name: () => Promise<String>;
+  bio: () => Promise<String>;
+  dob: () => Promise<DateTimeOutput>;
+  account: <T = AccountPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface UserSubscription extends Promise<AsyncIterator<User>>, Fragmentable {
+  id: () => Promise<AsyncIterator<UUID>>;
+  name: () => Promise<AsyncIterator<String>>;
+  bio: () => Promise<AsyncIterator<String>>;
+  dob: () => Promise<AsyncIterator<DateTimeOutput>>;
+  account: <T = AccountSubscription>() => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface UserNullablePromise extends Promise<User | null>, Fragmentable {
+  id: () => Promise<UUID>;
+  name: () => Promise<String>;
+  bio: () => Promise<String>;
+  dob: () => Promise<DateTimeOutput>;
+  account: <T = AccountPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise extends Promise<AggregateUser>, Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface CategorySubscriptionPayload {
+  mutation: MutationType;
+  node: Category;
+  updatedFields: String[];
+  previousValues: CategoryPreviousValues;
+}
+
+export interface CategorySubscriptionPayloadPromise
+  extends Promise<CategorySubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = CategoryPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = CategoryPreviousValuesPromise>() => T;
+}
+
+export interface CategorySubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<CategorySubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = CategorySubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = CategoryPreviousValuesSubscription>() => T;
+}
+
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
+}
+
+export interface UserConnectionPromise extends Promise<UserConnection>, Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
+}
+
+export interface CategoryPreviousValues {
+  id: UUID;
+  index?: Int;
+  name: String;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+}
+
+export interface CategoryPreviousValuesPromise
+  extends Promise<CategoryPreviousValues>,
+    Fragmentable {
+  id: () => Promise<UUID>;
+  index: () => Promise<Int>;
+  name: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface CategoryPreviousValuesSubscription
+  extends Promise<AsyncIterator<CategoryPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<UUID>>;
+  index: () => Promise<AsyncIterator<Int>>;
+  name: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface AggregateStep {
+  count: Int;
+}
+
+export interface AggregateStepPromise extends Promise<AggregateStep>, Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateStepSubscription
+  extends Promise<AsyncIterator<AggregateStep>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface Task {
   id: UUID;
   index?: Int;
@@ -2918,104 +3123,63 @@ export interface TaskNullablePromise extends Promise<Task | null>, Fragmentable 
   updatedAt: () => Promise<DateTimeOutput>;
 }
 
-export interface AggregateUser {
-  count: Int;
+export interface ImageEdge {
+  node: Image;
+  cursor: String;
 }
 
-export interface AggregateUserPromise extends Promise<AggregateUser>, Fragmentable {
-  count: () => Promise<Int>;
+export interface ImageEdgePromise extends Promise<ImageEdge>, Fragmentable {
+  node: <T = ImagePromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+export interface ImageEdgeSubscription extends Promise<AsyncIterator<ImageEdge>>, Fragmentable {
+  node: <T = ImageSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface CategorySubscriptionPayload {
-  mutation: MutationType;
-  node: Category;
-  updatedFields: String[];
-  previousValues: CategoryPreviousValues;
-}
-
-export interface CategorySubscriptionPayloadPromise
-  extends Promise<CategorySubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = CategoryPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = CategoryPreviousValuesPromise>() => T;
-}
-
-export interface CategorySubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<CategorySubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = CategorySubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = CategoryPreviousValuesSubscription>() => T;
-}
-
-export interface UserConnection {
+export interface CategoryConnection {
   pageInfo: PageInfo;
-  edges: UserEdge[];
+  edges: CategoryEdge[];
 }
 
-export interface UserConnectionPromise extends Promise<UserConnection>, Fragmentable {
+export interface CategoryConnectionPromise extends Promise<CategoryConnection>, Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
+  edges: <T = FragmentableArray<CategoryEdge>>() => T;
+  aggregate: <T = AggregateCategoryPromise>() => T;
 }
 
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
+export interface CategoryConnectionSubscription
+  extends Promise<AsyncIterator<CategoryConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CategoryEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCategorySubscription>() => T;
 }
 
-export interface CategoryPreviousValues {
-  id: UUID;
-  index?: Int;
-  name: String;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
+export interface StepSubscriptionPayload {
+  mutation: MutationType;
+  node: Step;
+  updatedFields: String[];
+  previousValues: StepPreviousValues;
 }
 
-export interface CategoryPreviousValuesPromise
-  extends Promise<CategoryPreviousValues>,
+export interface StepSubscriptionPayloadPromise
+  extends Promise<StepSubscriptionPayload>,
     Fragmentable {
-  id: () => Promise<UUID>;
-  index: () => Promise<Int>;
-  name: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
+  mutation: () => Promise<MutationType>;
+  node: <T = StepPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = StepPreviousValuesPromise>() => T;
 }
 
-export interface CategoryPreviousValuesSubscription
-  extends Promise<AsyncIterator<CategoryPreviousValues>>,
+export interface StepSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<StepSubscriptionPayload>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<UUID>>;
-  index: () => Promise<AsyncIterator<Int>>;
-  name: () => Promise<AsyncIterator<String>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface AggregateStep {
-  count: Int;
-}
-
-export interface AggregateStepPromise extends Promise<AggregateStep>, Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateStepSubscription
-  extends Promise<AsyncIterator<AggregateStep>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = StepSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = StepPreviousValuesSubscription>() => T;
 }
 
 export interface Category {
@@ -3076,96 +3240,6 @@ export interface CategoryNullablePromise extends Promise<Category | null>, Fragm
     first?: Int;
     last?: Int;
   }) => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-}
-
-export interface ImageEdge {
-  node: Image;
-  cursor: String;
-}
-
-export interface ImageEdgePromise extends Promise<ImageEdge>, Fragmentable {
-  node: <T = ImagePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface ImageEdgeSubscription extends Promise<AsyncIterator<ImageEdge>>, Fragmentable {
-  node: <T = ImageSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface CategoryConnection {
-  pageInfo: PageInfo;
-  edges: CategoryEdge[];
-}
-
-export interface CategoryConnectionPromise extends Promise<CategoryConnection>, Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<CategoryEdge>>() => T;
-  aggregate: <T = AggregateCategoryPromise>() => T;
-}
-
-export interface CategoryConnectionSubscription
-  extends Promise<AsyncIterator<CategoryConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<CategoryEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateCategorySubscription>() => T;
-}
-
-export interface StepSubscriptionPayload {
-  mutation: MutationType;
-  node: Step;
-  updatedFields: String[];
-  previousValues: StepPreviousValues;
-}
-
-export interface StepSubscriptionPayloadPromise
-  extends Promise<StepSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = StepPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = StepPreviousValuesPromise>() => T;
-}
-
-export interface StepSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<StepSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = StepSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = StepPreviousValuesSubscription>() => T;
-}
-
-export interface User {
-  id: UUID;
-  name: String;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-}
-
-export interface UserPromise extends Promise<User>, Fragmentable {
-  id: () => Promise<UUID>;
-  name: () => Promise<String>;
-  account: <T = AccountPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-}
-
-export interface UserSubscription extends Promise<AsyncIterator<User>>, Fragmentable {
-  id: () => Promise<AsyncIterator<UUID>>;
-  name: () => Promise<AsyncIterator<String>>;
-  account: <T = AccountSubscription>() => T;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface UserNullablePromise extends Promise<User | null>, Fragmentable {
-  id: () => Promise<UUID>;
-  name: () => Promise<String>;
-  account: <T = AccountPromise>() => T;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -3292,23 +3366,18 @@ export interface TaskEdgeSubscription extends Promise<AsyncIterator<TaskEdge>>, 
 }
 
 /*
-DateTime scalar input type, allowing Date
+The `Boolean` scalar type represents `true` or `false`.
 */
-export type DateTimeInput = Date | string;
-
-/*
-DateTime scalar output type, which is always a string
-*/
-export type DateTimeOutput = string;
+export type Boolean = boolean;
 
 export type UUID = string;
 
 export type Long = string;
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
-export type Boolean = boolean;
+export type Int = number;
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
@@ -3322,9 +3391,14 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 export type String = string;
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+DateTime scalar input type, allowing Date
 */
-export type Int = number;
+export type DateTimeInput = Date | string;
+
+/*
+DateTime scalar output type, which is always a string
+*/
+export type DateTimeOutput = string;
 
 /**
  * Model Metadata

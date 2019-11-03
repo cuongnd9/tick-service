@@ -15,7 +15,7 @@ type Account {
   password: String!
   email: String! @unique
   role: Role! @default(value: Free)
-  status: AccountStatus
+  status: AccountStatus @default(value: Pending)
   users: [User!]! @relation(name: "AccountUsers", onDelete: CASCADE)
   categories: [Category!]! @relation(name: "AccountCategories", onDelete: CASCADE)
   tasks: [Task!]! @relation(name: "AccountTasks", onDelete: CASCADE)
@@ -54,7 +54,7 @@ enum TaskStatus {
 
 enum TaskPriority {
   Highest
-  Hight
+  High
   Medium
   Low
   Lowest

@@ -1,7 +1,23 @@
 import service from '@/services/account.service';
 
 function register(req) {
-  return service.register(req.body);
+  const {
+    body,
+    app: {
+      locals: { redis },
+    },
+  } = req;
+  return service.register(redis, body);
+}
+
+function checkCodeConfirmation(req) {
+  const {
+    query,
+    app: {
+      locals: { redis },
+    },
+  } = req;
+  return service.checkCodeConfirmation(redis, query);
 }
 
 function login(req) {
@@ -10,5 +26,6 @@ function login(req) {
 
 export default {
   register,
+  checkCodeConfirmation,
   login,
 };
