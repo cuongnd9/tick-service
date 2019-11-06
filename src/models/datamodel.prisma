@@ -99,6 +99,7 @@ type Step {
 type TaskImage {
   id: UUID! @id
   task: Task! @relation(name: "Task_TaskImage")
+  image: Image!
   account: Account! @relation(name: "Account_TaskImage")
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt

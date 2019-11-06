@@ -900,6 +900,11 @@ module.exports = {
         connect: [ImageWhereUniqueInput!]
       }
 
+      input ImageCreateOneInput {
+        create: ImageCreateInput
+        connect: ImageWhereUniqueInput
+      }
+
       input ImageCreateWithoutAccountInput {
         id: UUID
         publicId: String
@@ -1014,6 +1019,12 @@ module.exports = {
         NOT: [ImageSubscriptionWhereInput!]
       }
 
+      input ImageUpdateDataInput {
+        publicId: String
+        url: String
+        account: AccountUpdateOneRequiredWithoutImagesInput
+      }
+
       input ImageUpdateInput {
         publicId: String
         url: String
@@ -1047,6 +1058,13 @@ module.exports = {
         data: ImageUpdateManyDataInput!
       }
 
+      input ImageUpdateOneRequiredInput {
+        create: ImageCreateInput
+        update: ImageUpdateDataInput
+        upsert: ImageUpsertNestedInput
+        connect: ImageWhereUniqueInput
+      }
+
       input ImageUpdateWithoutAccountDataInput {
         publicId: String
         url: String
@@ -1055,6 +1073,11 @@ module.exports = {
       input ImageUpdateWithWhereUniqueWithoutAccountInput {
         where: ImageWhereUniqueInput!
         data: ImageUpdateWithoutAccountDataInput!
+      }
+
+      input ImageUpsertNestedInput {
+        update: ImageUpdateDataInput!
+        create: ImageCreateInput!
       }
 
       input ImageUpsertWithWhereUniqueWithoutAccountInput {
@@ -1850,6 +1873,7 @@ module.exports = {
       type TaskImage {
         id: UUID!
         task: Task!
+        image: Image!
         account: Account!
         createdAt: DateTime!
         updatedAt: DateTime!
@@ -1864,6 +1888,7 @@ module.exports = {
       input TaskImageCreateInput {
         id: UUID
         task: TaskCreateOneWithoutImagesInput!
+        image: ImageCreateOneInput!
         account: AccountCreateOneWithoutTaskImagesInput!
       }
 
@@ -1880,10 +1905,12 @@ module.exports = {
       input TaskImageCreateWithoutAccountInput {
         id: UUID
         task: TaskCreateOneWithoutImagesInput!
+        image: ImageCreateOneInput!
       }
 
       input TaskImageCreateWithoutTaskInput {
         id: UUID
+        image: ImageCreateOneInput!
         account: AccountCreateOneWithoutTaskImagesInput!
       }
 
@@ -1963,6 +1990,7 @@ module.exports = {
 
       input TaskImageUpdateInput {
         task: TaskUpdateOneRequiredWithoutImagesInput
+        image: ImageUpdateOneRequiredInput
         account: AccountUpdateOneRequiredWithoutTaskImagesInput
       }
 
@@ -1990,9 +2018,11 @@ module.exports = {
 
       input TaskImageUpdateWithoutAccountDataInput {
         task: TaskUpdateOneRequiredWithoutImagesInput
+        image: ImageUpdateOneRequiredInput
       }
 
       input TaskImageUpdateWithoutTaskDataInput {
+        image: ImageUpdateOneRequiredInput
         account: AccountUpdateOneRequiredWithoutTaskImagesInput
       }
 
@@ -2034,6 +2064,7 @@ module.exports = {
         id_ends_with: UUID
         id_not_ends_with: UUID
         task: TaskWhereInput
+        image: ImageWhereInput
         account: AccountWhereInput
         createdAt: DateTime
         createdAt_not: DateTime
