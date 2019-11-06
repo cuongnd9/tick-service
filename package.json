@@ -14,7 +14,7 @@
     "prisma:reset": "dotenv -- prisma reset",
     "prisma:delete": "dotenv -- prisma delete",
     "clean": "rm -rf dist",
-    "dist": "babel src --out-dir dist",
+    "dist": "babel src --out-dir dist --copy-files",
     "build": "npm run clean  && npm run dist",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
