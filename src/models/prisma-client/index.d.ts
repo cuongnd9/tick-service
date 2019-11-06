@@ -413,17 +413,19 @@ export type ImageOrderByInput =
 
 export type AccountStatus = 'Pending' | 'Active' | 'Deactive';
 
-export interface AccountUpdateWithoutTasksDataInput {
-  username?: Maybe<String>;
-  password?: Maybe<String>;
-  email?: Maybe<String>;
-  role?: Maybe<Role>;
-  status?: Maybe<AccountStatus>;
-  users?: Maybe<UserUpdateManyWithoutAccountInput>;
-  categories?: Maybe<CategoryUpdateManyWithoutAccountInput>;
-  steps?: Maybe<StepUpdateManyWithoutAccountInput>;
-  images?: Maybe<ImageUpdateManyWithoutAccountInput>;
-  taskImages?: Maybe<TaskImageUpdateManyWithoutAccountInput>;
+export interface TaskUpdateWithoutCategoryDataInput {
+  index?: Maybe<Int>;
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+  status?: Maybe<TaskStatus>;
+  priority?: Maybe<TaskPriority>;
+  isImportant?: Maybe<Boolean>;
+  dueDate?: Maybe<DateTimeInput>;
+  reminderDate?: Maybe<DateTimeInput>;
+  doSendMail?: Maybe<Boolean>;
+  account?: Maybe<AccountUpdateOneRequiredWithoutTasksInput>;
+  steps?: Maybe<StepUpdateManyWithoutTaskInput>;
+  images?: Maybe<TaskImageUpdateManyWithoutTaskInput>;
 }
 
 export type AccountWhereUniqueInput = AtLeastOne<{
@@ -432,11 +434,11 @@ export type AccountWhereUniqueInput = AtLeastOne<{
   email?: Maybe<String>;
 }>;
 
-export interface AccountUpdateOneRequiredWithoutCategoriesInput {
-  create?: Maybe<AccountCreateWithoutCategoriesInput>;
-  update?: Maybe<AccountUpdateWithoutCategoriesDataInput>;
-  upsert?: Maybe<AccountUpsertWithoutCategoriesInput>;
-  connect?: Maybe<AccountWhereUniqueInput>;
+export interface CategoryUpdateOneRequiredWithoutTasksInput {
+  create?: Maybe<CategoryCreateWithoutTasksInput>;
+  update?: Maybe<CategoryUpdateWithoutTasksDataInput>;
+  upsert?: Maybe<CategoryUpsertWithoutTasksInput>;
+  connect?: Maybe<CategoryWhereUniqueInput>;
 }
 
 export interface StepWhereInput {
@@ -503,17 +505,10 @@ export interface StepWhereInput {
   NOT?: Maybe<StepWhereInput[] | StepWhereInput>;
 }
 
-export interface AccountUpdateWithoutCategoriesDataInput {
-  username?: Maybe<String>;
-  password?: Maybe<String>;
-  email?: Maybe<String>;
-  role?: Maybe<Role>;
-  status?: Maybe<AccountStatus>;
-  users?: Maybe<UserUpdateManyWithoutAccountInput>;
-  tasks?: Maybe<TaskUpdateManyWithoutAccountInput>;
-  steps?: Maybe<StepUpdateManyWithoutAccountInput>;
-  images?: Maybe<ImageUpdateManyWithoutAccountInput>;
-  taskImages?: Maybe<TaskImageUpdateManyWithoutAccountInput>;
+export interface CategoryUpdateWithoutTasksDataInput {
+  index?: Maybe<Int>;
+  name?: Maybe<String>;
+  account?: Maybe<AccountUpdateOneRequiredWithoutCategoriesInput>;
 }
 
 export interface TaskImageWhereInput {
@@ -532,6 +527,7 @@ export interface TaskImageWhereInput {
   id_ends_with?: Maybe<UUID>;
   id_not_ends_with?: Maybe<UUID>;
   task?: Maybe<TaskWhereInput>;
+  image?: Maybe<ImageWhereInput>;
   account?: Maybe<AccountWhereInput>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
@@ -554,20 +550,11 @@ export interface TaskImageWhereInput {
   NOT?: Maybe<TaskImageWhereInput[] | TaskImageWhereInput>;
 }
 
-export interface TaskUpdateManyWithoutAccountInput {
-  create?: Maybe<TaskCreateWithoutAccountInput[] | TaskCreateWithoutAccountInput>;
-  delete?: Maybe<TaskWhereUniqueInput[] | TaskWhereUniqueInput>;
-  connect?: Maybe<TaskWhereUniqueInput[] | TaskWhereUniqueInput>;
-  set?: Maybe<TaskWhereUniqueInput[] | TaskWhereUniqueInput>;
-  disconnect?: Maybe<TaskWhereUniqueInput[] | TaskWhereUniqueInput>;
-  update?: Maybe<
-    TaskUpdateWithWhereUniqueWithoutAccountInput[] | TaskUpdateWithWhereUniqueWithoutAccountInput
-  >;
-  upsert?: Maybe<
-    TaskUpsertWithWhereUniqueWithoutAccountInput[] | TaskUpsertWithWhereUniqueWithoutAccountInput
-  >;
-  deleteMany?: Maybe<TaskScalarWhereInput[] | TaskScalarWhereInput>;
-  updateMany?: Maybe<TaskUpdateManyWithWhereNestedInput[] | TaskUpdateManyWithWhereNestedInput>;
+export interface AccountUpdateOneRequiredWithoutCategoriesInput {
+  create?: Maybe<AccountCreateWithoutCategoriesInput>;
+  update?: Maybe<AccountUpdateWithoutCategoriesDataInput>;
+  upsert?: Maybe<AccountUpsertWithoutCategoriesInput>;
+  connect?: Maybe<AccountWhereUniqueInput>;
 }
 
 export interface TaskWhereInput {
@@ -678,6 +665,53 @@ export interface TaskWhereInput {
   NOT?: Maybe<TaskWhereInput[] | TaskWhereInput>;
 }
 
+export interface AccountCreateWithoutTaskImagesInput {
+  id?: Maybe<UUID>;
+  username: String;
+  password: String;
+  email: String;
+  role?: Maybe<Role>;
+  status?: Maybe<AccountStatus>;
+  users?: Maybe<UserCreateManyWithoutAccountInput>;
+  categories?: Maybe<CategoryCreateManyWithoutAccountInput>;
+  tasks?: Maybe<TaskCreateManyWithoutAccountInput>;
+  steps?: Maybe<StepCreateManyWithoutAccountInput>;
+  images?: Maybe<ImageCreateManyWithoutAccountInput>;
+}
+
+export interface TaskUpsertWithWhereUniqueWithoutCategoryInput {
+  where: TaskWhereUniqueInput;
+  update: TaskUpdateWithoutCategoryDataInput;
+  create: TaskCreateWithoutCategoryInput;
+}
+
+export interface AccountUpdateInput {
+  username?: Maybe<String>;
+  password?: Maybe<String>;
+  email?: Maybe<String>;
+  role?: Maybe<Role>;
+  status?: Maybe<AccountStatus>;
+  users?: Maybe<UserUpdateManyWithoutAccountInput>;
+  categories?: Maybe<CategoryUpdateManyWithoutAccountInput>;
+  tasks?: Maybe<TaskUpdateManyWithoutAccountInput>;
+  steps?: Maybe<StepUpdateManyWithoutAccountInput>;
+  images?: Maybe<ImageUpdateManyWithoutAccountInput>;
+  taskImages?: Maybe<TaskImageUpdateManyWithoutAccountInput>;
+}
+
+export interface AccountUpdateWithoutCategoriesDataInput {
+  username?: Maybe<String>;
+  password?: Maybe<String>;
+  email?: Maybe<String>;
+  role?: Maybe<Role>;
+  status?: Maybe<AccountStatus>;
+  users?: Maybe<UserUpdateManyWithoutAccountInput>;
+  tasks?: Maybe<TaskUpdateManyWithoutAccountInput>;
+  steps?: Maybe<StepUpdateManyWithoutAccountInput>;
+  images?: Maybe<ImageUpdateManyWithoutAccountInput>;
+  taskImages?: Maybe<TaskImageUpdateManyWithoutAccountInput>;
+}
+
 export interface UserUpdateManyWithoutAccountInput {
   create?: Maybe<UserCreateWithoutAccountInput[] | UserCreateWithoutAccountInput>;
   delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
@@ -694,30 +728,6 @@ export interface UserUpdateManyWithoutAccountInput {
   updateMany?: Maybe<UserUpdateManyWithWhereNestedInput[] | UserUpdateManyWithWhereNestedInput>;
 }
 
-export interface CategoryCreateInput {
-  id?: Maybe<UUID>;
-  index?: Maybe<Int>;
-  name: String;
-  account: AccountCreateOneWithoutCategoriesInput;
-  tasks?: Maybe<TaskCreateManyWithoutCategoryInput>;
-}
-
-export interface UserUpdateWithWhereUniqueWithoutAccountInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutAccountDataInput;
-}
-
-export interface TaskUpdateWithWhereUniqueWithoutAccountInput {
-  where: TaskWhereUniqueInput;
-  data: TaskUpdateWithoutAccountDataInput;
-}
-
-export interface UserUpdateWithoutAccountDataInput {
-  name?: Maybe<String>;
-  bio?: Maybe<String>;
-  dob?: Maybe<DateTimeInput>;
-}
-
 export interface UserSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
@@ -729,10 +739,9 @@ export interface UserSubscriptionWhereInput {
   NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
-export interface UserUpsertWithWhereUniqueWithoutAccountInput {
+export interface UserUpdateWithWhereUniqueWithoutAccountInput {
   where: UserWhereUniqueInput;
-  update: UserUpdateWithoutAccountDataInput;
-  create: UserCreateWithoutAccountInput;
+  data: UserUpdateWithoutAccountDataInput;
 }
 
 export interface TaskImageSubscriptionWhereInput {
@@ -744,6 +753,102 @@ export interface TaskImageSubscriptionWhereInput {
   AND?: Maybe<TaskImageSubscriptionWhereInput[] | TaskImageSubscriptionWhereInput>;
   OR?: Maybe<TaskImageSubscriptionWhereInput[] | TaskImageSubscriptionWhereInput>;
   NOT?: Maybe<TaskImageSubscriptionWhereInput[] | TaskImageSubscriptionWhereInput>;
+}
+
+export interface UserUpdateWithoutAccountDataInput {
+  name?: Maybe<String>;
+  bio?: Maybe<String>;
+  dob?: Maybe<DateTimeInput>;
+}
+
+export interface StepSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<StepWhereInput>;
+  AND?: Maybe<StepSubscriptionWhereInput[] | StepSubscriptionWhereInput>;
+  OR?: Maybe<StepSubscriptionWhereInput[] | StepSubscriptionWhereInput>;
+  NOT?: Maybe<StepSubscriptionWhereInput[] | StepSubscriptionWhereInput>;
+}
+
+export interface UserUpsertWithWhereUniqueWithoutAccountInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutAccountDataInput;
+  create: UserCreateWithoutAccountInput;
+}
+
+export interface UserWhereInput {
+  id?: Maybe<UUID>;
+  id_not?: Maybe<UUID>;
+  id_in?: Maybe<UUID[] | UUID>;
+  id_not_in?: Maybe<UUID[] | UUID>;
+  id_lt?: Maybe<UUID>;
+  id_lte?: Maybe<UUID>;
+  id_gt?: Maybe<UUID>;
+  id_gte?: Maybe<UUID>;
+  id_contains?: Maybe<UUID>;
+  id_not_contains?: Maybe<UUID>;
+  id_starts_with?: Maybe<UUID>;
+  id_not_starts_with?: Maybe<UUID>;
+  id_ends_with?: Maybe<UUID>;
+  id_not_ends_with?: Maybe<UUID>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  bio?: Maybe<String>;
+  bio_not?: Maybe<String>;
+  bio_in?: Maybe<String[] | String>;
+  bio_not_in?: Maybe<String[] | String>;
+  bio_lt?: Maybe<String>;
+  bio_lte?: Maybe<String>;
+  bio_gt?: Maybe<String>;
+  bio_gte?: Maybe<String>;
+  bio_contains?: Maybe<String>;
+  bio_not_contains?: Maybe<String>;
+  bio_starts_with?: Maybe<String>;
+  bio_not_starts_with?: Maybe<String>;
+  bio_ends_with?: Maybe<String>;
+  bio_not_ends_with?: Maybe<String>;
+  dob?: Maybe<DateTimeInput>;
+  dob_not?: Maybe<DateTimeInput>;
+  dob_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  dob_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  dob_lt?: Maybe<DateTimeInput>;
+  dob_lte?: Maybe<DateTimeInput>;
+  dob_gt?: Maybe<DateTimeInput>;
+  dob_gte?: Maybe<DateTimeInput>;
+  account?: Maybe<AccountWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
+  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
+  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
 export interface UserScalarWhereInput {
@@ -818,39 +923,6 @@ export interface UserScalarWhereInput {
   NOT?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
 }
 
-export interface StepSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<StepWhereInput>;
-  AND?: Maybe<StepSubscriptionWhereInput[] | StepSubscriptionWhereInput>;
-  OR?: Maybe<StepSubscriptionWhereInput[] | StepSubscriptionWhereInput>;
-  NOT?: Maybe<StepSubscriptionWhereInput[] | StepSubscriptionWhereInput>;
-}
-
-export interface UserUpdateManyWithWhereNestedInput {
-  where: UserScalarWhereInput;
-  data: UserUpdateManyDataInput;
-}
-
-export interface ImageSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<ImageWhereInput>;
-  AND?: Maybe<ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput>;
-  OR?: Maybe<ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput>;
-  NOT?: Maybe<ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput>;
-}
-
-export interface UserUpdateManyDataInput {
-  name?: Maybe<String>;
-  bio?: Maybe<String>;
-  dob?: Maybe<DateTimeInput>;
-}
-
 export interface AccountSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
@@ -861,6 +933,26 @@ export interface AccountSubscriptionWhereInput {
   OR?: Maybe<AccountSubscriptionWhereInput[] | AccountSubscriptionWhereInput>;
   NOT?: Maybe<AccountSubscriptionWhereInput[] | AccountSubscriptionWhereInput>;
 }
+
+export interface UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput;
+  data: UserUpdateManyDataInput;
+}
+
+export interface AccountUpsertWithoutUsersInput {
+  update: AccountUpdateWithoutUsersDataInput;
+  create: AccountCreateWithoutUsersInput;
+}
+
+export interface UserUpdateManyDataInput {
+  name?: Maybe<String>;
+  bio?: Maybe<String>;
+  dob?: Maybe<DateTimeInput>;
+}
+
+export type CategoryWhereUniqueInput = AtLeastOne<{
+  id: Maybe<UUID>;
+}>;
 
 export interface CategoryUpdateManyWithoutAccountInput {
   create?: Maybe<CategoryCreateWithoutAccountInput[] | CategoryCreateWithoutAccountInput>;
@@ -882,9 +974,11 @@ export interface CategoryUpdateManyWithoutAccountInput {
   >;
 }
 
-export interface AccountUpsertWithoutUsersInput {
-  update: AccountUpdateWithoutUsersDataInput;
-  create: AccountCreateWithoutUsersInput;
+export interface UserUpdateInput {
+  name?: Maybe<String>;
+  bio?: Maybe<String>;
+  dob?: Maybe<DateTimeInput>;
+  account?: Maybe<AccountUpdateOneRequiredWithoutUsersInput>;
 }
 
 export interface CategoryUpdateWithWhereUniqueWithoutAccountInput {
@@ -892,7 +986,7 @@ export interface CategoryUpdateWithWhereUniqueWithoutAccountInput {
   data: CategoryUpdateWithoutAccountDataInput;
 }
 
-export type CategoryWhereUniqueInput = AtLeastOne<{
+export type ImageWhereUniqueInput = AtLeastOne<{
   id: Maybe<UUID>;
 }>;
 
@@ -902,11 +996,12 @@ export interface CategoryUpdateWithoutAccountDataInput {
   tasks?: Maybe<TaskUpdateManyWithoutCategoryInput>;
 }
 
-export interface UserUpdateInput {
-  name?: Maybe<String>;
+export interface UserCreateInput {
+  id?: Maybe<UUID>;
+  name: String;
   bio?: Maybe<String>;
   dob?: Maybe<DateTimeInput>;
-  account?: Maybe<AccountUpdateOneRequiredWithoutUsersInput>;
+  account: AccountCreateOneWithoutUsersInput;
 }
 
 export interface TaskUpdateManyWithoutCategoryInput {
@@ -925,47 +1020,13 @@ export interface TaskUpdateManyWithoutCategoryInput {
   updateMany?: Maybe<TaskUpdateManyWithWhereNestedInput[] | TaskUpdateManyWithWhereNestedInput>;
 }
 
-export type ImageWhereUniqueInput = AtLeastOne<{
+export type StepWhereUniqueInput = AtLeastOne<{
   id: Maybe<UUID>;
 }>;
 
 export interface TaskUpdateWithWhereUniqueWithoutCategoryInput {
   where: TaskWhereUniqueInput;
   data: TaskUpdateWithoutCategoryDataInput;
-}
-
-export interface UserCreateInput {
-  id?: Maybe<UUID>;
-  name: String;
-  bio?: Maybe<String>;
-  dob?: Maybe<DateTimeInput>;
-  account: AccountCreateOneWithoutUsersInput;
-}
-
-export interface TaskUpdateWithoutCategoryDataInput {
-  index?: Maybe<Int>;
-  title?: Maybe<String>;
-  content?: Maybe<String>;
-  status?: Maybe<TaskStatus>;
-  priority?: Maybe<TaskPriority>;
-  isImportant?: Maybe<Boolean>;
-  dueDate?: Maybe<DateTimeInput>;
-  reminderDate?: Maybe<DateTimeInput>;
-  doSendMail?: Maybe<Boolean>;
-  account?: Maybe<AccountUpdateOneRequiredWithoutTasksInput>;
-  steps?: Maybe<StepUpdateManyWithoutTaskInput>;
-  images?: Maybe<TaskImageUpdateManyWithoutTaskInput>;
-}
-
-export type StepWhereUniqueInput = AtLeastOne<{
-  id: Maybe<UUID>;
-}>;
-
-export interface AccountUpdateOneRequiredWithoutTasksInput {
-  create?: Maybe<AccountCreateWithoutTasksInput>;
-  update?: Maybe<AccountUpdateWithoutTasksDataInput>;
-  upsert?: Maybe<AccountUpsertWithoutTasksInput>;
-  connect?: Maybe<AccountWhereUniqueInput>;
 }
 
 export interface TaskUpdateManyMutationInput {
@@ -980,12 +1041,42 @@ export interface TaskUpdateManyMutationInput {
   doSendMail?: Maybe<Boolean>;
 }
 
-export interface AccountCreateOneWithoutImagesInput {
-  create?: Maybe<AccountCreateWithoutImagesInput>;
-  connect?: Maybe<AccountWhereUniqueInput>;
+export interface CategoryUpdateManyDataInput {
+  index?: Maybe<Int>;
+  name?: Maybe<String>;
 }
 
 export type TaskWhereUniqueInput = AtLeastOne<{
+  id: Maybe<UUID>;
+}>;
+
+export interface AccountUpdateOneRequiredWithoutTasksInput {
+  create?: Maybe<AccountCreateWithoutTasksInput>;
+  update?: Maybe<AccountUpdateWithoutTasksDataInput>;
+  upsert?: Maybe<AccountUpsertWithoutTasksInput>;
+  connect?: Maybe<AccountWhereUniqueInput>;
+}
+
+export interface StepUpdateManyMutationInput {
+  index?: Maybe<Int>;
+  title?: Maybe<String>;
+  status?: Maybe<StepStatus>;
+}
+
+export interface AccountUpdateWithoutTasksDataInput {
+  username?: Maybe<String>;
+  password?: Maybe<String>;
+  email?: Maybe<String>;
+  role?: Maybe<Role>;
+  status?: Maybe<AccountStatus>;
+  users?: Maybe<UserUpdateManyWithoutAccountInput>;
+  categories?: Maybe<CategoryUpdateManyWithoutAccountInput>;
+  steps?: Maybe<StepUpdateManyWithoutAccountInput>;
+  images?: Maybe<ImageUpdateManyWithoutAccountInput>;
+  taskImages?: Maybe<TaskImageUpdateManyWithoutAccountInput>;
+}
+
+export type TaskImageWhereUniqueInput = AtLeastOne<{
   id: Maybe<UUID>;
 }>;
 
@@ -1005,10 +1096,9 @@ export interface StepUpdateManyWithoutAccountInput {
   updateMany?: Maybe<StepUpdateManyWithWhereNestedInput[] | StepUpdateManyWithWhereNestedInput>;
 }
 
-export interface StepUpdateManyMutationInput {
-  index?: Maybe<Int>;
-  title?: Maybe<String>;
-  status?: Maybe<StepStatus>;
+export interface ImageUpdateManyMutationInput {
+  publicId?: Maybe<String>;
+  url?: Maybe<String>;
 }
 
 export interface StepUpdateWithWhereUniqueWithoutAccountInput {
@@ -1016,7 +1106,7 @@ export interface StepUpdateWithWhereUniqueWithoutAccountInput {
   data: StepUpdateWithoutAccountDataInput;
 }
 
-export type TaskImageWhereUniqueInput = AtLeastOne<{
+export type UserWhereUniqueInput = AtLeastOne<{
   id: Maybe<UUID>;
 }>;
 
@@ -1027,9 +1117,11 @@ export interface StepUpdateWithoutAccountDataInput {
   task?: Maybe<TaskUpdateOneRequiredWithoutStepsInput>;
 }
 
-export interface ImageUpdateManyMutationInput {
-  publicId?: Maybe<String>;
-  url?: Maybe<String>;
+export interface CategoryUpdateInput {
+  index?: Maybe<Int>;
+  name?: Maybe<String>;
+  account?: Maybe<AccountUpdateOneRequiredWithoutCategoriesInput>;
+  tasks?: Maybe<TaskUpdateManyWithoutCategoryInput>;
 }
 
 export interface TaskUpdateOneRequiredWithoutStepsInput {
@@ -1039,9 +1131,13 @@ export interface TaskUpdateOneRequiredWithoutStepsInput {
   connect?: Maybe<TaskWhereUniqueInput>;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<UUID>;
-}>;
+export interface AccountUpdateManyMutationInput {
+  username?: Maybe<String>;
+  password?: Maybe<String>;
+  email?: Maybe<String>;
+  role?: Maybe<Role>;
+  status?: Maybe<AccountStatus>;
+}
 
 export interface TaskUpdateWithoutStepsDataInput {
   index?: Maybe<Int>;
@@ -1056,40 +1152,6 @@ export interface TaskUpdateWithoutStepsDataInput {
   category?: Maybe<CategoryUpdateOneRequiredWithoutTasksInput>;
   account?: Maybe<AccountUpdateOneRequiredWithoutTasksInput>;
   images?: Maybe<TaskImageUpdateManyWithoutTaskInput>;
-}
-
-export interface AccountUpdateOneRequiredWithoutImagesInput {
-  create?: Maybe<AccountCreateWithoutImagesInput>;
-  update?: Maybe<AccountUpdateWithoutImagesDataInput>;
-  upsert?: Maybe<AccountUpsertWithoutImagesInput>;
-  connect?: Maybe<AccountWhereUniqueInput>;
-}
-
-export interface CategoryUpdateOneRequiredWithoutTasksInput {
-  create?: Maybe<CategoryCreateWithoutTasksInput>;
-  update?: Maybe<CategoryUpdateWithoutTasksDataInput>;
-  upsert?: Maybe<CategoryUpsertWithoutTasksInput>;
-  connect?: Maybe<CategoryWhereUniqueInput>;
-}
-
-export interface AccountCreateWithoutImagesInput {
-  id?: Maybe<UUID>;
-  username: String;
-  password: String;
-  email: String;
-  role?: Maybe<Role>;
-  status?: Maybe<AccountStatus>;
-  users?: Maybe<UserCreateManyWithoutAccountInput>;
-  categories?: Maybe<CategoryCreateManyWithoutAccountInput>;
-  tasks?: Maybe<TaskCreateManyWithoutAccountInput>;
-  steps?: Maybe<StepCreateManyWithoutAccountInput>;
-  taskImages?: Maybe<TaskImageCreateManyWithoutAccountInput>;
-}
-
-export interface CategoryUpdateWithoutTasksDataInput {
-  index?: Maybe<Int>;
-  name?: Maybe<String>;
-  account?: Maybe<AccountUpdateOneRequiredWithoutCategoriesInput>;
 }
 
 export interface AccountCreateInput {
@@ -1107,11 +1169,9 @@ export interface AccountCreateInput {
   taskImages?: Maybe<TaskImageCreateManyWithoutAccountInput>;
 }
 
-export interface ImageCreateInput {
-  id?: Maybe<UUID>;
-  publicId?: Maybe<String>;
-  url: String;
-  account: AccountCreateOneWithoutImagesInput;
+export interface CategoryUpdateManyWithWhereNestedInput {
+  where: CategoryScalarWhereInput;
+  data: CategoryUpdateManyDataInput;
 }
 
 export interface UserCreateWithoutAccountInput {
@@ -1193,9 +1253,62 @@ export interface CategoryCreateWithoutAccountInput {
   tasks?: Maybe<TaskCreateManyWithoutCategoryInput>;
 }
 
-export interface CategoryUpdateManyMutationInput {
+export interface CategoryScalarWhereInput {
+  id?: Maybe<UUID>;
+  id_not?: Maybe<UUID>;
+  id_in?: Maybe<UUID[] | UUID>;
+  id_not_in?: Maybe<UUID[] | UUID>;
+  id_lt?: Maybe<UUID>;
+  id_lte?: Maybe<UUID>;
+  id_gt?: Maybe<UUID>;
+  id_gte?: Maybe<UUID>;
+  id_contains?: Maybe<UUID>;
+  id_not_contains?: Maybe<UUID>;
+  id_starts_with?: Maybe<UUID>;
+  id_not_starts_with?: Maybe<UUID>;
+  id_ends_with?: Maybe<UUID>;
+  id_not_ends_with?: Maybe<UUID>;
   index?: Maybe<Int>;
+  index_not?: Maybe<Int>;
+  index_in?: Maybe<Int[] | Int>;
+  index_not_in?: Maybe<Int[] | Int>;
+  index_lt?: Maybe<Int>;
+  index_lte?: Maybe<Int>;
+  index_gt?: Maybe<Int>;
+  index_gte?: Maybe<Int>;
   name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<CategoryScalarWhereInput[] | CategoryScalarWhereInput>;
+  OR?: Maybe<CategoryScalarWhereInput[] | CategoryScalarWhereInput>;
+  NOT?: Maybe<CategoryScalarWhereInput[] | CategoryScalarWhereInput>;
 }
 
 export interface TaskCreateWithoutCategoryInput {
@@ -1214,11 +1327,10 @@ export interface TaskCreateWithoutCategoryInput {
   images?: Maybe<TaskImageCreateManyWithoutTaskInput>;
 }
 
-export interface CategoryUpdateInput {
-  index?: Maybe<Int>;
-  name?: Maybe<String>;
-  account?: Maybe<AccountUpdateOneRequiredWithoutCategoriesInput>;
-  tasks?: Maybe<TaskUpdateManyWithoutCategoryInput>;
+export interface CategoryUpsertWithWhereUniqueWithoutAccountInput {
+  where: CategoryWhereUniqueInput;
+  update: CategoryUpdateWithoutAccountDataInput;
+  create: CategoryCreateWithoutAccountInput;
 }
 
 export interface AccountCreateWithoutTasksInput {
@@ -1235,19 +1347,20 @@ export interface AccountCreateWithoutTasksInput {
   taskImages?: Maybe<TaskImageCreateManyWithoutAccountInput>;
 }
 
-export interface TaskUpdateWithoutAccountDataInput {
-  index?: Maybe<Int>;
-  title?: Maybe<String>;
-  content?: Maybe<String>;
-  status?: Maybe<TaskStatus>;
-  priority?: Maybe<TaskPriority>;
-  isImportant?: Maybe<Boolean>;
-  dueDate?: Maybe<DateTimeInput>;
-  reminderDate?: Maybe<DateTimeInput>;
-  doSendMail?: Maybe<Boolean>;
-  category?: Maybe<CategoryUpdateOneRequiredWithoutTasksInput>;
-  steps?: Maybe<StepUpdateManyWithoutTaskInput>;
-  images?: Maybe<TaskImageUpdateManyWithoutTaskInput>;
+export interface TaskUpdateManyWithoutAccountInput {
+  create?: Maybe<TaskCreateWithoutAccountInput[] | TaskCreateWithoutAccountInput>;
+  delete?: Maybe<TaskWhereUniqueInput[] | TaskWhereUniqueInput>;
+  connect?: Maybe<TaskWhereUniqueInput[] | TaskWhereUniqueInput>;
+  set?: Maybe<TaskWhereUniqueInput[] | TaskWhereUniqueInput>;
+  disconnect?: Maybe<TaskWhereUniqueInput[] | TaskWhereUniqueInput>;
+  update?: Maybe<
+    TaskUpdateWithWhereUniqueWithoutAccountInput[] | TaskUpdateWithWhereUniqueWithoutAccountInput
+  >;
+  upsert?: Maybe<
+    TaskUpsertWithWhereUniqueWithoutAccountInput[] | TaskUpsertWithWhereUniqueWithoutAccountInput
+  >;
+  deleteMany?: Maybe<TaskScalarWhereInput[] | TaskScalarWhereInput>;
+  updateMany?: Maybe<TaskUpdateManyWithWhereNestedInput[] | TaskUpdateManyWithWhereNestedInput>;
 }
 
 export interface StepCreateWithoutAccountInput {
@@ -1258,20 +1371,9 @@ export interface StepCreateWithoutAccountInput {
   task: TaskCreateOneWithoutStepsInput;
 }
 
-export interface StepUpdateManyWithoutTaskInput {
-  create?: Maybe<StepCreateWithoutTaskInput[] | StepCreateWithoutTaskInput>;
-  delete?: Maybe<StepWhereUniqueInput[] | StepWhereUniqueInput>;
-  connect?: Maybe<StepWhereUniqueInput[] | StepWhereUniqueInput>;
-  set?: Maybe<StepWhereUniqueInput[] | StepWhereUniqueInput>;
-  disconnect?: Maybe<StepWhereUniqueInput[] | StepWhereUniqueInput>;
-  update?: Maybe<
-    StepUpdateWithWhereUniqueWithoutTaskInput[] | StepUpdateWithWhereUniqueWithoutTaskInput
-  >;
-  upsert?: Maybe<
-    StepUpsertWithWhereUniqueWithoutTaskInput[] | StepUpsertWithWhereUniqueWithoutTaskInput
-  >;
-  deleteMany?: Maybe<StepScalarWhereInput[] | StepScalarWhereInput>;
-  updateMany?: Maybe<StepUpdateManyWithWhereNestedInput[] | StepUpdateManyWithWhereNestedInput>;
+export interface TaskUpdateWithWhereUniqueWithoutAccountInput {
+  where: TaskWhereUniqueInput;
+  data: TaskUpdateWithoutAccountDataInput;
 }
 
 export interface TaskCreateWithoutStepsInput {
@@ -1290,9 +1392,19 @@ export interface TaskCreateWithoutStepsInput {
   images?: Maybe<TaskImageCreateManyWithoutTaskInput>;
 }
 
-export interface StepUpdateWithWhereUniqueWithoutTaskInput {
-  where: StepWhereUniqueInput;
-  data: StepUpdateWithoutTaskDataInput;
+export interface TaskUpdateWithoutAccountDataInput {
+  index?: Maybe<Int>;
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+  status?: Maybe<TaskStatus>;
+  priority?: Maybe<TaskPriority>;
+  isImportant?: Maybe<Boolean>;
+  dueDate?: Maybe<DateTimeInput>;
+  reminderDate?: Maybe<DateTimeInput>;
+  doSendMail?: Maybe<Boolean>;
+  category?: Maybe<CategoryUpdateOneRequiredWithoutTasksInput>;
+  steps?: Maybe<StepUpdateManyWithoutTaskInput>;
+  images?: Maybe<TaskImageUpdateManyWithoutTaskInput>;
 }
 
 export interface CategoryCreateWithoutTasksInput {
@@ -1302,11 +1414,20 @@ export interface CategoryCreateWithoutTasksInput {
   account: AccountCreateOneWithoutCategoriesInput;
 }
 
-export interface StepUpdateWithoutTaskDataInput {
-  index?: Maybe<Int>;
-  title?: Maybe<String>;
-  status?: Maybe<StepStatus>;
-  account?: Maybe<AccountUpdateOneRequiredWithoutStepsInput>;
+export interface StepUpdateManyWithoutTaskInput {
+  create?: Maybe<StepCreateWithoutTaskInput[] | StepCreateWithoutTaskInput>;
+  delete?: Maybe<StepWhereUniqueInput[] | StepWhereUniqueInput>;
+  connect?: Maybe<StepWhereUniqueInput[] | StepWhereUniqueInput>;
+  set?: Maybe<StepWhereUniqueInput[] | StepWhereUniqueInput>;
+  disconnect?: Maybe<StepWhereUniqueInput[] | StepWhereUniqueInput>;
+  update?: Maybe<
+    StepUpdateWithWhereUniqueWithoutTaskInput[] | StepUpdateWithWhereUniqueWithoutTaskInput
+  >;
+  upsert?: Maybe<
+    StepUpsertWithWhereUniqueWithoutTaskInput[] | StepUpsertWithWhereUniqueWithoutTaskInput
+  >;
+  deleteMany?: Maybe<StepScalarWhereInput[] | StepScalarWhereInput>;
+  updateMany?: Maybe<StepUpdateManyWithWhereNestedInput[] | StepUpdateManyWithWhereNestedInput>;
 }
 
 export interface AccountCreateWithoutCategoriesInput {
@@ -1323,11 +1444,9 @@ export interface AccountCreateWithoutCategoriesInput {
   taskImages?: Maybe<TaskImageCreateManyWithoutAccountInput>;
 }
 
-export interface AccountUpdateOneRequiredWithoutStepsInput {
-  create?: Maybe<AccountCreateWithoutStepsInput>;
-  update?: Maybe<AccountUpdateWithoutStepsDataInput>;
-  upsert?: Maybe<AccountUpsertWithoutStepsInput>;
-  connect?: Maybe<AccountWhereUniqueInput>;
+export interface StepUpdateWithWhereUniqueWithoutTaskInput {
+  where: StepWhereUniqueInput;
+  data: StepUpdateWithoutTaskDataInput;
 }
 
 export interface TaskCreateWithoutAccountInput {
@@ -1346,6 +1465,42 @@ export interface TaskCreateWithoutAccountInput {
   images?: Maybe<TaskImageCreateManyWithoutTaskInput>;
 }
 
+export interface StepUpdateWithoutTaskDataInput {
+  index?: Maybe<Int>;
+  title?: Maybe<String>;
+  status?: Maybe<StepStatus>;
+  account?: Maybe<AccountUpdateOneRequiredWithoutStepsInput>;
+}
+
+export interface StepCreateWithoutTaskInput {
+  id?: Maybe<UUID>;
+  index?: Maybe<Int>;
+  title: String;
+  status?: Maybe<StepStatus>;
+  account: AccountCreateOneWithoutStepsInput;
+}
+
+export interface AccountUpdateOneRequiredWithoutStepsInput {
+  create?: Maybe<AccountCreateWithoutStepsInput>;
+  update?: Maybe<AccountUpdateWithoutStepsDataInput>;
+  upsert?: Maybe<AccountUpsertWithoutStepsInput>;
+  connect?: Maybe<AccountWhereUniqueInput>;
+}
+
+export interface AccountCreateWithoutStepsInput {
+  id?: Maybe<UUID>;
+  username: String;
+  password: String;
+  email: String;
+  role?: Maybe<Role>;
+  status?: Maybe<AccountStatus>;
+  users?: Maybe<UserCreateManyWithoutAccountInput>;
+  categories?: Maybe<CategoryCreateManyWithoutAccountInput>;
+  tasks?: Maybe<TaskCreateManyWithoutAccountInput>;
+  images?: Maybe<ImageCreateManyWithoutAccountInput>;
+  taskImages?: Maybe<TaskImageCreateManyWithoutAccountInput>;
+}
+
 export interface AccountUpdateWithoutStepsDataInput {
   username?: Maybe<String>;
   password?: Maybe<String>;
@@ -1359,12 +1514,10 @@ export interface AccountUpdateWithoutStepsDataInput {
   taskImages?: Maybe<TaskImageUpdateManyWithoutAccountInput>;
 }
 
-export interface StepCreateWithoutTaskInput {
+export interface ImageCreateWithoutAccountInput {
   id?: Maybe<UUID>;
-  index?: Maybe<Int>;
-  title: String;
-  status?: Maybe<StepStatus>;
-  account: AccountCreateOneWithoutStepsInput;
+  publicId?: Maybe<String>;
+  url: String;
 }
 
 export interface ImageUpdateManyWithoutAccountInput {
@@ -1383,45 +1536,15 @@ export interface ImageUpdateManyWithoutAccountInput {
   updateMany?: Maybe<ImageUpdateManyWithWhereNestedInput[] | ImageUpdateManyWithWhereNestedInput>;
 }
 
-export interface AccountCreateWithoutStepsInput {
+export interface TaskImageCreateWithoutAccountInput {
   id?: Maybe<UUID>;
-  username: String;
-  password: String;
-  email: String;
-  role?: Maybe<Role>;
-  status?: Maybe<AccountStatus>;
-  users?: Maybe<UserCreateManyWithoutAccountInput>;
-  categories?: Maybe<CategoryCreateManyWithoutAccountInput>;
-  tasks?: Maybe<TaskCreateManyWithoutAccountInput>;
-  images?: Maybe<ImageCreateManyWithoutAccountInput>;
-  taskImages?: Maybe<TaskImageCreateManyWithoutAccountInput>;
+  task: TaskCreateOneWithoutImagesInput;
+  image: ImageCreateOneInput;
 }
 
 export interface ImageUpdateWithWhereUniqueWithoutAccountInput {
   where: ImageWhereUniqueInput;
   data: ImageUpdateWithoutAccountDataInput;
-}
-
-export interface ImageCreateWithoutAccountInput {
-  id?: Maybe<UUID>;
-  publicId?: Maybe<String>;
-  url: String;
-}
-
-export interface ImageUpdateWithoutAccountDataInput {
-  publicId?: Maybe<String>;
-  url?: Maybe<String>;
-}
-
-export interface TaskImageCreateWithoutAccountInput {
-  id?: Maybe<UUID>;
-  task: TaskCreateOneWithoutImagesInput;
-}
-
-export interface ImageUpsertWithWhereUniqueWithoutAccountInput {
-  where: ImageWhereUniqueInput;
-  update: ImageUpdateWithoutAccountDataInput;
-  create: ImageCreateWithoutAccountInput;
 }
 
 export interface TaskCreateWithoutImagesInput {
@@ -1438,6 +1561,38 @@ export interface TaskCreateWithoutImagesInput {
   category: CategoryCreateOneWithoutTasksInput;
   account: AccountCreateOneWithoutTasksInput;
   steps?: Maybe<StepCreateManyWithoutTaskInput>;
+}
+
+export interface ImageUpdateWithoutAccountDataInput {
+  publicId?: Maybe<String>;
+  url?: Maybe<String>;
+}
+
+export interface ImageCreateInput {
+  id?: Maybe<UUID>;
+  publicId?: Maybe<String>;
+  url: String;
+  account: AccountCreateOneWithoutImagesInput;
+}
+
+export interface ImageUpsertWithWhereUniqueWithoutAccountInput {
+  where: ImageWhereUniqueInput;
+  update: ImageUpdateWithoutAccountDataInput;
+  create: ImageCreateWithoutAccountInput;
+}
+
+export interface AccountCreateWithoutImagesInput {
+  id?: Maybe<UUID>;
+  username: String;
+  password: String;
+  email: String;
+  role?: Maybe<Role>;
+  status?: Maybe<AccountStatus>;
+  users?: Maybe<UserCreateManyWithoutAccountInput>;
+  categories?: Maybe<CategoryCreateManyWithoutAccountInput>;
+  tasks?: Maybe<TaskCreateManyWithoutAccountInput>;
+  steps?: Maybe<StepCreateManyWithoutAccountInput>;
+  taskImages?: Maybe<TaskImageCreateManyWithoutAccountInput>;
 }
 
 export interface ImageScalarWhereInput {
@@ -1506,31 +1661,13 @@ export interface ImageScalarWhereInput {
 
 export interface TaskImageCreateWithoutTaskInput {
   id?: Maybe<UUID>;
+  image: ImageCreateOneInput;
   account: AccountCreateOneWithoutTaskImagesInput;
 }
 
 export interface ImageUpdateManyWithWhereNestedInput {
   where: ImageScalarWhereInput;
   data: ImageUpdateManyDataInput;
-}
-
-export interface AccountCreateWithoutTaskImagesInput {
-  id?: Maybe<UUID>;
-  username: String;
-  password: String;
-  email: String;
-  role?: Maybe<Role>;
-  status?: Maybe<AccountStatus>;
-  users?: Maybe<UserCreateManyWithoutAccountInput>;
-  categories?: Maybe<CategoryCreateManyWithoutAccountInput>;
-  tasks?: Maybe<TaskCreateManyWithoutAccountInput>;
-  steps?: Maybe<StepCreateManyWithoutAccountInput>;
-  images?: Maybe<ImageCreateManyWithoutAccountInput>;
-}
-
-export interface ImageUpdateManyDataInput {
-  publicId?: Maybe<String>;
-  url?: Maybe<String>;
 }
 
 export interface CategoryWhereInput {
@@ -1595,6 +1732,22 @@ export interface CategoryWhereInput {
   NOT?: Maybe<CategoryWhereInput[] | CategoryWhereInput>;
 }
 
+export interface ImageUpdateManyDataInput {
+  publicId?: Maybe<String>;
+  url?: Maybe<String>;
+}
+
+export interface TaskSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<TaskWhereInput>;
+  AND?: Maybe<TaskSubscriptionWhereInput[] | TaskSubscriptionWhereInput>;
+  OR?: Maybe<TaskSubscriptionWhereInput[] | TaskSubscriptionWhereInput>;
+  NOT?: Maybe<TaskSubscriptionWhereInput[] | TaskSubscriptionWhereInput>;
+}
+
 export interface TaskImageUpdateManyWithoutAccountInput {
   create?: Maybe<TaskImageCreateWithoutAccountInput[] | TaskImageCreateWithoutAccountInput>;
   delete?: Maybe<TaskImageWhereUniqueInput[] | TaskImageWhereUniqueInput>;
@@ -1612,22 +1765,6 @@ export interface TaskImageUpdateManyWithoutAccountInput {
   deleteMany?: Maybe<TaskImageScalarWhereInput[] | TaskImageScalarWhereInput>;
 }
 
-export interface TaskSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<TaskWhereInput>;
-  AND?: Maybe<TaskSubscriptionWhereInput[] | TaskSubscriptionWhereInput>;
-  OR?: Maybe<TaskSubscriptionWhereInput[] | TaskSubscriptionWhereInput>;
-  NOT?: Maybe<TaskSubscriptionWhereInput[] | TaskSubscriptionWhereInput>;
-}
-
-export interface TaskImageUpdateWithWhereUniqueWithoutAccountInput {
-  where: TaskImageWhereUniqueInput;
-  data: TaskImageUpdateWithoutAccountDataInput;
-}
-
 export interface CategorySubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
@@ -1639,8 +1776,9 @@ export interface CategorySubscriptionWhereInput {
   NOT?: Maybe<CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput>;
 }
 
-export interface TaskImageUpdateWithoutAccountDataInput {
-  task?: Maybe<TaskUpdateOneRequiredWithoutImagesInput>;
+export interface TaskImageUpdateWithWhereUniqueWithoutAccountInput {
+  where: TaskImageWhereUniqueInput;
+  data: TaskImageUpdateWithoutAccountDataInput;
 }
 
 export interface AccountUpdateWithoutUsersDataInput {
@@ -1656,11 +1794,9 @@ export interface AccountUpdateWithoutUsersDataInput {
   taskImages?: Maybe<TaskImageUpdateManyWithoutAccountInput>;
 }
 
-export interface TaskUpdateOneRequiredWithoutImagesInput {
-  create?: Maybe<TaskCreateWithoutImagesInput>;
-  update?: Maybe<TaskUpdateWithoutImagesDataInput>;
-  upsert?: Maybe<TaskUpsertWithoutImagesInput>;
-  connect?: Maybe<TaskWhereUniqueInput>;
+export interface TaskImageUpdateWithoutAccountDataInput {
+  task?: Maybe<TaskUpdateOneRequiredWithoutImagesInput>;
+  image?: Maybe<ImageUpdateOneRequiredInput>;
 }
 
 export interface AccountCreateWithoutUsersInput {
@@ -1677,6 +1813,19 @@ export interface AccountCreateWithoutUsersInput {
   taskImages?: Maybe<TaskImageCreateManyWithoutAccountInput>;
 }
 
+export interface TaskUpdateOneRequiredWithoutImagesInput {
+  create?: Maybe<TaskCreateWithoutImagesInput>;
+  update?: Maybe<TaskUpdateWithoutImagesDataInput>;
+  upsert?: Maybe<TaskUpsertWithoutImagesInput>;
+  connect?: Maybe<TaskWhereUniqueInput>;
+}
+
+export interface TaskImageUpdateInput {
+  task?: Maybe<TaskUpdateOneRequiredWithoutImagesInput>;
+  image?: Maybe<ImageUpdateOneRequiredInput>;
+  account?: Maybe<AccountUpdateOneRequiredWithoutTaskImagesInput>;
+}
+
 export interface TaskUpdateWithoutImagesDataInput {
   index?: Maybe<Int>;
   title?: Maybe<String>;
@@ -1690,16 +1839,6 @@ export interface TaskUpdateWithoutImagesDataInput {
   category?: Maybe<CategoryUpdateOneRequiredWithoutTasksInput>;
   account?: Maybe<AccountUpdateOneRequiredWithoutTasksInput>;
   steps?: Maybe<StepUpdateManyWithoutTaskInput>;
-}
-
-export interface TaskImageUpdateInput {
-  task?: Maybe<TaskUpdateOneRequiredWithoutImagesInput>;
-  account?: Maybe<AccountUpdateOneRequiredWithoutTaskImagesInput>;
-}
-
-export interface TaskUpsertWithoutImagesInput {
-  update: TaskUpdateWithoutImagesDataInput;
-  create: TaskCreateWithoutImagesInput;
 }
 
 export interface TaskUpdateInput {
@@ -1718,10 +1857,9 @@ export interface TaskUpdateInput {
   images?: Maybe<TaskImageUpdateManyWithoutTaskInput>;
 }
 
-export interface TaskImageUpsertWithWhereUniqueWithoutAccountInput {
-  where: TaskImageWhereUniqueInput;
-  update: TaskImageUpdateWithoutAccountDataInput;
-  create: TaskImageCreateWithoutAccountInput;
+export interface TaskUpsertWithoutImagesInput {
+  update: TaskUpdateWithoutImagesDataInput;
+  create: TaskCreateWithoutImagesInput;
 }
 
 export interface StepUpdateInput {
@@ -1730,6 +1868,94 @@ export interface StepUpdateInput {
   status?: Maybe<StepStatus>;
   task?: Maybe<TaskUpdateOneRequiredWithoutStepsInput>;
   account?: Maybe<AccountUpdateOneRequiredWithoutStepsInput>;
+}
+
+export interface ImageUpdateOneRequiredInput {
+  create?: Maybe<ImageCreateInput>;
+  update?: Maybe<ImageUpdateDataInput>;
+  upsert?: Maybe<ImageUpsertNestedInput>;
+  connect?: Maybe<ImageWhereUniqueInput>;
+}
+
+export interface ImageUpdateInput {
+  publicId?: Maybe<String>;
+  url?: Maybe<String>;
+  account?: Maybe<AccountUpdateOneRequiredWithoutImagesInput>;
+}
+
+export interface ImageUpdateDataInput {
+  publicId?: Maybe<String>;
+  url?: Maybe<String>;
+  account?: Maybe<AccountUpdateOneRequiredWithoutImagesInput>;
+}
+
+export interface CategoryCreateInput {
+  id?: Maybe<UUID>;
+  index?: Maybe<Int>;
+  name: String;
+  account: AccountCreateOneWithoutCategoriesInput;
+  tasks?: Maybe<TaskCreateManyWithoutCategoryInput>;
+}
+
+export interface AccountUpdateOneRequiredWithoutImagesInput {
+  create?: Maybe<AccountCreateWithoutImagesInput>;
+  update?: Maybe<AccountUpdateWithoutImagesDataInput>;
+  upsert?: Maybe<AccountUpsertWithoutImagesInput>;
+  connect?: Maybe<AccountWhereUniqueInput>;
+}
+
+export interface UserCreateManyWithoutAccountInput {
+  create?: Maybe<UserCreateWithoutAccountInput[] | UserCreateWithoutAccountInput>;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+}
+
+export interface AccountUpdateWithoutImagesDataInput {
+  username?: Maybe<String>;
+  password?: Maybe<String>;
+  email?: Maybe<String>;
+  role?: Maybe<Role>;
+  status?: Maybe<AccountStatus>;
+  users?: Maybe<UserUpdateManyWithoutAccountInput>;
+  categories?: Maybe<CategoryUpdateManyWithoutAccountInput>;
+  tasks?: Maybe<TaskUpdateManyWithoutAccountInput>;
+  steps?: Maybe<StepUpdateManyWithoutAccountInput>;
+  taskImages?: Maybe<TaskImageUpdateManyWithoutAccountInput>;
+}
+
+export interface TaskCreateManyWithoutCategoryInput {
+  create?: Maybe<TaskCreateWithoutCategoryInput[] | TaskCreateWithoutCategoryInput>;
+  connect?: Maybe<TaskWhereUniqueInput[] | TaskWhereUniqueInput>;
+}
+
+export interface AccountUpsertWithoutImagesInput {
+  update: AccountUpdateWithoutImagesDataInput;
+  create: AccountCreateWithoutImagesInput;
+}
+
+export interface StepCreateManyWithoutAccountInput {
+  create?: Maybe<StepCreateWithoutAccountInput[] | StepCreateWithoutAccountInput>;
+  connect?: Maybe<StepWhereUniqueInput[] | StepWhereUniqueInput>;
+}
+
+export interface ImageUpsertNestedInput {
+  update: ImageUpdateDataInput;
+  create: ImageCreateInput;
+}
+
+export interface CategoryCreateOneWithoutTasksInput {
+  create?: Maybe<CategoryCreateWithoutTasksInput>;
+  connect?: Maybe<CategoryWhereUniqueInput>;
+}
+
+export interface TaskImageUpsertWithWhereUniqueWithoutAccountInput {
+  where: TaskImageWhereUniqueInput;
+  update: TaskImageUpdateWithoutAccountDataInput;
+  create: TaskImageCreateWithoutAccountInput;
+}
+
+export interface TaskCreateManyWithoutAccountInput {
+  create?: Maybe<TaskCreateWithoutAccountInput[] | TaskCreateWithoutAccountInput>;
+  connect?: Maybe<TaskWhereUniqueInput[] | TaskWhereUniqueInput>;
 }
 
 export interface TaskImageScalarWhereInput {
@@ -1768,9 +1994,9 @@ export interface TaskImageScalarWhereInput {
   NOT?: Maybe<TaskImageScalarWhereInput[] | TaskImageScalarWhereInput>;
 }
 
-export interface AccountUpsertWithoutImagesInput {
-  update: AccountUpdateWithoutImagesDataInput;
-  create: AccountCreateWithoutImagesInput;
+export interface AccountCreateOneWithoutStepsInput {
+  create?: Maybe<AccountCreateWithoutStepsInput>;
+  connect?: Maybe<AccountWhereUniqueInput>;
 }
 
 export interface AccountUpsertWithoutStepsInput {
@@ -1778,10 +2004,9 @@ export interface AccountUpsertWithoutStepsInput {
   create: AccountCreateWithoutStepsInput;
 }
 
-export interface ImageUpdateInput {
-  publicId?: Maybe<String>;
-  url?: Maybe<String>;
-  account?: Maybe<AccountUpdateOneRequiredWithoutImagesInput>;
+export interface TaskImageCreateManyWithoutAccountInput {
+  create?: Maybe<TaskImageCreateWithoutAccountInput[] | TaskImageCreateWithoutAccountInput>;
+  connect?: Maybe<TaskImageWhereUniqueInput[] | TaskImageWhereUniqueInput>;
 }
 
 export interface StepUpsertWithWhereUniqueWithoutTaskInput {
@@ -1790,9 +2015,9 @@ export interface StepUpsertWithWhereUniqueWithoutTaskInput {
   create: StepCreateWithoutTaskInput;
 }
 
-export interface UserCreateManyWithoutAccountInput {
-  create?: Maybe<UserCreateWithoutAccountInput[] | UserCreateWithoutAccountInput>;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+export interface ImageCreateOneInput {
+  create?: Maybe<ImageCreateInput>;
+  connect?: Maybe<ImageWhereUniqueInput>;
 }
 
 export interface StepScalarWhereInput {
@@ -1857,430 +2082,14 @@ export interface StepScalarWhereInput {
   NOT?: Maybe<StepScalarWhereInput[] | StepScalarWhereInput>;
 }
 
-export interface TaskCreateManyWithoutCategoryInput {
-  create?: Maybe<TaskCreateWithoutCategoryInput[] | TaskCreateWithoutCategoryInput>;
-  connect?: Maybe<TaskWhereUniqueInput[] | TaskWhereUniqueInput>;
-}
-
-export interface StepUpdateManyWithWhereNestedInput {
-  where: StepScalarWhereInput;
-  data: StepUpdateManyDataInput;
-}
-
-export interface StepCreateManyWithoutAccountInput {
-  create?: Maybe<StepCreateWithoutAccountInput[] | StepCreateWithoutAccountInput>;
-  connect?: Maybe<StepWhereUniqueInput[] | StepWhereUniqueInput>;
-}
-
-export interface StepUpdateManyDataInput {
-  index?: Maybe<Int>;
-  title?: Maybe<String>;
-  status?: Maybe<StepStatus>;
-}
-
-export interface CategoryCreateOneWithoutTasksInput {
-  create?: Maybe<CategoryCreateWithoutTasksInput>;
-  connect?: Maybe<CategoryWhereUniqueInput>;
-}
-
-export interface TaskImageUpdateManyWithoutTaskInput {
-  create?: Maybe<TaskImageCreateWithoutTaskInput[] | TaskImageCreateWithoutTaskInput>;
-  delete?: Maybe<TaskImageWhereUniqueInput[] | TaskImageWhereUniqueInput>;
-  connect?: Maybe<TaskImageWhereUniqueInput[] | TaskImageWhereUniqueInput>;
-  set?: Maybe<TaskImageWhereUniqueInput[] | TaskImageWhereUniqueInput>;
-  disconnect?: Maybe<TaskImageWhereUniqueInput[] | TaskImageWhereUniqueInput>;
-  update?: Maybe<
-    | TaskImageUpdateWithWhereUniqueWithoutTaskInput[]
-    | TaskImageUpdateWithWhereUniqueWithoutTaskInput
-  >;
-  upsert?: Maybe<
-    | TaskImageUpsertWithWhereUniqueWithoutTaskInput[]
-    | TaskImageUpsertWithWhereUniqueWithoutTaskInput
-  >;
-  deleteMany?: Maybe<TaskImageScalarWhereInput[] | TaskImageScalarWhereInput>;
-}
-
-export interface TaskCreateManyWithoutAccountInput {
-  create?: Maybe<TaskCreateWithoutAccountInput[] | TaskCreateWithoutAccountInput>;
-  connect?: Maybe<TaskWhereUniqueInput[] | TaskWhereUniqueInput>;
-}
-
-export interface TaskImageUpdateWithWhereUniqueWithoutTaskInput {
-  where: TaskImageWhereUniqueInput;
-  data: TaskImageUpdateWithoutTaskDataInput;
-}
-
-export interface AccountCreateOneWithoutStepsInput {
-  create?: Maybe<AccountCreateWithoutStepsInput>;
-  connect?: Maybe<AccountWhereUniqueInput>;
-}
-
-export interface TaskImageUpdateWithoutTaskDataInput {
-  account?: Maybe<AccountUpdateOneRequiredWithoutTaskImagesInput>;
-}
-
-export interface TaskImageCreateManyWithoutAccountInput {
-  create?: Maybe<TaskImageCreateWithoutAccountInput[] | TaskImageCreateWithoutAccountInput>;
-  connect?: Maybe<TaskImageWhereUniqueInput[] | TaskImageWhereUniqueInput>;
-}
-
-export interface AccountUpdateOneRequiredWithoutTaskImagesInput {
-  create?: Maybe<AccountCreateWithoutTaskImagesInput>;
-  update?: Maybe<AccountUpdateWithoutTaskImagesDataInput>;
-  upsert?: Maybe<AccountUpsertWithoutTaskImagesInput>;
-  connect?: Maybe<AccountWhereUniqueInput>;
-}
-
 export interface TaskImageCreateManyWithoutTaskInput {
   create?: Maybe<TaskImageCreateWithoutTaskInput[] | TaskImageCreateWithoutTaskInput>;
   connect?: Maybe<TaskImageWhereUniqueInput[] | TaskImageWhereUniqueInput>;
 }
 
-export interface AccountUpdateWithoutTaskImagesDataInput {
-  username?: Maybe<String>;
-  password?: Maybe<String>;
-  email?: Maybe<String>;
-  role?: Maybe<Role>;
-  status?: Maybe<AccountStatus>;
-  users?: Maybe<UserUpdateManyWithoutAccountInput>;
-  categories?: Maybe<CategoryUpdateManyWithoutAccountInput>;
-  tasks?: Maybe<TaskUpdateManyWithoutAccountInput>;
-  steps?: Maybe<StepUpdateManyWithoutAccountInput>;
-  images?: Maybe<ImageUpdateManyWithoutAccountInput>;
-}
-
-export interface AccountUpdateInput {
-  username?: Maybe<String>;
-  password?: Maybe<String>;
-  email?: Maybe<String>;
-  role?: Maybe<Role>;
-  status?: Maybe<AccountStatus>;
-  users?: Maybe<UserUpdateManyWithoutAccountInput>;
-  categories?: Maybe<CategoryUpdateManyWithoutAccountInput>;
-  tasks?: Maybe<TaskUpdateManyWithoutAccountInput>;
-  steps?: Maybe<StepUpdateManyWithoutAccountInput>;
-  images?: Maybe<ImageUpdateManyWithoutAccountInput>;
-  taskImages?: Maybe<TaskImageUpdateManyWithoutAccountInput>;
-}
-
-export interface AccountUpsertWithoutTaskImagesInput {
-  update: AccountUpdateWithoutTaskImagesDataInput;
-  create: AccountCreateWithoutTaskImagesInput;
-}
-
-export interface UserWhereInput {
-  id?: Maybe<UUID>;
-  id_not?: Maybe<UUID>;
-  id_in?: Maybe<UUID[] | UUID>;
-  id_not_in?: Maybe<UUID[] | UUID>;
-  id_lt?: Maybe<UUID>;
-  id_lte?: Maybe<UUID>;
-  id_gt?: Maybe<UUID>;
-  id_gte?: Maybe<UUID>;
-  id_contains?: Maybe<UUID>;
-  id_not_contains?: Maybe<UUID>;
-  id_starts_with?: Maybe<UUID>;
-  id_not_starts_with?: Maybe<UUID>;
-  id_ends_with?: Maybe<UUID>;
-  id_not_ends_with?: Maybe<UUID>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  bio?: Maybe<String>;
-  bio_not?: Maybe<String>;
-  bio_in?: Maybe<String[] | String>;
-  bio_not_in?: Maybe<String[] | String>;
-  bio_lt?: Maybe<String>;
-  bio_lte?: Maybe<String>;
-  bio_gt?: Maybe<String>;
-  bio_gte?: Maybe<String>;
-  bio_contains?: Maybe<String>;
-  bio_not_contains?: Maybe<String>;
-  bio_starts_with?: Maybe<String>;
-  bio_not_starts_with?: Maybe<String>;
-  bio_ends_with?: Maybe<String>;
-  bio_not_ends_with?: Maybe<String>;
-  dob?: Maybe<DateTimeInput>;
-  dob_not?: Maybe<DateTimeInput>;
-  dob_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  dob_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  dob_lt?: Maybe<DateTimeInput>;
-  dob_lte?: Maybe<DateTimeInput>;
-  dob_gt?: Maybe<DateTimeInput>;
-  dob_gte?: Maybe<DateTimeInput>;
-  account?: Maybe<AccountWhereInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
-  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
-  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
-}
-
-export interface TaskImageUpsertWithWhereUniqueWithoutTaskInput {
-  where: TaskImageWhereUniqueInput;
-  update: TaskImageUpdateWithoutTaskDataInput;
-  create: TaskImageCreateWithoutTaskInput;
-}
-
-export interface AccountUpdateOneRequiredWithoutUsersInput {
-  create?: Maybe<AccountCreateWithoutUsersInput>;
-  update?: Maybe<AccountUpdateWithoutUsersDataInput>;
-  upsert?: Maybe<AccountUpsertWithoutUsersInput>;
-  connect?: Maybe<AccountWhereUniqueInput>;
-}
-
-export interface TaskUpsertWithWhereUniqueWithoutAccountInput {
-  where: TaskWhereUniqueInput;
-  update: TaskUpdateWithoutAccountDataInput;
-  create: TaskCreateWithoutAccountInput;
-}
-
-export interface TaskImageCreateInput {
-  id?: Maybe<UUID>;
-  task: TaskCreateOneWithoutImagesInput;
-  account: AccountCreateOneWithoutTaskImagesInput;
-}
-
-export interface TaskScalarWhereInput {
-  id?: Maybe<UUID>;
-  id_not?: Maybe<UUID>;
-  id_in?: Maybe<UUID[] | UUID>;
-  id_not_in?: Maybe<UUID[] | UUID>;
-  id_lt?: Maybe<UUID>;
-  id_lte?: Maybe<UUID>;
-  id_gt?: Maybe<UUID>;
-  id_gte?: Maybe<UUID>;
-  id_contains?: Maybe<UUID>;
-  id_not_contains?: Maybe<UUID>;
-  id_starts_with?: Maybe<UUID>;
-  id_not_starts_with?: Maybe<UUID>;
-  id_ends_with?: Maybe<UUID>;
-  id_not_ends_with?: Maybe<UUID>;
-  index?: Maybe<Int>;
-  index_not?: Maybe<Int>;
-  index_in?: Maybe<Int[] | Int>;
-  index_not_in?: Maybe<Int[] | Int>;
-  index_lt?: Maybe<Int>;
-  index_lte?: Maybe<Int>;
-  index_gt?: Maybe<Int>;
-  index_gte?: Maybe<Int>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  content?: Maybe<String>;
-  content_not?: Maybe<String>;
-  content_in?: Maybe<String[] | String>;
-  content_not_in?: Maybe<String[] | String>;
-  content_lt?: Maybe<String>;
-  content_lte?: Maybe<String>;
-  content_gt?: Maybe<String>;
-  content_gte?: Maybe<String>;
-  content_contains?: Maybe<String>;
-  content_not_contains?: Maybe<String>;
-  content_starts_with?: Maybe<String>;
-  content_not_starts_with?: Maybe<String>;
-  content_ends_with?: Maybe<String>;
-  content_not_ends_with?: Maybe<String>;
-  status?: Maybe<TaskStatus>;
-  status_not?: Maybe<TaskStatus>;
-  status_in?: Maybe<TaskStatus[] | TaskStatus>;
-  status_not_in?: Maybe<TaskStatus[] | TaskStatus>;
-  priority?: Maybe<TaskPriority>;
-  priority_not?: Maybe<TaskPriority>;
-  priority_in?: Maybe<TaskPriority[] | TaskPriority>;
-  priority_not_in?: Maybe<TaskPriority[] | TaskPriority>;
-  isImportant?: Maybe<Boolean>;
-  isImportant_not?: Maybe<Boolean>;
-  dueDate?: Maybe<DateTimeInput>;
-  dueDate_not?: Maybe<DateTimeInput>;
-  dueDate_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  dueDate_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  dueDate_lt?: Maybe<DateTimeInput>;
-  dueDate_lte?: Maybe<DateTimeInput>;
-  dueDate_gt?: Maybe<DateTimeInput>;
-  dueDate_gte?: Maybe<DateTimeInput>;
-  reminderDate?: Maybe<DateTimeInput>;
-  reminderDate_not?: Maybe<DateTimeInput>;
-  reminderDate_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  reminderDate_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  reminderDate_lt?: Maybe<DateTimeInput>;
-  reminderDate_lte?: Maybe<DateTimeInput>;
-  reminderDate_gt?: Maybe<DateTimeInput>;
-  reminderDate_gte?: Maybe<DateTimeInput>;
-  doSendMail?: Maybe<Boolean>;
-  doSendMail_not?: Maybe<Boolean>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<TaskScalarWhereInput[] | TaskScalarWhereInput>;
-  OR?: Maybe<TaskScalarWhereInput[] | TaskScalarWhereInput>;
-  NOT?: Maybe<TaskScalarWhereInput[] | TaskScalarWhereInput>;
-}
-
-export interface StepCreateInput {
-  id?: Maybe<UUID>;
-  index?: Maybe<Int>;
-  title: String;
-  status?: Maybe<StepStatus>;
-  task: TaskCreateOneWithoutStepsInput;
-  account: AccountCreateOneWithoutStepsInput;
-}
-
-export interface TaskUpdateManyWithWhereNestedInput {
-  where: TaskScalarWhereInput;
-  data: TaskUpdateManyDataInput;
-}
-
-export interface AccountCreateOneWithoutTasksInput {
-  create?: Maybe<AccountCreateWithoutTasksInput>;
-  connect?: Maybe<AccountWhereUniqueInput>;
-}
-
-export interface TaskUpdateManyDataInput {
-  index?: Maybe<Int>;
-  title?: Maybe<String>;
-  content?: Maybe<String>;
-  status?: Maybe<TaskStatus>;
-  priority?: Maybe<TaskPriority>;
-  isImportant?: Maybe<Boolean>;
-  dueDate?: Maybe<DateTimeInput>;
-  reminderDate?: Maybe<DateTimeInput>;
-  doSendMail?: Maybe<Boolean>;
-}
-
-export interface AccountCreateOneWithoutCategoriesInput {
-  create?: Maybe<AccountCreateWithoutCategoriesInput>;
-  connect?: Maybe<AccountWhereUniqueInput>;
-}
-
-export interface AccountUpsertWithoutCategoriesInput {
-  update: AccountUpdateWithoutCategoriesDataInput;
-  create: AccountCreateWithoutCategoriesInput;
-}
-
-export interface ImageCreateManyWithoutAccountInput {
-  create?: Maybe<ImageCreateWithoutAccountInput[] | ImageCreateWithoutAccountInput>;
-  connect?: Maybe<ImageWhereUniqueInput[] | ImageWhereUniqueInput>;
-}
-
-export interface CategoryUpsertWithoutTasksInput {
-  update: CategoryUpdateWithoutTasksDataInput;
-  create: CategoryCreateWithoutTasksInput;
-}
-
-export interface AccountCreateOneWithoutTaskImagesInput {
-  create?: Maybe<AccountCreateWithoutTaskImagesInput>;
-  connect?: Maybe<AccountWhereUniqueInput>;
-}
-
-export interface TaskUpsertWithoutStepsInput {
-  update: TaskUpdateWithoutStepsDataInput;
-  create: TaskCreateWithoutStepsInput;
-}
-
-export interface UserUpdateManyMutationInput {
-  name?: Maybe<String>;
-  bio?: Maybe<String>;
-  dob?: Maybe<DateTimeInput>;
-}
-
-export interface StepUpsertWithWhereUniqueWithoutAccountInput {
-  where: StepWhereUniqueInput;
-  update: StepUpdateWithoutAccountDataInput;
-  create: StepCreateWithoutAccountInput;
-}
-
-export interface TaskCreateInput {
-  id?: Maybe<UUID>;
-  index?: Maybe<Int>;
-  title: String;
-  content?: Maybe<String>;
-  status?: Maybe<TaskStatus>;
-  priority?: Maybe<TaskPriority>;
-  isImportant?: Maybe<Boolean>;
-  dueDate: DateTimeInput;
-  reminderDate?: Maybe<DateTimeInput>;
-  doSendMail?: Maybe<Boolean>;
-  category: CategoryCreateOneWithoutTasksInput;
-  account: AccountCreateOneWithoutTasksInput;
-  steps?: Maybe<StepCreateManyWithoutTaskInput>;
-  images?: Maybe<TaskImageCreateManyWithoutTaskInput>;
-}
-
-export interface AccountUpsertWithoutTasksInput {
-  update: AccountUpdateWithoutTasksDataInput;
-  create: AccountCreateWithoutTasksInput;
-}
-
-export interface CategoryCreateManyWithoutAccountInput {
-  create?: Maybe<CategoryCreateWithoutAccountInput[] | CategoryCreateWithoutAccountInput>;
-  connect?: Maybe<CategoryWhereUniqueInput[] | CategoryWhereUniqueInput>;
-}
-
-export interface TaskUpsertWithWhereUniqueWithoutCategoryInput {
-  where: TaskWhereUniqueInput;
-  update: TaskUpdateWithoutCategoryDataInput;
-  create: TaskCreateWithoutCategoryInput;
-}
-
-export interface StepCreateManyWithoutTaskInput {
-  create?: Maybe<StepCreateWithoutTaskInput[] | StepCreateWithoutTaskInput>;
-  connect?: Maybe<StepWhereUniqueInput[] | StepWhereUniqueInput>;
-}
-
-export interface CategoryUpsertWithWhereUniqueWithoutAccountInput {
-  where: CategoryWhereUniqueInput;
-  update: CategoryUpdateWithoutAccountDataInput;
-  create: CategoryCreateWithoutAccountInput;
+export interface StepUpdateManyWithWhereNestedInput {
+  where: StepScalarWhereInput;
+  data: StepUpdateManyDataInput;
 }
 
 export interface AccountWhereInput {
@@ -2387,25 +2196,135 @@ export interface AccountWhereInput {
   NOT?: Maybe<AccountWhereInput[] | AccountWhereInput>;
 }
 
-export interface AccountUpdateManyMutationInput {
+export interface StepUpdateManyDataInput {
+  index?: Maybe<Int>;
+  title?: Maybe<String>;
+  status?: Maybe<StepStatus>;
+}
+
+export interface UserUpdateManyMutationInput {
+  name?: Maybe<String>;
+  bio?: Maybe<String>;
+  dob?: Maybe<DateTimeInput>;
+}
+
+export interface TaskImageUpdateManyWithoutTaskInput {
+  create?: Maybe<TaskImageCreateWithoutTaskInput[] | TaskImageCreateWithoutTaskInput>;
+  delete?: Maybe<TaskImageWhereUniqueInput[] | TaskImageWhereUniqueInput>;
+  connect?: Maybe<TaskImageWhereUniqueInput[] | TaskImageWhereUniqueInput>;
+  set?: Maybe<TaskImageWhereUniqueInput[] | TaskImageWhereUniqueInput>;
+  disconnect?: Maybe<TaskImageWhereUniqueInput[] | TaskImageWhereUniqueInput>;
+  update?: Maybe<
+    | TaskImageUpdateWithWhereUniqueWithoutTaskInput[]
+    | TaskImageUpdateWithWhereUniqueWithoutTaskInput
+  >;
+  upsert?: Maybe<
+    | TaskImageUpsertWithWhereUniqueWithoutTaskInput[]
+    | TaskImageUpsertWithWhereUniqueWithoutTaskInput
+  >;
+  deleteMany?: Maybe<TaskImageScalarWhereInput[] | TaskImageScalarWhereInput>;
+}
+
+export interface AccountCreateOneWithoutUsersInput {
+  create?: Maybe<AccountCreateWithoutUsersInput>;
+  connect?: Maybe<AccountWhereUniqueInput>;
+}
+
+export interface TaskImageUpdateWithWhereUniqueWithoutTaskInput {
+  where: TaskImageWhereUniqueInput;
+  data: TaskImageUpdateWithoutTaskDataInput;
+}
+
+export interface TaskCreateInput {
+  id?: Maybe<UUID>;
+  index?: Maybe<Int>;
+  title: String;
+  content?: Maybe<String>;
+  status?: Maybe<TaskStatus>;
+  priority?: Maybe<TaskPriority>;
+  isImportant?: Maybe<Boolean>;
+  dueDate: DateTimeInput;
+  reminderDate?: Maybe<DateTimeInput>;
+  doSendMail?: Maybe<Boolean>;
+  category: CategoryCreateOneWithoutTasksInput;
+  account: AccountCreateOneWithoutTasksInput;
+  steps?: Maybe<StepCreateManyWithoutTaskInput>;
+  images?: Maybe<TaskImageCreateManyWithoutTaskInput>;
+}
+
+export interface TaskImageUpdateWithoutTaskDataInput {
+  image?: Maybe<ImageUpdateOneRequiredInput>;
+  account?: Maybe<AccountUpdateOneRequiredWithoutTaskImagesInput>;
+}
+
+export interface CategoryUpdateManyMutationInput {
+  index?: Maybe<Int>;
+  name?: Maybe<String>;
+}
+
+export interface AccountUpdateOneRequiredWithoutTaskImagesInput {
+  create?: Maybe<AccountCreateWithoutTaskImagesInput>;
+  update?: Maybe<AccountUpdateWithoutTaskImagesDataInput>;
+  upsert?: Maybe<AccountUpsertWithoutTaskImagesInput>;
+  connect?: Maybe<AccountWhereUniqueInput>;
+}
+
+export interface CategoryCreateManyWithoutAccountInput {
+  create?: Maybe<CategoryCreateWithoutAccountInput[] | CategoryCreateWithoutAccountInput>;
+  connect?: Maybe<CategoryWhereUniqueInput[] | CategoryWhereUniqueInput>;
+}
+
+export interface AccountUpdateWithoutTaskImagesDataInput {
   username?: Maybe<String>;
   password?: Maybe<String>;
   email?: Maybe<String>;
   role?: Maybe<Role>;
   status?: Maybe<AccountStatus>;
+  users?: Maybe<UserUpdateManyWithoutAccountInput>;
+  categories?: Maybe<CategoryUpdateManyWithoutAccountInput>;
+  tasks?: Maybe<TaskUpdateManyWithoutAccountInput>;
+  steps?: Maybe<StepUpdateManyWithoutAccountInput>;
+  images?: Maybe<ImageUpdateManyWithoutAccountInput>;
 }
 
-export interface CategoryUpdateManyDataInput {
-  index?: Maybe<Int>;
-  name?: Maybe<String>;
+export interface TaskCreateOneWithoutStepsInput {
+  create?: Maybe<TaskCreateWithoutStepsInput>;
+  connect?: Maybe<TaskWhereUniqueInput>;
 }
 
-export interface CategoryUpdateManyWithWhereNestedInput {
-  where: CategoryScalarWhereInput;
-  data: CategoryUpdateManyDataInput;
+export interface AccountUpsertWithoutTaskImagesInput {
+  update: AccountUpdateWithoutTaskImagesDataInput;
+  create: AccountCreateWithoutTaskImagesInput;
 }
 
-export interface CategoryScalarWhereInput {
+export interface StepCreateManyWithoutTaskInput {
+  create?: Maybe<StepCreateWithoutTaskInput[] | StepCreateWithoutTaskInput>;
+  connect?: Maybe<StepWhereUniqueInput[] | StepWhereUniqueInput>;
+}
+
+export interface TaskImageUpsertWithWhereUniqueWithoutTaskInput {
+  where: TaskImageWhereUniqueInput;
+  update: TaskImageUpdateWithoutTaskDataInput;
+  create: TaskImageCreateWithoutTaskInput;
+}
+
+export interface TaskCreateOneWithoutImagesInput {
+  create?: Maybe<TaskCreateWithoutImagesInput>;
+  connect?: Maybe<TaskWhereUniqueInput>;
+}
+
+export interface TaskUpsertWithWhereUniqueWithoutAccountInput {
+  where: TaskWhereUniqueInput;
+  update: TaskUpdateWithoutAccountDataInput;
+  create: TaskCreateWithoutAccountInput;
+}
+
+export interface AccountCreateOneWithoutTaskImagesInput {
+  create?: Maybe<AccountCreateWithoutTaskImagesInput>;
+  connect?: Maybe<AccountWhereUniqueInput>;
+}
+
+export interface TaskScalarWhereInput {
   id?: Maybe<UUID>;
   id_not?: Maybe<UUID>;
   id_in?: Maybe<UUID[] | UUID>;
@@ -2428,20 +2347,62 @@ export interface CategoryScalarWhereInput {
   index_lte?: Maybe<Int>;
   index_gt?: Maybe<Int>;
   index_gte?: Maybe<Int>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  content?: Maybe<String>;
+  content_not?: Maybe<String>;
+  content_in?: Maybe<String[] | String>;
+  content_not_in?: Maybe<String[] | String>;
+  content_lt?: Maybe<String>;
+  content_lte?: Maybe<String>;
+  content_gt?: Maybe<String>;
+  content_gte?: Maybe<String>;
+  content_contains?: Maybe<String>;
+  content_not_contains?: Maybe<String>;
+  content_starts_with?: Maybe<String>;
+  content_not_starts_with?: Maybe<String>;
+  content_ends_with?: Maybe<String>;
+  content_not_ends_with?: Maybe<String>;
+  status?: Maybe<TaskStatus>;
+  status_not?: Maybe<TaskStatus>;
+  status_in?: Maybe<TaskStatus[] | TaskStatus>;
+  status_not_in?: Maybe<TaskStatus[] | TaskStatus>;
+  priority?: Maybe<TaskPriority>;
+  priority_not?: Maybe<TaskPriority>;
+  priority_in?: Maybe<TaskPriority[] | TaskPriority>;
+  priority_not_in?: Maybe<TaskPriority[] | TaskPriority>;
+  isImportant?: Maybe<Boolean>;
+  isImportant_not?: Maybe<Boolean>;
+  dueDate?: Maybe<DateTimeInput>;
+  dueDate_not?: Maybe<DateTimeInput>;
+  dueDate_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  dueDate_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  dueDate_lt?: Maybe<DateTimeInput>;
+  dueDate_lte?: Maybe<DateTimeInput>;
+  dueDate_gt?: Maybe<DateTimeInput>;
+  dueDate_gte?: Maybe<DateTimeInput>;
+  reminderDate?: Maybe<DateTimeInput>;
+  reminderDate_not?: Maybe<DateTimeInput>;
+  reminderDate_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  reminderDate_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  reminderDate_lt?: Maybe<DateTimeInput>;
+  reminderDate_lte?: Maybe<DateTimeInput>;
+  reminderDate_gt?: Maybe<DateTimeInput>;
+  reminderDate_gte?: Maybe<DateTimeInput>;
+  doSendMail?: Maybe<Boolean>;
+  doSendMail_not?: Maybe<Boolean>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -2458,37 +2419,106 @@ export interface CategoryScalarWhereInput {
   updatedAt_lte?: Maybe<DateTimeInput>;
   updatedAt_gt?: Maybe<DateTimeInput>;
   updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<CategoryScalarWhereInput[] | CategoryScalarWhereInput>;
-  OR?: Maybe<CategoryScalarWhereInput[] | CategoryScalarWhereInput>;
-  NOT?: Maybe<CategoryScalarWhereInput[] | CategoryScalarWhereInput>;
+  AND?: Maybe<TaskScalarWhereInput[] | TaskScalarWhereInput>;
+  OR?: Maybe<TaskScalarWhereInput[] | TaskScalarWhereInput>;
+  NOT?: Maybe<TaskScalarWhereInput[] | TaskScalarWhereInput>;
 }
 
-export interface AccountCreateOneWithoutUsersInput {
+export interface AccountUpdateOneRequiredWithoutUsersInput {
   create?: Maybe<AccountCreateWithoutUsersInput>;
+  update?: Maybe<AccountUpdateWithoutUsersDataInput>;
+  upsert?: Maybe<AccountUpsertWithoutUsersInput>;
   connect?: Maybe<AccountWhereUniqueInput>;
 }
 
-export interface TaskCreateOneWithoutImagesInput {
-  create?: Maybe<TaskCreateWithoutImagesInput>;
-  connect?: Maybe<TaskWhereUniqueInput>;
+export interface TaskUpdateManyWithWhereNestedInput {
+  where: TaskScalarWhereInput;
+  data: TaskUpdateManyDataInput;
 }
 
-export interface TaskCreateOneWithoutStepsInput {
-  create?: Maybe<TaskCreateWithoutStepsInput>;
-  connect?: Maybe<TaskWhereUniqueInput>;
+export interface StepCreateInput {
+  id?: Maybe<UUID>;
+  index?: Maybe<Int>;
+  title: String;
+  status?: Maybe<StepStatus>;
+  task: TaskCreateOneWithoutStepsInput;
+  account: AccountCreateOneWithoutStepsInput;
 }
 
-export interface AccountUpdateWithoutImagesDataInput {
-  username?: Maybe<String>;
-  password?: Maybe<String>;
-  email?: Maybe<String>;
-  role?: Maybe<Role>;
-  status?: Maybe<AccountStatus>;
-  users?: Maybe<UserUpdateManyWithoutAccountInput>;
-  categories?: Maybe<CategoryUpdateManyWithoutAccountInput>;
-  tasks?: Maybe<TaskUpdateManyWithoutAccountInput>;
-  steps?: Maybe<StepUpdateManyWithoutAccountInput>;
-  taskImages?: Maybe<TaskImageUpdateManyWithoutAccountInput>;
+export interface TaskUpdateManyDataInput {
+  index?: Maybe<Int>;
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+  status?: Maybe<TaskStatus>;
+  priority?: Maybe<TaskPriority>;
+  isImportant?: Maybe<Boolean>;
+  dueDate?: Maybe<DateTimeInput>;
+  reminderDate?: Maybe<DateTimeInput>;
+  doSendMail?: Maybe<Boolean>;
+}
+
+export interface AccountCreateOneWithoutTasksInput {
+  create?: Maybe<AccountCreateWithoutTasksInput>;
+  connect?: Maybe<AccountWhereUniqueInput>;
+}
+
+export interface AccountUpsertWithoutCategoriesInput {
+  update: AccountUpdateWithoutCategoriesDataInput;
+  create: AccountCreateWithoutCategoriesInput;
+}
+
+export interface ImageCreateManyWithoutAccountInput {
+  create?: Maybe<ImageCreateWithoutAccountInput[] | ImageCreateWithoutAccountInput>;
+  connect?: Maybe<ImageWhereUniqueInput[] | ImageWhereUniqueInput>;
+}
+
+export interface ImageSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ImageWhereInput>;
+  AND?: Maybe<ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput>;
+  OR?: Maybe<ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput>;
+  NOT?: Maybe<ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput>;
+}
+
+export interface AccountUpsertWithoutTasksInput {
+  update: AccountUpdateWithoutTasksDataInput;
+  create: AccountCreateWithoutTasksInput;
+}
+
+export interface StepUpsertWithWhereUniqueWithoutAccountInput {
+  where: StepWhereUniqueInput;
+  update: StepUpdateWithoutAccountDataInput;
+  create: StepCreateWithoutAccountInput;
+}
+
+export interface TaskUpsertWithoutStepsInput {
+  update: TaskUpdateWithoutStepsDataInput;
+  create: TaskCreateWithoutStepsInput;
+}
+
+export interface CategoryUpsertWithoutTasksInput {
+  update: CategoryUpdateWithoutTasksDataInput;
+  create: CategoryCreateWithoutTasksInput;
+}
+
+export interface TaskImageCreateInput {
+  id?: Maybe<UUID>;
+  task: TaskCreateOneWithoutImagesInput;
+  image: ImageCreateOneInput;
+  account: AccountCreateOneWithoutTaskImagesInput;
+}
+
+export interface AccountCreateOneWithoutImagesInput {
+  create?: Maybe<AccountCreateWithoutImagesInput>;
+  connect?: Maybe<AccountWhereUniqueInput>;
+}
+
+export interface AccountCreateOneWithoutCategoriesInput {
+  create?: Maybe<AccountCreateWithoutCategoriesInput>;
+  connect?: Maybe<AccountWhereUniqueInput>;
 }
 
 export interface NodeNode {
@@ -2524,18 +2554,97 @@ export interface UserPreviousValuesSubscription
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface AggregateCategory {
+export interface AggregateAccount {
   count: Int;
 }
 
-export interface AggregateCategoryPromise extends Promise<AggregateCategory>, Fragmentable {
+export interface AggregateAccountPromise extends Promise<AggregateAccount>, Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateCategorySubscription
-  extends Promise<AsyncIterator<AggregateCategory>>,
+export interface AggregateAccountSubscription
+  extends Promise<AsyncIterator<AggregateAccount>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Category {
+  id: UUID;
+  index?: Int;
+  name: String;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+}
+
+export interface CategoryPromise extends Promise<Category>, Fragmentable {
+  id: () => Promise<UUID>;
+  index: () => Promise<Int>;
+  name: () => Promise<String>;
+  account: <T = AccountPromise>() => T;
+  tasks: <T = FragmentableArray<Task>>(args?: {
+    where?: TaskWhereInput;
+    orderBy?: TaskOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface CategorySubscription extends Promise<AsyncIterator<Category>>, Fragmentable {
+  id: () => Promise<AsyncIterator<UUID>>;
+  index: () => Promise<AsyncIterator<Int>>;
+  name: () => Promise<AsyncIterator<String>>;
+  account: <T = AccountSubscription>() => T;
+  tasks: <T = Promise<AsyncIterator<TaskSubscription>>>(args?: {
+    where?: TaskWhereInput;
+    orderBy?: TaskOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface CategoryNullablePromise extends Promise<Category | null>, Fragmentable {
+  id: () => Promise<UUID>;
+  index: () => Promise<Int>;
+  name: () => Promise<String>;
+  account: <T = AccountPromise>() => T;
+  tasks: <T = FragmentableArray<Task>>(args?: {
+    where?: TaskWhereInput;
+    orderBy?: TaskOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface CategoryEdge {
+  node: Category;
+  cursor: String;
+}
+
+export interface CategoryEdgePromise extends Promise<CategoryEdge>, Fragmentable {
+  node: <T = CategoryPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface CategoryEdgeSubscription
+  extends Promise<AsyncIterator<CategoryEdge>>,
+    Fragmentable {
+  node: <T = CategorySubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface TaskPreviousValues {
@@ -2585,37 +2694,6 @@ export interface TaskPreviousValuesSubscription
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface CategoryEdge {
-  node: Category;
-  cursor: String;
-}
-
-export interface CategoryEdgePromise extends Promise<CategoryEdge>, Fragmentable {
-  node: <T = CategoryPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface CategoryEdgeSubscription
-  extends Promise<AsyncIterator<CategoryEdge>>,
-    Fragmentable {
-  node: <T = CategorySubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateAccount {
-  count: Int;
-}
-
-export interface AggregateAccountPromise extends Promise<AggregateAccount>, Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateAccountSubscription
-  extends Promise<AsyncIterator<AggregateAccount>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
 export interface CategoryConnection {
   pageInfo: PageInfo;
   edges: CategoryEdge[];
@@ -2633,6 +2711,21 @@ export interface CategoryConnectionSubscription
   pageInfo: <T = PageInfoSubscription>() => T;
   edges: <T = Promise<AsyncIterator<CategoryEdgeSubscription>>>() => T;
   aggregate: <T = AggregateCategorySubscription>() => T;
+}
+
+export interface AccountEdge {
+  node: Account;
+  cursor: String;
+}
+
+export interface AccountEdgePromise extends Promise<AccountEdge>, Fragmentable {
+  node: <T = AccountPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface AccountEdgeSubscription extends Promise<AsyncIterator<AccountEdge>>, Fragmentable {
+  node: <T = AccountSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface User {
@@ -2688,139 +2781,26 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
-export interface Task {
+export interface TaskImagePreviousValues {
   id: UUID;
-  index?: Int;
-  title: String;
-  content?: String;
-  status: TaskStatus;
-  priority: TaskPriority;
-  isImportant: Boolean;
-  dueDate: DateTimeOutput;
-  reminderDate?: DateTimeOutput;
-  doSendMail: Boolean;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
 
-export interface TaskPromise extends Promise<Task>, Fragmentable {
+export interface TaskImagePreviousValuesPromise
+  extends Promise<TaskImagePreviousValues>,
+    Fragmentable {
   id: () => Promise<UUID>;
-  index: () => Promise<Int>;
-  title: () => Promise<String>;
-  content: () => Promise<String>;
-  status: () => Promise<TaskStatus>;
-  priority: () => Promise<TaskPriority>;
-  isImportant: () => Promise<Boolean>;
-  dueDate: () => Promise<DateTimeOutput>;
-  reminderDate: () => Promise<DateTimeOutput>;
-  doSendMail: () => Promise<Boolean>;
-  category: <T = CategoryPromise>() => T;
-  account: <T = AccountPromise>() => T;
-  steps: <T = FragmentableArray<Step>>(args?: {
-    where?: StepWhereInput;
-    orderBy?: StepOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  images: <T = FragmentableArray<TaskImage>>(args?: {
-    where?: TaskImageWhereInput;
-    orderBy?: TaskImageOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
 
-export interface TaskSubscription extends Promise<AsyncIterator<Task>>, Fragmentable {
+export interface TaskImagePreviousValuesSubscription
+  extends Promise<AsyncIterator<TaskImagePreviousValues>>,
+    Fragmentable {
   id: () => Promise<AsyncIterator<UUID>>;
-  index: () => Promise<AsyncIterator<Int>>;
-  title: () => Promise<AsyncIterator<String>>;
-  content: () => Promise<AsyncIterator<String>>;
-  status: () => Promise<AsyncIterator<TaskStatus>>;
-  priority: () => Promise<AsyncIterator<TaskPriority>>;
-  isImportant: () => Promise<AsyncIterator<Boolean>>;
-  dueDate: () => Promise<AsyncIterator<DateTimeOutput>>;
-  reminderDate: () => Promise<AsyncIterator<DateTimeOutput>>;
-  doSendMail: () => Promise<AsyncIterator<Boolean>>;
-  category: <T = CategorySubscription>() => T;
-  account: <T = AccountSubscription>() => T;
-  steps: <T = Promise<AsyncIterator<StepSubscription>>>(args?: {
-    where?: StepWhereInput;
-    orderBy?: StepOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  images: <T = Promise<AsyncIterator<TaskImageSubscription>>>(args?: {
-    where?: TaskImageWhereInput;
-    orderBy?: TaskImageOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface TaskNullablePromise extends Promise<Task | null>, Fragmentable {
-  id: () => Promise<UUID>;
-  index: () => Promise<Int>;
-  title: () => Promise<String>;
-  content: () => Promise<String>;
-  status: () => Promise<TaskStatus>;
-  priority: () => Promise<TaskPriority>;
-  isImportant: () => Promise<Boolean>;
-  dueDate: () => Promise<DateTimeOutput>;
-  reminderDate: () => Promise<DateTimeOutput>;
-  doSendMail: () => Promise<Boolean>;
-  category: <T = CategoryPromise>() => T;
-  account: <T = AccountPromise>() => T;
-  steps: <T = FragmentableArray<Step>>(args?: {
-    where?: StepWhereInput;
-    orderBy?: StepOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  images: <T = FragmentableArray<TaskImage>>(args?: {
-    where?: TaskImageWhereInput;
-    orderBy?: TaskImageOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-}
-
-export interface AccountEdge {
-  node: Account;
-  cursor: String;
-}
-
-export interface AccountEdgePromise extends Promise<AccountEdge>, Fragmentable {
-  node: <T = AccountPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface AccountEdgeSubscription extends Promise<AsyncIterator<AccountEdge>>, Fragmentable {
-  node: <T = AccountSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface AggregateUser {
@@ -3506,6 +3486,7 @@ export interface TaskImage {
 export interface TaskImagePromise extends Promise<TaskImage>, Fragmentable {
   id: () => Promise<UUID>;
   task: <T = TaskPromise>() => T;
+  image: <T = ImagePromise>() => T;
   account: <T = AccountPromise>() => T;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
@@ -3514,6 +3495,7 @@ export interface TaskImagePromise extends Promise<TaskImage>, Fragmentable {
 export interface TaskImageSubscription extends Promise<AsyncIterator<TaskImage>>, Fragmentable {
   id: () => Promise<AsyncIterator<UUID>>;
   task: <T = TaskSubscription>() => T;
+  image: <T = ImageSubscription>() => T;
   account: <T = AccountSubscription>() => T;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
@@ -3522,6 +3504,7 @@ export interface TaskImageSubscription extends Promise<AsyncIterator<TaskImage>>
 export interface TaskImageNullablePromise extends Promise<TaskImage | null>, Fragmentable {
   id: () => Promise<UUID>;
   task: <T = TaskPromise>() => T;
+  image: <T = ImagePromise>() => T;
   account: <T = AccountPromise>() => T;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
@@ -3542,26 +3525,124 @@ export interface ImageEdgeSubscription extends Promise<AsyncIterator<ImageEdge>>
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface TaskImagePreviousValues {
+export interface Task {
   id: UUID;
+  index?: Int;
+  title: String;
+  content?: String;
+  status: TaskStatus;
+  priority: TaskPriority;
+  isImportant: Boolean;
+  dueDate: DateTimeOutput;
+  reminderDate?: DateTimeOutput;
+  doSendMail: Boolean;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
 
-export interface TaskImagePreviousValuesPromise
-  extends Promise<TaskImagePreviousValues>,
-    Fragmentable {
+export interface TaskPromise extends Promise<Task>, Fragmentable {
   id: () => Promise<UUID>;
+  index: () => Promise<Int>;
+  title: () => Promise<String>;
+  content: () => Promise<String>;
+  status: () => Promise<TaskStatus>;
+  priority: () => Promise<TaskPriority>;
+  isImportant: () => Promise<Boolean>;
+  dueDate: () => Promise<DateTimeOutput>;
+  reminderDate: () => Promise<DateTimeOutput>;
+  doSendMail: () => Promise<Boolean>;
+  category: <T = CategoryPromise>() => T;
+  account: <T = AccountPromise>() => T;
+  steps: <T = FragmentableArray<Step>>(args?: {
+    where?: StepWhereInput;
+    orderBy?: StepOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  images: <T = FragmentableArray<TaskImage>>(args?: {
+    where?: TaskImageWhereInput;
+    orderBy?: TaskImageOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
 
-export interface TaskImagePreviousValuesSubscription
-  extends Promise<AsyncIterator<TaskImagePreviousValues>>,
-    Fragmentable {
+export interface TaskSubscription extends Promise<AsyncIterator<Task>>, Fragmentable {
   id: () => Promise<AsyncIterator<UUID>>;
+  index: () => Promise<AsyncIterator<Int>>;
+  title: () => Promise<AsyncIterator<String>>;
+  content: () => Promise<AsyncIterator<String>>;
+  status: () => Promise<AsyncIterator<TaskStatus>>;
+  priority: () => Promise<AsyncIterator<TaskPriority>>;
+  isImportant: () => Promise<AsyncIterator<Boolean>>;
+  dueDate: () => Promise<AsyncIterator<DateTimeOutput>>;
+  reminderDate: () => Promise<AsyncIterator<DateTimeOutput>>;
+  doSendMail: () => Promise<AsyncIterator<Boolean>>;
+  category: <T = CategorySubscription>() => T;
+  account: <T = AccountSubscription>() => T;
+  steps: <T = Promise<AsyncIterator<StepSubscription>>>(args?: {
+    where?: StepWhereInput;
+    orderBy?: StepOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  images: <T = Promise<AsyncIterator<TaskImageSubscription>>>(args?: {
+    where?: TaskImageWhereInput;
+    orderBy?: TaskImageOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface TaskNullablePromise extends Promise<Task | null>, Fragmentable {
+  id: () => Promise<UUID>;
+  index: () => Promise<Int>;
+  title: () => Promise<String>;
+  content: () => Promise<String>;
+  status: () => Promise<TaskStatus>;
+  priority: () => Promise<TaskPriority>;
+  isImportant: () => Promise<Boolean>;
+  dueDate: () => Promise<DateTimeOutput>;
+  reminderDate: () => Promise<DateTimeOutput>;
+  doSendMail: () => Promise<Boolean>;
+  category: <T = CategoryPromise>() => T;
+  account: <T = AccountPromise>() => T;
+  steps: <T = FragmentableArray<Step>>(args?: {
+    where?: StepWhereInput;
+    orderBy?: StepOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  images: <T = FragmentableArray<TaskImage>>(args?: {
+    where?: TaskImageWhereInput;
+    orderBy?: TaskImageOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface TaskSubscriptionPayload {
@@ -3699,66 +3780,18 @@ export interface AggregateTaskImageSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface Category {
-  id: UUID;
-  index?: Int;
-  name: String;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
+export interface AggregateCategory {
+  count: Int;
 }
 
-export interface CategoryPromise extends Promise<Category>, Fragmentable {
-  id: () => Promise<UUID>;
-  index: () => Promise<Int>;
-  name: () => Promise<String>;
-  account: <T = AccountPromise>() => T;
-  tasks: <T = FragmentableArray<Task>>(args?: {
-    where?: TaskWhereInput;
-    orderBy?: TaskOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
+export interface AggregateCategoryPromise extends Promise<AggregateCategory>, Fragmentable {
+  count: () => Promise<Int>;
 }
 
-export interface CategorySubscription extends Promise<AsyncIterator<Category>>, Fragmentable {
-  id: () => Promise<AsyncIterator<UUID>>;
-  index: () => Promise<AsyncIterator<Int>>;
-  name: () => Promise<AsyncIterator<String>>;
-  account: <T = AccountSubscription>() => T;
-  tasks: <T = Promise<AsyncIterator<TaskSubscription>>>(args?: {
-    where?: TaskWhereInput;
-    orderBy?: TaskOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface CategoryNullablePromise extends Promise<Category | null>, Fragmentable {
-  id: () => Promise<UUID>;
-  index: () => Promise<Int>;
-  name: () => Promise<String>;
-  account: <T = AccountPromise>() => T;
-  tasks: <T = FragmentableArray<Task>>(args?: {
-    where?: TaskWhereInput;
-    orderBy?: TaskOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
+export interface AggregateCategorySubscription
+  extends Promise<AsyncIterator<AggregateCategory>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface StepConnection {
@@ -3800,20 +3833,20 @@ The `Int` scalar type represents non-fractional signed whole numeric values. Int
 */
 export type Int = number;
 
-export type Long = string;
-
 /*
 The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean;
-
-export type UUID = string;
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
 */
 export type ID_Input = string | number;
 export type ID_Output = string;
+
+export type Long = string;
+
+export type UUID = string;
 
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
