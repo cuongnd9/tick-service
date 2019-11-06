@@ -16,11 +16,12 @@ type Account {
   email: String! @unique
   role: Role! @default(value: Free)
   status: AccountStatus @default(value: Pending)
-  users: [User!]! @relation(name: "AccountUsers", onDelete: CASCADE)
-  categories: [Category!]! @relation(name: "AccountCategories", onDelete: CASCADE)
-  tasks: [Task!]! @relation(name: "AccountTasks", onDelete: CASCADE)
-  steps: [Step!]! @relation(name: "AccountSteps", onDelete: CASCADE)
-  images: [Image!]! @relation(name: "AccountImages", onDelete: CASCADE)
+  users: [User!] @relation(name: "Account_User", onDelete: CASCADE)
+  categories: [Category!] @relation(name: "Account_Category", onDelete: CASCADE)
+  tasks: [Task!] @relation(name: "Account_Task", onDelete: CASCADE)
+  steps: [Step!] @relation(name: "Account_Step", onDelete: CASCADE)
+  images: [Image!] @relation(name: "Account_Image", onDelete: CASCADE)
+  taskImages: [TaskImage] @relation(name: "Account_TaskImage", onDelete: CASCADE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
@@ -30,7 +31,7 @@ type User {
   name: String!
   bio: String
   dob: DateTime
-  account: Account! @relation(name: "AccountUsers")
+  account: Account! @relation(name: "Account_User")
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
@@ -39,8 +40,8 @@ type Category {
   id: UUID! @id
   index: Int
   name: String!
-  account: Account! @relation(name: "AccountCategories")
-  tasks: [Task!]! @relation(name: "CategoryTasks", onDelete: CASCADE)
+  account: Account! @relation(name: "Account_Category")
+  tasks: [Task!]! @relation(name: "Category_Task", onDelete: CASCADE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
@@ -71,10 +72,10 @@ type Task {
   dueDate: DateTime!
   reminderDate: DateTime
   doSendMail: Boolean! @default(value: false)
-  category: Category! @relation(name: "CategoryTasks")
-  account: Account! @relation(name: "AccountTasks")
-  steps: [Step!]! @relation(name: "TaskSteps", onDelete: CASCADE)
-  images: [Image!]! @relation(name: "TaskImages", onDelete: CASCADE)
+  category: Category! @relation(name: "Category_Task")
+  account: Account! @relation(name: "Account_Task")
+  steps: [Step!]! @relation(name: "Task_Step", onDelete: CASCADE)
+  images: [TaskImage!]! @relation(name: "Task_TaskImage", onDelete: CASCADE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
@@ -89,17 +90,26 @@ type Step {
   index: Int
   title: String!
   status: StepStatus @default(value: Todo)
-  task: Task! @relation(name: "TaskSteps")
-  account: Account! @relation(name: "AccountSteps")
+  task: Task! @relation(name: "Task_Step")
+  account: Account! @relation(name: "Account_Step")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type TaskImage {
+  id: UUID! @id
+  task: Task! @relation(name: "Task_TaskImage")
+  image: Image!
+  account: Account! @relation(name: "Account_TaskImage")
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
 
 type Image {
   id: UUID! @id
+  publicId: String
   url: String!
-  task: Task! @relation(name: "TaskImages")
-  account: Account! @relation(name: "AccountImages")
+  account: Account! @relation(name: "Account_Image")
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }

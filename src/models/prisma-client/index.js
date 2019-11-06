@@ -45,6 +45,10 @@ var models = [
     embedded: false,
   },
   {
+    name: 'TaskImage',
+    embedded: false,
+  },
+  {
     name: 'Image',
     embedded: false,
   },
