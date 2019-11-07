@@ -1,26 +1,42 @@
-import { Prisma } from '@/models/prisma-client';
+import { prisma } from '../models/prisma-client';
 
 function getUsers() {
-  return Prisma.users();
+  return prisma.users();
 }
 
 function getUser(id) {
-  return Prisma.user({ id });
+  return prisma.user({ id });
 }
 
 function createUser(data) {
-  return Prisma.createUser(data);
+  const { account } = data;
+  return prisma.createUser({
+    ...data,
+    account: {
+      connect: {
+        id: account,
+      },
+    },
+  });
 }
 
 function updateUser(id, data) {
-  return Prisma.updateUser({
+  const { account } = data;
+  return prisma.updateUser({
     where: { id },
-    data,
+    data: {
+      ...data,
+      account: {
+        connect: {
+          id: account,
+        },
+      },
+    },
   });
 }
 
 function deleteUser(id) {
-  return Prisma.deleteUser({ id });
+  return prisma.deleteUser({ id });
 }
 
 export default {

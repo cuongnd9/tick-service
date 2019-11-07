@@ -7,7 +7,7 @@ import Boom from '@hapi/boom';
 import fs from 'fs';
 import { JSDOM } from 'jsdom';
 import { promisify } from 'util';
-import { Prisma } from '@/models/prisma-client';
+import { prisma } from '@/models/prisma-client';
 import config from '@/config';
 
 function createMailHtml(codeConfirmation) {
@@ -37,7 +37,7 @@ async function sendEmail(email, codeConfirmation) {
 
 async function requireCode(redis, data) {
   const { email } = data;
-  const account = await Prisma.account({ email });
+  const account = await prisma.account({ email });
   if (account) {
     throw Boom.conflict('email is exist');
   }
@@ -74,13 +74,13 @@ async function register(data) {
     ...data,
     password: hashPassword,
   };
-  const newAccount = await Prisma.createAccount(newData);
+  const newAccount = await prisma.createAccount(newData);
   return _.omit(newAccount, ['password']);
 }
 
 async function login(data) {
   const { username, password } = data;
-  const account = await Prisma.account({ username });
+  const account = await prisma.account({ username });
   if (!account) {
     throw Boom.notFound('username does not exist');
   }
