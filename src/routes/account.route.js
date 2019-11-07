@@ -1,17 +1,40 @@
 import express from 'express';
-import { uid } from 'thinid';
 import { celebrate, Joi } from 'celebrate';
 import withController from '@/helpers/withController';
-import controller from '@/controllers/account.controller';
+import controller from '../controllers/account.controller';
 import { role, accountStatus } from '@/config/constants';
 
 const router = express.Router();
+router.get(
+  '/require-code',
+  celebrate({
+    query: Joi.object().keys({
+      email: Joi.string()
+        .email()
+        .required(),
+    }),
+  }),
+  withController(controller.requireCode),
+);
+
+router.get(
+  '/check-code',
+  celebrate({
+    query: Joi.object().keys({
+      code: Joi.number().required(),
+      email: Joi.string()
+        .email()
+        .required(),
+    }),
+  }),
+  withController(controller.checkCode),
+);
 
 router.post(
   '/register',
   celebrate({
     body: Joi.object().keys({
-      username: Joi.string().default(uid()),
+      username: Joi.string().required(),
       password: Joi.string().required(),
       email: Joi.string()
         .email()
@@ -21,23 +44,12 @@ router.post(
         .default(role.free),
       status: Joi.string()
         .valid(accountStatus)
-        .default(accountStatus.pending),
+        .default(accountStatus.active),
     }),
   }),
   withController(controller.register),
 );
-router.get(
-  '/check-code',
-  celebrate({
-    query: Joi.object().keys({
-      code: Joi.number().required(),
-      accountId: Joi.string()
-        .guid()
-        .required(),
-    }),
-  }),
-  withController(controller.checkCodeConfirmation),
-);
+
 router.post(
   '/login',
   celebrate({

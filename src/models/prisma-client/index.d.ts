@@ -411,7 +411,7 @@ export type ImageOrderByInput =
   | 'updatedAt_ASC'
   | 'updatedAt_DESC';
 
-export type AccountStatus = 'Pending' | 'Active' | 'Deactive';
+export type AccountStatus = 'Active' | 'Deactive';
 
 export interface TaskUpdateWithoutCategoryDataInput {
   index?: Maybe<Int>;

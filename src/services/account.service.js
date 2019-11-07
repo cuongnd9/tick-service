@@ -7,9 +7,8 @@ import Boom from '@hapi/boom';
 import fs from 'fs';
 import { JSDOM } from 'jsdom';
 import { promisify } from 'util';
-import { prisma } from '@/models/prisma-client';
+import { Prisma } from '@/models/prisma-client';
 import config from '@/config';
-import { accountStatus } from '@/config/constants';
 
 function createMailHtml(codeConfirmation) {
   const html = fs.readFileSync(`${__dirname}/../templates/codeConfirmation.html`, 'utf8');
@@ -29,53 +28,59 @@ async function sendEmail(email, codeConfirmation) {
   });
   const mailContent = {
     from: `"Cuong Duy Nguyen 👻" ${config.email}`,
-    to: 'cuongw.me@gmail.com',
+    to: email,
     subject: '[Tick ✔️] Verify your email address',
     html: createMailHtml(codeConfirmation),
   };
   await transporter.sendMail(mailContent);
 }
 
-async function register(redis, data) {
-  const { password, email } = data;
+async function requireCode(redis, data) {
+  const { email } = data;
+  const account = await Prisma.account({ email });
+  if (account) {
+    throw Boom.conflict('email is exist');
+  }
+  const codeConfirmation = code();
+  // Save code confirmation to Redis.
+  await redis.set(email, codeConfirmation, 'PX', config.registerExpiration);
+  // Send code confirmation by mail.
+  await sendEmail(email, codeConfirmation);
+  return {
+    email,
+  };
+}
+
+async function checkCode(redis, data) {
+  const { code: codeConfirmation, email } = data;
+  const getAsync = promisify(redis.get).bind(redis);
+  const redisCodeConfirmation = await getAsync(email);
+  if (!redisCodeConfirmation) {
+    throw Boom.clientTimeout('code is time out');
+  }
+  if (redisCodeConfirmation.toString() !== codeConfirmation.toString()) {
+    throw Boom.notFound('code is incorrect');
+  }
+  return {
+    email,
+    code: codeConfirmation,
+  };
+}
+
+async function register(data) {
+  const { password } = data;
   const hashPassword = await bcrypt.hash(password, 10);
   const newData = {
     ...data,
     password: hashPassword,
   };
-  const newAccount = await prisma.createAccount(newData);
-  const codeConfirmation = code();
-  // Save code confirmation to Redis.
-  await redis.set(newAccount.id, codeConfirmation, 'PX', config.registerExpiration);
-  // Send code confirmation by mail.
-  await sendEmail(email, codeConfirmation);
+  const newAccount = await Prisma.createAccount(newData);
   return _.omit(newAccount, ['password']);
-}
-
-async function checkCodeConfirmation(redis, data) {
-  const { accountId, code: codeConfirmation } = data;
-  const getAsync = promisify(redis.get).bind(redis);
-  const redisCodeConfirmation = await getAsync(accountId);
-  if (!redisCodeConfirmation) {
-    throw Boom.clientTimeout('code is time out');
-  }
-  if (redisCodeConfirmation.toString() === codeConfirmation.toString()) {
-    const account = await prisma.updateAccount({
-      where: {
-        id: accountId,
-      },
-      data: {
-        status: accountStatus.active,
-      },
-    });
-    return _.omit(account, ['password']);
-  }
-  throw Boom.notFound('code is incorrect');
 }
 
 async function login(data) {
   const { username, password } = data;
-  const account = await prisma.account({ username });
+  const account = await Prisma.account({ username });
   if (!account) {
     throw Boom.notFound('username does not exist');
   }
@@ -97,7 +102,8 @@ async function login(data) {
 }
 
 export default {
+  requireCode,
+  checkCode,
   register,
-  checkCodeConfirmation,
   login,
 };

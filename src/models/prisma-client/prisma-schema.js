@@ -241,7 +241,6 @@ module.exports = {
       }
 
       enum AccountStatus {
-        Pending
         Active
         Deactive
       }

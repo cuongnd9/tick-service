@@ -18,4 +18,4 @@ app.get('/', (req, res) => res.send('<p>👋 Xin chào</p>'));
 app.use('/api', apiRoute);
 
 // Start server.
-app.listen(config.port, () => signale.debug(`Server started on http://localhost:${config.port}`));
+app.listen(config.port, () => signale.watch(`Server started on http://localhost:${config.port}`));

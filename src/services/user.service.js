@@ -1,26 +1,26 @@
-import { prisma } from '@/models/prisma-client';
+import { Prisma } from '@/models/prisma-client';
 
 function getUsers() {
-  return prisma.users();
+  return Prisma.users();
 }
 
 function getUser(id) {
-  return prisma.user({ id });
+  return Prisma.user({ id });
 }
 
 function createUser(data) {
-  return prisma.createUser(data);
+  return Prisma.createUser(data);
 }
 
 function updateUser(id, data) {
-  return prisma.updateUser({
+  return Prisma.updateUser({
     where: { id },
     data,
   });
 }
 
 function deleteUser(id) {
-  return prisma.deleteUser({ id });
+  return Prisma.deleteUser({ id });
 }
 
 export default {
