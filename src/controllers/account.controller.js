@@ -1,23 +1,27 @@
-import service from '@/services/account.service';
+import service from '../services/account.service';
 
-function register(req) {
-  const {
-    body,
-    app: {
-      locals: { redis },
-    },
-  } = req;
-  return service.register(redis, body);
-}
-
-function checkCodeConfirmation(req) {
+function requireCode(req) {
   const {
     query,
     app: {
       locals: { redis },
     },
   } = req;
-  return service.checkCodeConfirmation(redis, query);
+  return service.requireCode(redis, query);
+}
+
+function checkCode(req) {
+  const {
+    query,
+    app: {
+      locals: { redis },
+    },
+  } = req;
+  return service.checkCode(redis, query);
+}
+
+function register(req) {
+  return service.register(req.body);
 }
 
 function login(req) {
@@ -25,7 +29,8 @@ function login(req) {
 }
 
 export default {
+  requireCode,
+  checkCode,
   register,
-  checkCodeConfirmation,
   login,
 };

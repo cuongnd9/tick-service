@@ -4,7 +4,6 @@ export const role = {
 };
 
 export const accountStatus = {
-  pending: 'Pending',
   active: 'Active',
   deactive: 'Deactive',
 };

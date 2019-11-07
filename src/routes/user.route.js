@@ -28,11 +28,11 @@ router.post(
   celebrate({
     body: Joi.object().keys({
       name: Joi.string().required(),
-      email: Joi.string().email(),
-      phoneNumber: Joi.string(),
-      address: Joi.string(),
+      bio: Joi.string(),
       dob: Joi.string().isoDate(),
-      sex: Joi.string().valid('MALE', 'FEMALE'),
+      account: Joi.string()
+        .guid()
+        .required(),
     }),
   }),
   withController(controller.create),
@@ -48,12 +48,10 @@ router.put(
         .required(),
     }),
     body: Joi.object().keys({
-      name: Joi.string().required(),
-      email: Joi.string().email(),
-      phoneNumber: Joi.string(),
-      address: Joi.string(),
+      name: Joi.string(),
+      bio: Joi.string(),
       dob: Joi.string().isoDate(),
-      sex: Joi.string().valid('MALE', 'FEMALE'),
+      account: Joi.string().guid(),
     }),
   }),
   withController(controller.update),
