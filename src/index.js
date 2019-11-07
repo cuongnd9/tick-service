@@ -4,7 +4,7 @@ import signale from 'signale';
 import apiRoute from './routes';
 import config from './config';
 
-// Initialize express app.REDIS_PASSWORD
+// Initialize express app
 const app = express();
 
 // Initialize redis client.
