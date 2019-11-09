@@ -8,6 +8,7 @@ export default {
   redis: {
     host: process.env.REDIS_HOST || '127.0.0.1',
     port: process.env.REDIS_PORT || 6379,
+    password: process.env.REDIS_PASSWORD || 'test',
   },
   registerExpiration: process.env.REGISTER_EXPIRATION || 300000,
   email: process.env.EMAIL || 'ndc07.it@gmail.com',
