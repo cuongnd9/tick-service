@@ -56,7 +56,7 @@ async function checkCode(redis, data) {
   const getAsync = promisify(redis.get).bind(redis);
   const redisCodeConfirmation = await getAsync(email);
   if (!redisCodeConfirmation) {
-    throw Boom.clientTimeout('code is time out');
+    throw Boom.clientTimeout('code is expired');
   }
   if (redisCodeConfirmation.toString() !== codeConfirmation.toString()) {
     throw Boom.notFound('code is incorrect');
