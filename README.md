@@ -1,6 +1,6 @@
 # tick-service
 
-🎉 Awesome service for ✔️ Tick.
+🚀👽 Awesome service for ⏳📒 Tick.
 
 ## Features
 
