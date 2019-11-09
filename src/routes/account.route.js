@@ -17,8 +17,8 @@ router.get(
   withController(controller.requireCode),
 );
 
-router.get(
-  '/check-code',
+router.post(
+  '/register',
   celebrate({
     query: Joi.object().keys({
       code: Joi.number().required(),
@@ -26,19 +26,9 @@ router.get(
         .email()
         .required(),
     }),
-  }),
-  withController(controller.checkCode),
-);
-
-router.post(
-  '/register',
-  celebrate({
     body: Joi.object().keys({
       username: Joi.string().required(),
       password: Joi.string().required(),
-      email: Joi.string()
-        .email()
-        .required(),
       role: Joi.string()
         .valid(role)
         .default(role.free),
