@@ -61,18 +61,25 @@ async function checkCode(redis, data) {
   if (redisCodeConfirmation.toString() !== codeConfirmation.toString()) {
     throw Boom.notFound('code is incorrect');
   }
-  return {
-    email,
-    code: codeConfirmation,
-  };
 }
 
-async function register(data) {
-  const { password } = data;
+async function register(redis, query, body) {
+  const { password, username } = body;
+  const { email } = query;
+  const accountByEmail = await prisma.account({ email });
+  if (accountByEmail) {
+    throw Boom.conflict('email is exists');
+  }
+  const accountByUsername = await prisma.account({ username });
+  if (accountByUsername) {
+    throw Boom.conflict('username is exists');
+  }
+  await checkCode(redis, query);
   const hashPassword = await bcrypt.hash(password, 10);
   const newData = {
-    ...data,
+    ...body,
     password: hashPassword,
+    email,
   };
   const newAccount = await prisma.createAccount(newData);
   return _.omit(newAccount, ['password']);
@@ -103,7 +110,6 @@ async function login(data) {
 
 export default {
   requireCode,
-  checkCode,
   register,
   login,
 };
