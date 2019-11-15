@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import _ from 'lodash';
-import { code } from 'thinid';
+import { numcode } from 'numcode';
 import nodemailer from 'nodemailer';
 import Boom from '@hapi/boom';
 import fs from 'fs';
@@ -41,7 +41,7 @@ async function requireCode(redis, data) {
   if (account) {
     throw Boom.conflict('email is exist');
   }
-  const codeConfirmation = code();
+  const codeConfirmation = numcode();
   // Save code confirmation to Redis.
   await redis.set(email, codeConfirmation, 'PX', config.registerExpiration);
   // Send code confirmation by mail.
