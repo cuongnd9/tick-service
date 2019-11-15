@@ -4921,6 +4921,11 @@ number-is-nan@^1.0.0:
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
   integrity sha1-CXtgK1NCKlIsGvuHkDGDNpQaAR0=
 
+numcode@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/numcode/-/numcode-0.1.1.tgz#412c1f2bccf8fa1c0895aaa0bb6a0dc0dac71067"
+  integrity sha512-TErQ65C6u1VwTYW3cuHGY3VTJ3vvX0POVzLFJn1QzEBwBC7W6FiWsW0x+APrHWtZauv/zL+z4EcrlCthgQLESQ==
+
 nwsapi@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.2.0.tgz#204879a9e3d068ff2a55139c2c772780681a38b7"
@@ -6777,10 +6782,10 @@ text-table@^0.2.0:
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
 
-thinid@^0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/thinid/-/thinid-0.5.2.tgz#e719efd48aefb54306164f4401b9a9629b3d2a3c"
-  integrity sha512-3Idy3zPyT06TYvEiIhKLAAKtkKrt0J0OjHImaCGE2+lniQxyfNmmf5trO9IzYbnYJvKgL7/NMNqRKx+XlIzKVg==
+thinid@^0.5.5:
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/thinid/-/thinid-0.5.5.tgz#a5c70a7ef46c4d2bd249285c1479c5ac4ab8b70f"
+  integrity sha512-RkNHRkwYV1ofnCea2Bg7k+Kthdiwkn4ZKoz34rAAzG/MmGBZWJ00QMql9oPyDVMLkjkWDr3GRKEpYLnkkHDoVA==
 
 through2@^2.0.3:
   version "2.0.5"
