@@ -96,4 +96,7 @@ typings/
 # dist directories
 dist/
 
+# uploads directories
+uploads/
+
 # End of https://www.gitignore.io/api/node
