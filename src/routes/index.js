@@ -9,6 +9,7 @@ import errorHandler from '@/helpers/errorHandler';
 import userRoute from './user.route';
 import accountRoute from './account.route';
 import imageRoute from './image.route';
+import taskRoute from './task.route';
 
 const router = express.Router();
 
@@ -24,6 +25,7 @@ router.use(logger('dev'));
 router.use('/user', authenticate, userRoute);
 router.use('/account', accountRoute);
 router.use('/image', authenticate, imageRoute);
+router.use('/task', authenticate, taskRoute);
 
 // 404 not found.
 router.use((req, res, next) => {
