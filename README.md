@@ -2,7 +2,7 @@
 
 🚀👽 Awesome service for ⏳📒 Tick.
 
-![cat](./images/cat.gif)
+<img src="./images/cat.gif" width=400 />
 
 ## Features
 
