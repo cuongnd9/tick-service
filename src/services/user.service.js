@@ -9,28 +9,16 @@ function getUser(id) {
 }
 
 function createUser(data) {
-  const { account } = data;
   return prisma.createUser({
     ...data,
-    account: {
-      connect: {
-        id: account,
-      },
-    },
   });
 }
 
 function updateUser(id, data) {
-  const { account } = data;
   return prisma.updateUser({
     where: { id },
     data: {
       ...data,
-      account: {
-        connect: {
-          id: account,
-        },
-      },
     },
   });
 }
