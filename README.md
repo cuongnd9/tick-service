@@ -1,6 +1,6 @@
 # tick-service
 
-🚀👽 Awesome service for ⏳📒 Tick.
+📒 Tick's service.
 
 <img src="./images/cat.gif" width=400 />
 
