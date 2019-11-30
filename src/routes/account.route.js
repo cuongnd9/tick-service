@@ -1,8 +1,9 @@
 import express from 'express';
 import { celebrate, Joi } from 'celebrate';
-import withController from '@/helpers/withController';
+import objectToArray from '../helpers/objectToArray';
+import withController from '../helpers/withController';
 import controller from '../controllers/account.controller';
-import { role, accountStatus } from '@/config/constants';
+import { role, accountStatus } from '../config/constants';
 
 const router = express.Router();
 router.get(
@@ -30,10 +31,10 @@ router.post(
       username: Joi.string().required(),
       password: Joi.string().required(),
       role: Joi.string()
-        .valid(role)
+        .valid(objectToArray(role))
         .default(role.free),
       status: Joi.string()
-        .valid(accountStatus)
+        .valid(objectToArray(accountStatus))
         .default(accountStatus.active),
     }),
   }),
