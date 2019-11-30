@@ -26,20 +26,16 @@ router.post(
       dueDate: Joi.date().required(),
       reminderDate: Joi.date(),
       doSendMail: Joi.boolean().default(false),
-      category: Joi.string().required(),
+      category: Joi.string()
+        .guid()
+        .required(),
       steps: Joi.array().items({
-        id: Joi.string().guid(),
-        // index: Joi.number().integer(),
         title: Joi.string().required(),
         status: Joi.string()
           .valid(objectToArray(stepStatus))
           .default(stepStatus.todo),
       }),
-      images: Joi.array().items({
-        id: Joi.string().guid(),
-        publicId: Joi.string(),
-        url: Joi.string().required(),
-      }),
+      images: Joi.array().items(Joi.string().guid()),
     },
   }),
   withController(controller.create),

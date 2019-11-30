@@ -555,6 +555,7 @@ export interface TaskCreateOneWithoutImagesInput {
 }
 
 export interface StepUpdateWithoutAccountDataInput {
+  index?: Maybe<Int>;
   title?: Maybe<String>;
   status?: Maybe<StepStatus>;
   task?: Maybe<TaskUpdateOneRequiredWithoutStepsInput>;
@@ -732,6 +733,7 @@ export interface UserUpdateDataInput {
 }
 
 export interface TaskUpdateManyMutationInput {
+  index?: Maybe<Int>;
   title?: Maybe<String>;
   content?: Maybe<String>;
   status?: Maybe<TaskStatus>;
@@ -752,6 +754,7 @@ export interface ImageUpdateOneInput {
 }
 
 export interface TaskUpdateInput {
+  index?: Maybe<Int>;
   title?: Maybe<String>;
   content?: Maybe<String>;
   status?: Maybe<TaskStatus>;
@@ -773,6 +776,7 @@ export interface ImageUpdateDataInput {
 }
 
 export interface StepUpdateManyMutationInput {
+  index?: Maybe<Int>;
   title?: Maybe<String>;
   status?: Maybe<StepStatus>;
 }
@@ -785,6 +789,7 @@ export interface AccountUpdateOneRequiredWithoutImagesInput {
 }
 
 export interface StepUpdateInput {
+  index?: Maybe<Int>;
   title?: Maybe<String>;
   status?: Maybe<StepStatus>;
   task?: Maybe<TaskUpdateOneRequiredWithoutStepsInput>;
@@ -892,6 +897,7 @@ export interface AccountUpsertWithoutImagesInput {
 }
 
 export interface TaskUpdateWithoutCategoryDataInput {
+  index?: Maybe<Int>;
   title?: Maybe<String>;
   content?: Maybe<String>;
   status?: Maybe<TaskStatus>;
@@ -1183,6 +1189,7 @@ export interface ImageCreateInput {
 }
 
 export interface TaskUpdateWithoutStepsDataInput {
+  index?: Maybe<Int>;
   title?: Maybe<String>;
   content?: Maybe<String>;
   status?: Maybe<TaskStatus>;
@@ -1333,6 +1340,7 @@ export interface CategoryCreateWithoutTasksInput {
 }
 
 export interface TaskUpdateWithoutAccountDataInput {
+  index?: Maybe<Int>;
   title?: Maybe<String>;
   content?: Maybe<String>;
   status?: Maybe<TaskStatus>;
@@ -1406,6 +1414,7 @@ export interface StepCreateWithoutTaskInput {
 }
 
 export interface StepUpdateWithoutTaskDataInput {
+  index?: Maybe<Int>;
   title?: Maybe<String>;
   status?: Maybe<StepStatus>;
   account?: Maybe<AccountUpdateOneRequiredWithoutStepsInput>;
@@ -1664,7 +1673,6 @@ export interface ImageUpdateManyWithWhereNestedInput {
 
 export type StepWhereUniqueInput = AtLeastOne<{
   id: Maybe<UUID>;
-  index?: Maybe<Int>;
 }>;
 
 export interface ImageUpdateManyDataInput {
@@ -1674,7 +1682,6 @@ export interface ImageUpdateManyDataInput {
 
 export type TaskWhereUniqueInput = AtLeastOne<{
   id: Maybe<UUID>;
-  index?: Maybe<Int>;
 }>;
 
 export interface TaskImageUpdateManyWithoutAccountInput {
@@ -1730,6 +1737,7 @@ export interface UserCreateOneInput {
 }
 
 export interface TaskUpdateWithoutImagesDataInput {
+  index?: Maybe<Int>;
   title?: Maybe<String>;
   content?: Maybe<String>;
   status?: Maybe<TaskStatus>;
@@ -1994,6 +2002,7 @@ export interface StepCreateInput {
 }
 
 export interface StepUpdateManyDataInput {
+  index?: Maybe<Int>;
   title?: Maybe<String>;
   status?: Maybe<StepStatus>;
 }
@@ -2123,6 +2132,7 @@ export interface AccountUpsertWithoutCategoriesInput {
 }
 
 export interface TaskUpdateManyDataInput {
+  index?: Maybe<Int>;
   title?: Maybe<String>;
   content?: Maybe<String>;
   status?: Maybe<TaskStatus>;
@@ -2538,7 +2548,7 @@ export interface UserEdgeSubscription extends Promise<AsyncIterator<UserEdge>>, 
 
 export interface Category {
   id: UUID;
-  index?: Int;
+  index: Int;
   name: String;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
@@ -3134,7 +3144,7 @@ export interface CategoryEdgeSubscription
 
 export interface CategoryPreviousValues {
   id: UUID;
-  index?: Int;
+  index: Int;
   name: String;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;

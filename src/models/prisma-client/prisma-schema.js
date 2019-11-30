@@ -525,7 +525,7 @@ module.exports = {
 
       type Category {
         id: UUID!
-        index: Int
+        index: Int!
         name: String!
         account: Account!
         tasks(
@@ -599,7 +599,7 @@ module.exports = {
 
       type CategoryPreviousValues {
         id: UUID!
-        index: Int
+        index: Int!
         name: String!
         createdAt: DateTime!
         updatedAt: DateTime!
@@ -1515,6 +1515,7 @@ module.exports = {
       }
 
       input StepUpdateInput {
+        index: Int
         title: String
         status: StepStatus
         task: TaskUpdateOneRequiredWithoutStepsInput
@@ -1522,11 +1523,13 @@ module.exports = {
       }
 
       input StepUpdateManyDataInput {
+        index: Int
         title: String
         status: StepStatus
       }
 
       input StepUpdateManyMutationInput {
+        index: Int
         title: String
         status: StepStatus
       }
@@ -1561,12 +1564,14 @@ module.exports = {
       }
 
       input StepUpdateWithoutAccountDataInput {
+        index: Int
         title: String
         status: StepStatus
         task: TaskUpdateOneRequiredWithoutStepsInput
       }
 
       input StepUpdateWithoutTaskDataInput {
+        index: Int
         title: String
         status: StepStatus
         account: AccountUpdateOneRequiredWithoutStepsInput
@@ -1660,7 +1665,6 @@ module.exports = {
 
       input StepWhereUniqueInput {
         id: UUID
-        index: Int
       }
 
       type Subscription {
@@ -2217,6 +2221,7 @@ module.exports = {
       }
 
       input TaskUpdateInput {
+        index: Int
         title: String
         content: String
         status: TaskStatus
@@ -2232,6 +2237,7 @@ module.exports = {
       }
 
       input TaskUpdateManyDataInput {
+        index: Int
         title: String
         content: String
         status: TaskStatus
@@ -2243,6 +2249,7 @@ module.exports = {
       }
 
       input TaskUpdateManyMutationInput {
+        index: Int
         title: String
         content: String
         status: TaskStatus
@@ -2297,6 +2304,7 @@ module.exports = {
       }
 
       input TaskUpdateWithoutAccountDataInput {
+        index: Int
         title: String
         content: String
         status: TaskStatus
@@ -2311,6 +2319,7 @@ module.exports = {
       }
 
       input TaskUpdateWithoutCategoryDataInput {
+        index: Int
         title: String
         content: String
         status: TaskStatus
@@ -2325,6 +2334,7 @@ module.exports = {
       }
 
       input TaskUpdateWithoutImagesDataInput {
+        index: Int
         title: String
         content: String
         status: TaskStatus
@@ -2339,6 +2349,7 @@ module.exports = {
       }
 
       input TaskUpdateWithoutStepsDataInput {
+        index: Int
         title: String
         content: String
         status: TaskStatus
@@ -2494,7 +2505,6 @@ module.exports = {
 
       input TaskWhereUniqueInput {
         id: UUID
-        index: Int
       }
 
       type User {

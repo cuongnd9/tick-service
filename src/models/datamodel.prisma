@@ -37,7 +37,7 @@ type User {
 
 type Category {
   id: UUID! @id
-  index: Int
+  index: Int! @default(value: 0)
   name: String!
   account: Account! @relation(name: "Account_Category")
   tasks: [Task!]! @relation(name: "Category_Task", onDelete: CASCADE)
@@ -62,7 +62,7 @@ enum TaskPriority {
 
 type Task {
   id: UUID! @id
-  index: Int! @id
+  index: Int! @default(value: 0)
   title: String!
   content: String
   status: TaskStatus! @default(value: Todo)
@@ -86,7 +86,7 @@ enum StepStatus {
 
 type Step {
   id: UUID! @id
-  index: Int! @id
+  index: Int! @default(value: 0)
   title: String!
   status: StepStatus @default(value: Todo)
   task: Task! @relation(name: "Task_Step")
