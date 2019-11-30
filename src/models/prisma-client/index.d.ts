@@ -2548,7 +2548,7 @@ export interface UserEdgeSubscription extends Promise<AsyncIterator<UserEdge>>, 
 
 export interface Category {
   id: UUID;
-  index?: Int;
+  index: Int;
   name: String;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
@@ -3144,7 +3144,7 @@ export interface CategoryEdgeSubscription
 
 export interface CategoryPreviousValues {
   id: UUID;
-  index?: Int;
+  index: Int;
   name: String;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
