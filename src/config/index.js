@@ -13,4 +13,10 @@ export default {
   registerExpiration: process.env.REGISTER_EXPIRATION || 300000,
   email: process.env.EMAIL || 'ndc07.it@gmail.com',
   emailPassword: process.env.EMAIL_PASSWORD || 'test',
+  imageService: {
+    domain: process.env.IMAGE_DOMAIN || 'http://localhost:8000',
+    cloudName: process.env.CLOUD_NAME,
+    apiKey: process.env.API_KEY,
+    apiSecret: process.env.API_SECRET,
+  },
 };

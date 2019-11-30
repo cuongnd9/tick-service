@@ -27,3 +27,5 @@ export const stepStatus = {
   todo: 'Todo',
   done: 'Done',
 };
+
+export const maxImage = 10;

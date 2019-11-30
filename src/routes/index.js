@@ -8,6 +8,7 @@ import authenticate from '@/helpers/authenticate';
 import errorHandler from '@/helpers/errorHandler';
 import userRoute from './user.route';
 import accountRoute from './account.route';
+import imageRoute from './image.route';
 
 const router = express.Router();
 
@@ -22,6 +23,8 @@ router.use(logger('dev'));
 // API routes.
 router.use('/user', authenticate, userRoute);
 router.use('/account', accountRoute);
+router.use('/image', authenticate, imageRoute);
+
 // 404 not found.
 router.use((req, res, next) => {
   next(Boom.notFound('API not found'));
