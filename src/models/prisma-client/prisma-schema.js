@@ -525,7 +525,7 @@ module.exports = {
 
       type Category {
         id: UUID!
-        index: Int
+        index: Int!
         name: String!
         account: Account!
         tasks(
@@ -599,7 +599,7 @@ module.exports = {
 
       type CategoryPreviousValues {
         id: UUID!
-        index: Int
+        index: Int!
         name: String!
         createdAt: DateTime!
         updatedAt: DateTime!

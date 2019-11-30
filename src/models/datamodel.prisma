@@ -37,7 +37,7 @@ type User {
 
 type Category {
   id: UUID! @id
-  index: Int
+  index: Int! @default(value: 0)
   name: String!
   account: Account! @relation(name: "Account_Category")
   tasks: [Task!]! @relation(name: "Category_Task", onDelete: CASCADE)
