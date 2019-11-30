@@ -12,15 +12,7 @@ module.exports = {
         email: String!
         role: Role!
         status: AccountStatus
-        users(
-          where: UserWhereInput
-          orderBy: UserOrderByInput
-          skip: Int
-          after: String
-          before: String
-          first: Int
-          last: Int
-        ): [User!]
+        user: User
         categories(
           where: CategoryWhereInput
           orderBy: CategoryOrderByInput
@@ -83,7 +75,7 @@ module.exports = {
         email: String!
         role: Role
         status: AccountStatus
-        users: UserCreateManyWithoutAccountInput
+        user: UserCreateOneInput
         categories: CategoryCreateManyWithoutAccountInput
         tasks: TaskCreateManyWithoutAccountInput
         steps: StepCreateManyWithoutAccountInput
@@ -116,11 +108,6 @@ module.exports = {
         connect: AccountWhereUniqueInput
       }
 
-      input AccountCreateOneWithoutUsersInput {
-        create: AccountCreateWithoutUsersInput
-        connect: AccountWhereUniqueInput
-      }
-
       input AccountCreateWithoutCategoriesInput {
         id: UUID
         username: String!
@@ -128,7 +115,7 @@ module.exports = {
         email: String!
         role: Role
         status: AccountStatus
-        users: UserCreateManyWithoutAccountInput
+        user: UserCreateOneInput
         tasks: TaskCreateManyWithoutAccountInput
         steps: StepCreateManyWithoutAccountInput
         images: ImageCreateManyWithoutAccountInput
@@ -142,7 +129,7 @@ module.exports = {
         email: String!
         role: Role
         status: AccountStatus
-        users: UserCreateManyWithoutAccountInput
+        user: UserCreateOneInput
         categories: CategoryCreateManyWithoutAccountInput
         tasks: TaskCreateManyWithoutAccountInput
         steps: StepCreateManyWithoutAccountInput
@@ -156,7 +143,7 @@ module.exports = {
         email: String!
         role: Role
         status: AccountStatus
-        users: UserCreateManyWithoutAccountInput
+        user: UserCreateOneInput
         categories: CategoryCreateManyWithoutAccountInput
         tasks: TaskCreateManyWithoutAccountInput
         images: ImageCreateManyWithoutAccountInput
@@ -170,7 +157,7 @@ module.exports = {
         email: String!
         role: Role
         status: AccountStatus
-        users: UserCreateManyWithoutAccountInput
+        user: UserCreateOneInput
         categories: CategoryCreateManyWithoutAccountInput
         tasks: TaskCreateManyWithoutAccountInput
         steps: StepCreateManyWithoutAccountInput
@@ -184,22 +171,8 @@ module.exports = {
         email: String!
         role: Role
         status: AccountStatus
-        users: UserCreateManyWithoutAccountInput
+        user: UserCreateOneInput
         categories: CategoryCreateManyWithoutAccountInput
-        steps: StepCreateManyWithoutAccountInput
-        images: ImageCreateManyWithoutAccountInput
-        taskImages: TaskImageCreateManyWithoutAccountInput
-      }
-
-      input AccountCreateWithoutUsersInput {
-        id: UUID
-        username: String!
-        password: String!
-        email: String!
-        role: Role
-        status: AccountStatus
-        categories: CategoryCreateManyWithoutAccountInput
-        tasks: TaskCreateManyWithoutAccountInput
         steps: StepCreateManyWithoutAccountInput
         images: ImageCreateManyWithoutAccountInput
         taskImages: TaskImageCreateManyWithoutAccountInput
@@ -269,7 +242,7 @@ module.exports = {
         email: String
         role: Role
         status: AccountStatus
-        users: UserUpdateManyWithoutAccountInput
+        user: UserUpdateOneInput
         categories: CategoryUpdateManyWithoutAccountInput
         tasks: TaskUpdateManyWithoutAccountInput
         steps: StepUpdateManyWithoutAccountInput
@@ -320,20 +293,13 @@ module.exports = {
         connect: AccountWhereUniqueInput
       }
 
-      input AccountUpdateOneRequiredWithoutUsersInput {
-        create: AccountCreateWithoutUsersInput
-        update: AccountUpdateWithoutUsersDataInput
-        upsert: AccountUpsertWithoutUsersInput
-        connect: AccountWhereUniqueInput
-      }
-
       input AccountUpdateWithoutCategoriesDataInput {
         username: String
         password: String
         email: String
         role: Role
         status: AccountStatus
-        users: UserUpdateManyWithoutAccountInput
+        user: UserUpdateOneInput
         tasks: TaskUpdateManyWithoutAccountInput
         steps: StepUpdateManyWithoutAccountInput
         images: ImageUpdateManyWithoutAccountInput
@@ -346,7 +312,7 @@ module.exports = {
         email: String
         role: Role
         status: AccountStatus
-        users: UserUpdateManyWithoutAccountInput
+        user: UserUpdateOneInput
         categories: CategoryUpdateManyWithoutAccountInput
         tasks: TaskUpdateManyWithoutAccountInput
         steps: StepUpdateManyWithoutAccountInput
@@ -359,7 +325,7 @@ module.exports = {
         email: String
         role: Role
         status: AccountStatus
-        users: UserUpdateManyWithoutAccountInput
+        user: UserUpdateOneInput
         categories: CategoryUpdateManyWithoutAccountInput
         tasks: TaskUpdateManyWithoutAccountInput
         images: ImageUpdateManyWithoutAccountInput
@@ -372,7 +338,7 @@ module.exports = {
         email: String
         role: Role
         status: AccountStatus
-        users: UserUpdateManyWithoutAccountInput
+        user: UserUpdateOneInput
         categories: CategoryUpdateManyWithoutAccountInput
         tasks: TaskUpdateManyWithoutAccountInput
         steps: StepUpdateManyWithoutAccountInput
@@ -385,21 +351,8 @@ module.exports = {
         email: String
         role: Role
         status: AccountStatus
-        users: UserUpdateManyWithoutAccountInput
+        user: UserUpdateOneInput
         categories: CategoryUpdateManyWithoutAccountInput
-        steps: StepUpdateManyWithoutAccountInput
-        images: ImageUpdateManyWithoutAccountInput
-        taskImages: TaskImageUpdateManyWithoutAccountInput
-      }
-
-      input AccountUpdateWithoutUsersDataInput {
-        username: String
-        password: String
-        email: String
-        role: Role
-        status: AccountStatus
-        categories: CategoryUpdateManyWithoutAccountInput
-        tasks: TaskUpdateManyWithoutAccountInput
         steps: StepUpdateManyWithoutAccountInput
         images: ImageUpdateManyWithoutAccountInput
         taskImages: TaskImageUpdateManyWithoutAccountInput
@@ -428,11 +381,6 @@ module.exports = {
       input AccountUpsertWithoutTasksInput {
         update: AccountUpdateWithoutTasksDataInput!
         create: AccountCreateWithoutTasksInput!
-      }
-
-      input AccountUpsertWithoutUsersInput {
-        update: AccountUpdateWithoutUsersDataInput!
-        create: AccountCreateWithoutUsersInput!
       }
 
       input AccountWhereInput {
@@ -500,9 +448,7 @@ module.exports = {
         status_not: AccountStatus
         status_in: [AccountStatus!]
         status_not_in: [AccountStatus!]
-        users_every: UserWhereInput
-        users_some: UserWhereInput
-        users_none: UserWhereInput
+        user: UserWhereInput
         categories_every: CategoryWhereInput
         categories_some: CategoryWhereInput
         categories_none: CategoryWhereInput
@@ -1055,6 +1001,15 @@ module.exports = {
       input ImageUpdateManyWithWhereNestedInput {
         where: ImageScalarWhereInput!
         data: ImageUpdateManyDataInput!
+      }
+
+      input ImageUpdateOneInput {
+        create: ImageCreateInput
+        update: ImageUpdateDataInput
+        upsert: ImageUpsertNestedInput
+        delete: Boolean
+        disconnect: Boolean
+        connect: ImageWhereUniqueInput
       }
 
       input ImageUpdateOneRequiredInput {
@@ -2557,7 +2512,7 @@ module.exports = {
         name: String!
         bio: String
         dob: DateTime
-        account: Account!
+        avatar: Image
         createdAt: DateTime!
         updatedAt: DateTime!
       }
@@ -2573,19 +2528,12 @@ module.exports = {
         name: String!
         bio: String
         dob: DateTime
-        account: AccountCreateOneWithoutUsersInput!
+        avatar: ImageCreateOneInput
       }
 
-      input UserCreateManyWithoutAccountInput {
-        create: [UserCreateWithoutAccountInput!]
-        connect: [UserWhereUniqueInput!]
-      }
-
-      input UserCreateWithoutAccountInput {
-        id: UUID
-        name: String!
-        bio: String
-        dob: DateTime
+      input UserCreateOneInput {
+        create: UserCreateInput
+        connect: UserWhereUniqueInput
       }
 
       type UserEdge {
@@ -2617,78 +2565,6 @@ module.exports = {
         updatedAt: DateTime!
       }
 
-      input UserScalarWhereInput {
-        id: UUID
-        id_not: UUID
-        id_in: [UUID!]
-        id_not_in: [UUID!]
-        id_lt: UUID
-        id_lte: UUID
-        id_gt: UUID
-        id_gte: UUID
-        id_contains: UUID
-        id_not_contains: UUID
-        id_starts_with: UUID
-        id_not_starts_with: UUID
-        id_ends_with: UUID
-        id_not_ends_with: UUID
-        name: String
-        name_not: String
-        name_in: [String!]
-        name_not_in: [String!]
-        name_lt: String
-        name_lte: String
-        name_gt: String
-        name_gte: String
-        name_contains: String
-        name_not_contains: String
-        name_starts_with: String
-        name_not_starts_with: String
-        name_ends_with: String
-        name_not_ends_with: String
-        bio: String
-        bio_not: String
-        bio_in: [String!]
-        bio_not_in: [String!]
-        bio_lt: String
-        bio_lte: String
-        bio_gt: String
-        bio_gte: String
-        bio_contains: String
-        bio_not_contains: String
-        bio_starts_with: String
-        bio_not_starts_with: String
-        bio_ends_with: String
-        bio_not_ends_with: String
-        dob: DateTime
-        dob_not: DateTime
-        dob_in: [DateTime!]
-        dob_not_in: [DateTime!]
-        dob_lt: DateTime
-        dob_lte: DateTime
-        dob_gt: DateTime
-        dob_gte: DateTime
-        createdAt: DateTime
-        createdAt_not: DateTime
-        createdAt_in: [DateTime!]
-        createdAt_not_in: [DateTime!]
-        createdAt_lt: DateTime
-        createdAt_lte: DateTime
-        createdAt_gt: DateTime
-        createdAt_gte: DateTime
-        updatedAt: DateTime
-        updatedAt_not: DateTime
-        updatedAt_in: [DateTime!]
-        updatedAt_not_in: [DateTime!]
-        updatedAt_lt: DateTime
-        updatedAt_lte: DateTime
-        updatedAt_gt: DateTime
-        updatedAt_gte: DateTime
-        AND: [UserScalarWhereInput!]
-        OR: [UserScalarWhereInput!]
-        NOT: [UserScalarWhereInput!]
-      }
-
       type UserSubscriptionPayload {
         mutation: MutationType!
         node: User
@@ -2707,17 +2583,18 @@ module.exports = {
         NOT: [UserSubscriptionWhereInput!]
       }
 
+      input UserUpdateDataInput {
+        name: String
+        bio: String
+        dob: DateTime
+        avatar: ImageUpdateOneInput
+      }
+
       input UserUpdateInput {
         name: String
         bio: String
         dob: DateTime
-        account: AccountUpdateOneRequiredWithoutUsersInput
-      }
-
-      input UserUpdateManyDataInput {
-        name: String
-        bio: String
-        dob: DateTime
+        avatar: ImageUpdateOneInput
       }
 
       input UserUpdateManyMutationInput {
@@ -2726,38 +2603,18 @@ module.exports = {
         dob: DateTime
       }
 
-      input UserUpdateManyWithoutAccountInput {
-        create: [UserCreateWithoutAccountInput!]
-        delete: [UserWhereUniqueInput!]
-        connect: [UserWhereUniqueInput!]
-        set: [UserWhereUniqueInput!]
-        disconnect: [UserWhereUniqueInput!]
-        update: [UserUpdateWithWhereUniqueWithoutAccountInput!]
-        upsert: [UserUpsertWithWhereUniqueWithoutAccountInput!]
-        deleteMany: [UserScalarWhereInput!]
-        updateMany: [UserUpdateManyWithWhereNestedInput!]
+      input UserUpdateOneInput {
+        create: UserCreateInput
+        update: UserUpdateDataInput
+        upsert: UserUpsertNestedInput
+        delete: Boolean
+        disconnect: Boolean
+        connect: UserWhereUniqueInput
       }
 
-      input UserUpdateManyWithWhereNestedInput {
-        where: UserScalarWhereInput!
-        data: UserUpdateManyDataInput!
-      }
-
-      input UserUpdateWithoutAccountDataInput {
-        name: String
-        bio: String
-        dob: DateTime
-      }
-
-      input UserUpdateWithWhereUniqueWithoutAccountInput {
-        where: UserWhereUniqueInput!
-        data: UserUpdateWithoutAccountDataInput!
-      }
-
-      input UserUpsertWithWhereUniqueWithoutAccountInput {
-        where: UserWhereUniqueInput!
-        update: UserUpdateWithoutAccountDataInput!
-        create: UserCreateWithoutAccountInput!
+      input UserUpsertNestedInput {
+        update: UserUpdateDataInput!
+        create: UserCreateInput!
       }
 
       input UserWhereInput {
@@ -2811,7 +2668,7 @@ module.exports = {
         dob_lte: DateTime
         dob_gt: DateTime
         dob_gte: DateTime
-        account: AccountWhereInput
+        avatar: ImageWhereInput
         createdAt: DateTime
         createdAt_not: DateTime
         createdAt_in: [DateTime!]

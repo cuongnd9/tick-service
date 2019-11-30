@@ -15,7 +15,7 @@ type Account {
   email: String! @unique
   role: Role! @default(value: Free)
   status: AccountStatus @default(value: Active)
-  users: [User!] @relation(name: "Account_User", onDelete: CASCADE)
+  user: User @relation(onDelete: CASCADE)
   categories: [Category!] @relation(name: "Account_Category", onDelete: CASCADE)
   tasks: [Task!] @relation(name: "Account_Task", onDelete: CASCADE)
   steps: [Step!] @relation(name: "Account_Step", onDelete: CASCADE)
@@ -30,7 +30,7 @@ type User {
   name: String!
   bio: String
   dob: DateTime
-  account: Account! @relation(name: "Account_User")
+  avatar: Image @relation(onDelete: CASCADE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }

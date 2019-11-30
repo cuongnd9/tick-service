@@ -30,9 +30,6 @@ router.post(
       name: Joi.string().required(),
       bio: Joi.string(),
       dob: Joi.string().isoDate(),
-      account: Joi.string()
-        .guid()
-        .required(),
     }),
   }),
   withController(controller.create),
@@ -51,7 +48,6 @@ router.put(
       name: Joi.string(),
       bio: Joi.string(),
       dob: Joi.string().isoDate(),
-      account: Joi.string().guid(),
     }),
   }),
   withController(controller.update),

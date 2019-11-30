@@ -2,6 +2,8 @@
 
 🚀👽 Awesome service for ⏳📒 Tick.
 
+![cat](./images/cat.gif)
+
 ## Features
 
 - Using ESNext
