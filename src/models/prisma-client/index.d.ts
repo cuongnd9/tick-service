@@ -2436,7 +2436,7 @@ export interface CategoryConnectionSubscription
 
 export interface TaskPreviousValues {
   id: UUID;
-  index?: Int;
+  index: Int;
   title: String;
   content?: String;
   status: TaskStatus;
@@ -3340,7 +3340,7 @@ export interface StepConnectionSubscription
 
 export interface Step {
   id: UUID;
-  index?: Int;
+  index: Int;
   title: String;
   status?: StepStatus;
   createdAt: DateTimeOutput;
@@ -3435,7 +3435,7 @@ export interface TaskSubscriptionPayloadSubscription
 
 export interface Task {
   id: UUID;
-  index?: Int;
+  index: Int;
   title: String;
   content?: String;
   status: TaskStatus;
@@ -3555,7 +3555,7 @@ export interface TaskNullablePromise extends Promise<Task | null>, Fragmentable 
 
 export interface StepPreviousValues {
   id: UUID;
-  index?: Int;
+  index: Int;
   title: String;
   status?: StepStatus;
   createdAt: DateTimeOutput;
