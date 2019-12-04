@@ -15,7 +15,7 @@ router.post(
     body: {
       // index: Joi.number().integer(),
       title: Joi.string().required(),
-      content: Joi.string(),
+      description: Joi.string(),
       status: Joi.string()
         .valid(objectToArray(taskStatus))
         .default(taskStatus.todo),

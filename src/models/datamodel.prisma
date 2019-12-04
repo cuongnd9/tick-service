@@ -64,7 +64,7 @@ type Task {
   id: UUID! @id
   index: Int! @default(value: 0)
   title: String!
-  content: String
+  description: String
   status: TaskStatus! @default(value: Todo)
   priority: TaskPriority! @default(value: Medium)
   isImportant: Boolean! @default(value: false)

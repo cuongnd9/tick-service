@@ -1681,7 +1681,7 @@ module.exports = {
         id: UUID!
         index: Int!
         title: String!
-        content: String
+        description: String
         status: TaskStatus!
         priority: TaskPriority!
         isImportant: Boolean!
@@ -1722,7 +1722,7 @@ module.exports = {
         id: UUID
         index: Int
         title: String!
-        content: String
+        description: String
         status: TaskStatus
         priority: TaskPriority
         isImportant: Boolean
@@ -1759,7 +1759,7 @@ module.exports = {
         id: UUID
         index: Int
         title: String!
-        content: String
+        description: String
         status: TaskStatus
         priority: TaskPriority
         isImportant: Boolean
@@ -1775,7 +1775,7 @@ module.exports = {
         id: UUID
         index: Int
         title: String!
-        content: String
+        description: String
         status: TaskStatus
         priority: TaskPriority
         isImportant: Boolean
@@ -1791,7 +1791,7 @@ module.exports = {
         id: UUID
         index: Int
         title: String!
-        content: String
+        description: String
         status: TaskStatus
         priority: TaskPriority
         isImportant: Boolean
@@ -1807,7 +1807,7 @@ module.exports = {
         id: UUID
         index: Int
         title: String!
-        content: String
+        description: String
         status: TaskStatus
         priority: TaskPriority
         isImportant: Boolean
@@ -2052,8 +2052,8 @@ module.exports = {
         index_DESC
         title_ASC
         title_DESC
-        content_ASC
-        content_DESC
+        description_ASC
+        description_DESC
         status_ASC
         status_DESC
         priority_ASC
@@ -2076,7 +2076,7 @@ module.exports = {
         id: UUID!
         index: Int!
         title: String!
-        content: String
+        description: String
         status: TaskStatus!
         priority: TaskPriority!
         isImportant: Boolean!
@@ -2132,20 +2132,20 @@ module.exports = {
         title_not_starts_with: String
         title_ends_with: String
         title_not_ends_with: String
-        content: String
-        content_not: String
-        content_in: [String!]
-        content_not_in: [String!]
-        content_lt: String
-        content_lte: String
-        content_gt: String
-        content_gte: String
-        content_contains: String
-        content_not_contains: String
-        content_starts_with: String
-        content_not_starts_with: String
-        content_ends_with: String
-        content_not_ends_with: String
+        description: String
+        description_not: String
+        description_in: [String!]
+        description_not_in: [String!]
+        description_lt: String
+        description_lte: String
+        description_gt: String
+        description_gte: String
+        description_contains: String
+        description_not_contains: String
+        description_starts_with: String
+        description_not_starts_with: String
+        description_ends_with: String
+        description_not_ends_with: String
         status: TaskStatus
         status_not: TaskStatus
         status_in: [TaskStatus!]
@@ -2223,7 +2223,7 @@ module.exports = {
       input TaskUpdateInput {
         index: Int
         title: String
-        content: String
+        description: String
         status: TaskStatus
         priority: TaskPriority
         isImportant: Boolean
@@ -2239,7 +2239,7 @@ module.exports = {
       input TaskUpdateManyDataInput {
         index: Int
         title: String
-        content: String
+        description: String
         status: TaskStatus
         priority: TaskPriority
         isImportant: Boolean
@@ -2251,7 +2251,7 @@ module.exports = {
       input TaskUpdateManyMutationInput {
         index: Int
         title: String
-        content: String
+        description: String
         status: TaskStatus
         priority: TaskPriority
         isImportant: Boolean
@@ -2306,7 +2306,7 @@ module.exports = {
       input TaskUpdateWithoutAccountDataInput {
         index: Int
         title: String
-        content: String
+        description: String
         status: TaskStatus
         priority: TaskPriority
         isImportant: Boolean
@@ -2321,7 +2321,7 @@ module.exports = {
       input TaskUpdateWithoutCategoryDataInput {
         index: Int
         title: String
-        content: String
+        description: String
         status: TaskStatus
         priority: TaskPriority
         isImportant: Boolean
@@ -2336,7 +2336,7 @@ module.exports = {
       input TaskUpdateWithoutImagesDataInput {
         index: Int
         title: String
-        content: String
+        description: String
         status: TaskStatus
         priority: TaskPriority
         isImportant: Boolean
@@ -2351,7 +2351,7 @@ module.exports = {
       input TaskUpdateWithoutStepsDataInput {
         index: Int
         title: String
-        content: String
+        description: String
         status: TaskStatus
         priority: TaskPriority
         isImportant: Boolean
@@ -2432,20 +2432,20 @@ module.exports = {
         title_not_starts_with: String
         title_ends_with: String
         title_not_ends_with: String
-        content: String
-        content_not: String
-        content_in: [String!]
-        content_not_in: [String!]
-        content_lt: String
-        content_lte: String
-        content_gt: String
-        content_gte: String
-        content_contains: String
-        content_not_contains: String
-        content_starts_with: String
-        content_not_starts_with: String
-        content_ends_with: String
-        content_not_ends_with: String
+        description: String
+        description_not: String
+        description_in: [String!]
+        description_not_in: [String!]
+        description_lt: String
+        description_lte: String
+        description_gt: String
+        description_gte: String
+        description_contains: String
+        description_not_contains: String
+        description_starts_with: String
+        description_not_starts_with: String
+        description_ends_with: String
+        description_not_ends_with: String
         status: TaskStatus
         status_not: TaskStatus
         status_in: [TaskStatus!]

@@ -358,8 +358,8 @@ export type TaskOrderByInput =
   | 'index_DESC'
   | 'title_ASC'
   | 'title_DESC'
-  | 'content_ASC'
-  | 'content_DESC'
+  | 'description_ASC'
+  | 'description_DESC'
   | 'status_ASC'
   | 'status_DESC'
   | 'priority_ASC'
@@ -467,20 +467,20 @@ export interface TaskWhereInput {
   title_not_starts_with?: Maybe<String>;
   title_ends_with?: Maybe<String>;
   title_not_ends_with?: Maybe<String>;
-  content?: Maybe<String>;
-  content_not?: Maybe<String>;
-  content_in?: Maybe<String[] | String>;
-  content_not_in?: Maybe<String[] | String>;
-  content_lt?: Maybe<String>;
-  content_lte?: Maybe<String>;
-  content_gt?: Maybe<String>;
-  content_gte?: Maybe<String>;
-  content_contains?: Maybe<String>;
-  content_not_contains?: Maybe<String>;
-  content_starts_with?: Maybe<String>;
-  content_not_starts_with?: Maybe<String>;
-  content_ends_with?: Maybe<String>;
-  content_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
   status?: Maybe<TaskStatus>;
   status_not?: Maybe<TaskStatus>;
   status_in?: Maybe<TaskStatus[] | TaskStatus>;
@@ -565,7 +565,7 @@ export interface TaskCreateWithoutImagesInput {
   id?: Maybe<UUID>;
   index?: Maybe<Int>;
   title: String;
-  content?: Maybe<String>;
+  description?: Maybe<String>;
   status?: Maybe<TaskStatus>;
   priority?: Maybe<TaskPriority>;
   isImportant?: Maybe<Boolean>;
@@ -735,7 +735,7 @@ export interface UserUpdateDataInput {
 export interface TaskUpdateManyMutationInput {
   index?: Maybe<Int>;
   title?: Maybe<String>;
-  content?: Maybe<String>;
+  description?: Maybe<String>;
   status?: Maybe<TaskStatus>;
   priority?: Maybe<TaskPriority>;
   isImportant?: Maybe<Boolean>;
@@ -756,7 +756,7 @@ export interface ImageUpdateOneInput {
 export interface TaskUpdateInput {
   index?: Maybe<Int>;
   title?: Maybe<String>;
-  content?: Maybe<String>;
+  description?: Maybe<String>;
   status?: Maybe<TaskStatus>;
   priority?: Maybe<TaskPriority>;
   isImportant?: Maybe<Boolean>;
@@ -899,7 +899,7 @@ export interface AccountUpsertWithoutImagesInput {
 export interface TaskUpdateWithoutCategoryDataInput {
   index?: Maybe<Int>;
   title?: Maybe<String>;
-  content?: Maybe<String>;
+  description?: Maybe<String>;
   status?: Maybe<TaskStatus>;
   priority?: Maybe<TaskPriority>;
   isImportant?: Maybe<Boolean>;
@@ -1191,7 +1191,7 @@ export interface ImageCreateInput {
 export interface TaskUpdateWithoutStepsDataInput {
   index?: Maybe<Int>;
   title?: Maybe<String>;
-  content?: Maybe<String>;
+  description?: Maybe<String>;
   status?: Maybe<TaskStatus>;
   priority?: Maybe<TaskPriority>;
   isImportant?: Maybe<Boolean>;
@@ -1241,7 +1241,7 @@ export interface TaskCreateWithoutCategoryInput {
   id?: Maybe<UUID>;
   index?: Maybe<Int>;
   title: String;
-  content?: Maybe<String>;
+  description?: Maybe<String>;
   status?: Maybe<TaskStatus>;
   priority?: Maybe<TaskPriority>;
   isImportant?: Maybe<Boolean>;
@@ -1315,7 +1315,7 @@ export interface TaskCreateWithoutStepsInput {
   id?: Maybe<UUID>;
   index?: Maybe<Int>;
   title: String;
-  content?: Maybe<String>;
+  description?: Maybe<String>;
   status?: Maybe<TaskStatus>;
   priority?: Maybe<TaskPriority>;
   isImportant?: Maybe<Boolean>;
@@ -1342,7 +1342,7 @@ export interface CategoryCreateWithoutTasksInput {
 export interface TaskUpdateWithoutAccountDataInput {
   index?: Maybe<Int>;
   title?: Maybe<String>;
-  content?: Maybe<String>;
+  description?: Maybe<String>;
   status?: Maybe<TaskStatus>;
   priority?: Maybe<TaskPriority>;
   isImportant?: Maybe<Boolean>;
@@ -1388,7 +1388,7 @@ export interface TaskCreateWithoutAccountInput {
   id?: Maybe<UUID>;
   index?: Maybe<Int>;
   title: String;
-  content?: Maybe<String>;
+  description?: Maybe<String>;
   status?: Maybe<TaskStatus>;
   priority?: Maybe<TaskPriority>;
   isImportant?: Maybe<Boolean>;
@@ -1739,7 +1739,7 @@ export interface UserCreateOneInput {
 export interface TaskUpdateWithoutImagesDataInput {
   index?: Maybe<Int>;
   title?: Maybe<String>;
-  content?: Maybe<String>;
+  description?: Maybe<String>;
   status?: Maybe<TaskStatus>;
   priority?: Maybe<TaskPriority>;
   isImportant?: Maybe<Boolean>;
@@ -2134,7 +2134,7 @@ export interface AccountUpsertWithoutCategoriesInput {
 export interface TaskUpdateManyDataInput {
   index?: Maybe<Int>;
   title?: Maybe<String>;
-  content?: Maybe<String>;
+  description?: Maybe<String>;
   status?: Maybe<TaskStatus>;
   priority?: Maybe<TaskPriority>;
   isImportant?: Maybe<Boolean>;
@@ -2185,20 +2185,20 @@ export interface TaskScalarWhereInput {
   title_not_starts_with?: Maybe<String>;
   title_ends_with?: Maybe<String>;
   title_not_ends_with?: Maybe<String>;
-  content?: Maybe<String>;
-  content_not?: Maybe<String>;
-  content_in?: Maybe<String[] | String>;
-  content_not_in?: Maybe<String[] | String>;
-  content_lt?: Maybe<String>;
-  content_lte?: Maybe<String>;
-  content_gt?: Maybe<String>;
-  content_gte?: Maybe<String>;
-  content_contains?: Maybe<String>;
-  content_not_contains?: Maybe<String>;
-  content_starts_with?: Maybe<String>;
-  content_not_starts_with?: Maybe<String>;
-  content_ends_with?: Maybe<String>;
-  content_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
   status?: Maybe<TaskStatus>;
   status_not?: Maybe<TaskStatus>;
   status_in?: Maybe<TaskStatus[] | TaskStatus>;
@@ -2267,7 +2267,7 @@ export interface TaskCreateInput {
   id?: Maybe<UUID>;
   index?: Maybe<Int>;
   title: String;
-  content?: Maybe<String>;
+  description?: Maybe<String>;
   status?: Maybe<TaskStatus>;
   priority?: Maybe<TaskPriority>;
   isImportant?: Maybe<Boolean>;
@@ -2438,7 +2438,7 @@ export interface TaskPreviousValues {
   id: UUID;
   index: Int;
   title: String;
-  content?: String;
+  description?: String;
   status: TaskStatus;
   priority: TaskPriority;
   isImportant: Boolean;
@@ -2453,7 +2453,7 @@ export interface TaskPreviousValuesPromise extends Promise<TaskPreviousValues>, 
   id: () => Promise<UUID>;
   index: () => Promise<Int>;
   title: () => Promise<String>;
-  content: () => Promise<String>;
+  description: () => Promise<String>;
   status: () => Promise<TaskStatus>;
   priority: () => Promise<TaskPriority>;
   isImportant: () => Promise<Boolean>;
@@ -2470,7 +2470,7 @@ export interface TaskPreviousValuesSubscription
   id: () => Promise<AsyncIterator<UUID>>;
   index: () => Promise<AsyncIterator<Int>>;
   title: () => Promise<AsyncIterator<String>>;
-  content: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
   status: () => Promise<AsyncIterator<TaskStatus>>;
   priority: () => Promise<AsyncIterator<TaskPriority>>;
   isImportant: () => Promise<AsyncIterator<Boolean>>;
@@ -3437,7 +3437,7 @@ export interface Task {
   id: UUID;
   index: Int;
   title: String;
-  content?: String;
+  description?: String;
   status: TaskStatus;
   priority: TaskPriority;
   isImportant: Boolean;
@@ -3452,7 +3452,7 @@ export interface TaskPromise extends Promise<Task>, Fragmentable {
   id: () => Promise<UUID>;
   index: () => Promise<Int>;
   title: () => Promise<String>;
-  content: () => Promise<String>;
+  description: () => Promise<String>;
   status: () => Promise<TaskStatus>;
   priority: () => Promise<TaskPriority>;
   isImportant: () => Promise<Boolean>;
@@ -3487,7 +3487,7 @@ export interface TaskSubscription extends Promise<AsyncIterator<Task>>, Fragment
   id: () => Promise<AsyncIterator<UUID>>;
   index: () => Promise<AsyncIterator<Int>>;
   title: () => Promise<AsyncIterator<String>>;
-  content: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
   status: () => Promise<AsyncIterator<TaskStatus>>;
   priority: () => Promise<AsyncIterator<TaskPriority>>;
   isImportant: () => Promise<AsyncIterator<Boolean>>;
@@ -3522,7 +3522,7 @@ export interface TaskNullablePromise extends Promise<Task | null>, Fragmentable 
   id: () => Promise<UUID>;
   index: () => Promise<Int>;
   title: () => Promise<String>;
-  content: () => Promise<String>;
+  description: () => Promise<String>;
   status: () => Promise<TaskStatus>;
   priority: () => Promise<TaskPriority>;
   isImportant: () => Promise<Boolean>;
