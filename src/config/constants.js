@@ -28,4 +28,11 @@ export const stepStatus = {
   done: 'Done',
 };
 
+export const taskListType = {
+  olderDays: 'Older days',
+  today: 'Today',
+  tomorrow: 'Tomorrow',
+  nextDays: 'Next days',
+};
+
 export const maxImage = 10;
