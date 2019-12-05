@@ -1,5 +1,9 @@
 import service from '../services/task.service';
 
+function list(req) {
+  return service.getTaskList(req.user.id);
+}
+
 function create(req) {
   return service.createTask({
     ...req.body,
@@ -8,5 +12,6 @@ function create(req) {
 }
 
 export default {
+  list,
   create,
 };

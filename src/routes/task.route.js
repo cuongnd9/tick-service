@@ -8,6 +8,8 @@ import { role, taskStatus, taskPriority, stepStatus } from '../config/constants'
 
 const router = express.Router();
 
+router.get('/', authorize(role.free, role.premium), withController(controller.list));
+
 router.post(
   '/',
   authorize(role.free, role.premium),
