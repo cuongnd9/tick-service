@@ -1,7 +1,7 @@
 import service from '../services/task.service';
 
 function list(req) {
-  return service.getTaskList(req.user.id);
+  return service.getTaskList({ ...req.query, accountId: req.user.id });
 }
 
 function create(req) {
