@@ -8,7 +8,37 @@ import { role, taskStatus, taskPriority, stepStatus } from '../config/constants'
 
 const router = express.Router();
 
-router.get('/', authorize(role.free, role.premium), withController(controller.list));
+router.get(
+  '/',
+  authorize(role.free, role.premium),
+  celebrate({
+    query: {
+      // keyword: title
+      keyword: Joi.string().allow(''),
+      categoryIdList: Joi.array().items(
+        Joi.string()
+          .guid()
+          .allow(''),
+      ),
+      statusList: Joi.array().items(
+        Joi.string()
+          .valid(objectToArray(taskStatus))
+          .allow(''),
+      ),
+      priorityList: Joi.array().items(
+        Joi.string()
+          .valid(objectToArray(taskPriority))
+          .allow(''),
+      ),
+      isImportantList: Joi.array().items(
+        Joi.boolean()
+          .allow(null)
+          .allow(''),
+      ),
+    },
+  }),
+  withController(controller.list),
+);
 
 router.post(
   '/',

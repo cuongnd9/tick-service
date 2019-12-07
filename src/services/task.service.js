@@ -2,7 +2,8 @@ import moment from 'moment';
 import { prisma } from '../models/prisma-client';
 import { taskListType } from '../config/constants';
 
-async function getTaskList(accountId) {
+async function getTaskList(data) {
+  const { accountId, keyword, categoryIdList, statusList, priorityList, isImportantList } = data;
   const fragment = `
   fragment TaskFullProps on Task {
     id
@@ -49,6 +50,13 @@ async function getTaskList(accountId) {
   const taskList = await prisma
     .tasks({
       where: {
+        title_in: keyword,
+        category: {
+          id_in: categoryIdList,
+        },
+        status_in: statusList,
+        priority_in: priorityList,
+        isImportant: isImportantList && isImportantList.length === 1 && isImportantList[0],
         account: {
           id: accountId,
         },
