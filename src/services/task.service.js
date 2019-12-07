@@ -166,7 +166,112 @@ async function createTask(data) {
   });
 }
 
+async function updateTask(data) {
+  const {
+    id,
+    account,
+    steps: { newSteps = {}, deleteSteps = {} },
+    images: { newImages = {}, deleteImages = {} },
+    category,
+    ...otherData
+  } = data;
+  await prisma.deleteManySteps({
+    id_in: deleteSteps,
+  });
+  await prisma.deleteManyTaskImages({
+    id_in: deleteImages,
+  });
+  const fragment = `
+  fragment TaskFullProps on Task {
+    id
+    index
+    title
+    description
+    status
+    priority
+    isImportant
+    dueDate
+    reminderDate
+    doSendMail
+    category {
+      id
+      index
+      name
+      createdAt
+      updatedAt
+    }
+    steps {
+      id
+      index
+      title
+      status
+      createdAt
+      updatedAt
+    }
+    images {
+      id
+      image {
+        id
+        publicId
+        url
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+  `;
+  return prisma
+    .updateTask({
+      data: {
+        ...otherData,
+        category: {
+          connect: {
+            id: category,
+          },
+        },
+        steps: {
+          create: [
+            ...newSteps.map((step, index) => ({
+              index,
+              title: step.title,
+              account: {
+                connect: {
+                  id: account,
+                },
+              },
+            })),
+          ],
+        },
+        images: {
+          create: [
+            ...newImages.map(image => ({
+              image: {
+                connect: {
+                  id: image,
+                },
+              },
+              account: {
+                connect: {
+                  id: account,
+                },
+              },
+            })),
+          ],
+        },
+      },
+      where: {
+        id,
+      },
+    })
+    .$fragment(fragment);
+}
+
 export default {
   getTaskList,
   createTask,
+  updateTask,
 };

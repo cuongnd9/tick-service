@@ -11,7 +11,16 @@ function create(req) {
   });
 }
 
+function update(req) {
+  return service.updateTask({
+    ...req.body,
+    id: req.params.id,
+    account: req.user.id,
+  });
+}
+
 export default {
   list,
   create,
+  update,
 };

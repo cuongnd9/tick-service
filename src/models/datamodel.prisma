@@ -98,7 +98,7 @@ type Step {
 type TaskImage {
   id: UUID! @id
   task: Task! @relation(name: "Task_TaskImage")
-  image: Image!
+  image: Image! @relation(onDelete: CASCADE)
   account: Account! @relation(name: "Account_TaskImage")
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
