@@ -270,8 +270,13 @@ async function updateTask(data) {
     .$fragment(fragment);
 }
 
+function deleteTask(id) {
+  return prisma.deleteTask({ id });
+}
+
 export default {
   getTaskList,
   createTask,
   updateTask,
+  deleteTask,
 };

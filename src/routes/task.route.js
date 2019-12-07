@@ -99,4 +99,17 @@ router.put(
   withController(controller.update),
 );
 
+router.delete(
+  '/:id',
+  authorize(role.free, role.premium),
+  celebrate({
+    params: {
+      id: Joi.string()
+        .guid()
+        .required(),
+    },
+  }),
+  withController(controller.destroy),
+);
+
 export default router;
