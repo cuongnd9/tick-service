@@ -176,8 +176,8 @@ async function createTask(data) {
 
 async function updateTask(data) {
   const { id, account, steps = {}, images = {}, category, ...otherData } = data;
-  const { newSteps = {}, deleteSteps = {} } = steps;
-  const { newImages = {}, deleteImages = {} } = images;
+  const { newSteps = [], deleteSteps = [] } = steps;
+  const { newImages = [], deleteImages = [] } = images;
   await prisma.deleteManySteps({
     id_in: deleteSteps,
   });
