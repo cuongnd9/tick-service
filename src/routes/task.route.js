@@ -84,7 +84,7 @@ router.put(
     },
     body: {
       index: Joi.number().integer(),
-      title: Joi.string().required(),
+      title: Joi.string(),
       description: Joi.string().allow(''),
       status: Joi.string()
         .valid(objectToArray(taskStatus))
@@ -93,7 +93,7 @@ router.put(
         .valid(objectToArray(taskPriority))
         .default(taskPriority.medium),
       isImportant: Joi.boolean().default(false),
-      dueDate: Joi.date().required(),
+      dueDate: Joi.date(),
       reminderDate: Joi.date(),
       doSendMail: Joi.boolean().default(false),
       category: Joi.string()
