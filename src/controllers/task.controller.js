@@ -19,8 +19,13 @@ function update(req) {
   });
 }
 
+function destroy(req) {
+  return service.deleteTask(req.params.id);
+}
+
 export default {
   list,
   create,
   update,
+  destroy,
 };
