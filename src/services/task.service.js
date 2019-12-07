@@ -50,7 +50,7 @@ async function getTaskList(data) {
   const taskList = await prisma
     .tasks({
       where: {
-        title_in: keyword,
+        title_contains: keyword,
         category: {
           id_in: categoryIdList,
         },

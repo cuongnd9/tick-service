@@ -1,9 +1,10 @@
 import { prisma } from '../models/prisma-client';
 
 function getCategoryList(data) {
-  const { account } = data;
+  const { account, keyword } = data;
   return prisma.categories({
     where: {
+      name_contains: keyword,
       account: {
         id: account,
       },
@@ -36,7 +37,18 @@ async function createCategory(data) {
   });
 }
 
+function updateCategory(data) {
+  const { id, ...otherData } = data;
+  return prisma.updateCategory({ data: { ...otherData }, where: { id } });
+}
+
+function deleteCategory(id) {
+  return prisma.deleteCategory({ id });
+}
+
 export default {
   getCategoryList,
   createCategory,
+  updateCategory,
+  deleteCategory,
 };
