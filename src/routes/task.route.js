@@ -15,7 +15,7 @@ router.post(
   authorize(role.free, role.premium),
   celebrate({
     body: {
-      // index: Joi.number().integer(),
+      index: Joi.number().integer(),
       title: Joi.string().required(),
       description: Joi.string().allow(''),
       status: Joi.string()
@@ -41,6 +41,62 @@ router.post(
     },
   }),
   withController(controller.create),
+);
+
+router.put(
+  '/:id',
+  authorize(role.free, role.premium),
+  celebrate({
+    params: {
+      id: Joi.string()
+        .guid()
+        .required(),
+    },
+    body: {
+      index: Joi.number().integer(),
+      title: Joi.string().required(),
+      description: Joi.string().allow(''),
+      status: Joi.string()
+        .valid(objectToArray(taskStatus))
+        .default(taskStatus.todo),
+      priority: Joi.string()
+        .valid(objectToArray(taskPriority))
+        .default(taskPriority.medium),
+      isImportant: Joi.boolean().default(false),
+      dueDate: Joi.date().required(),
+      reminderDate: Joi.date(),
+      doSendMail: Joi.boolean().default(false),
+      category: Joi.string()
+        .guid()
+        .required(),
+      steps: Joi.object().keys({
+        newSteps: Joi.array().items({
+          title: Joi.string().required(),
+          status: Joi.string()
+            .valid(objectToArray(stepStatus))
+            .default(stepStatus.todo),
+        }),
+        deleteSteps: Joi.array().items(
+          Joi.string()
+            .guid()
+            .required(),
+        ),
+      }),
+      images: Joi.object().keys({
+        newImages: Joi.array().items(
+          Joi.string()
+            .guid()
+            .required(),
+        ),
+        deleteImages: Joi.array().items(
+          Joi.string()
+            .guid()
+            .required(),
+        ),
+      }),
+    },
+  }),
+  withController(controller.update),
 );
 
 export default router;
