@@ -7,7 +7,12 @@ import controller from '@/controllers/category.controller';
 
 const router = express.Router();
 
-router.get('/', authorize(role.free, role.premium), withController(controller.list));
+router.get(
+  '/',
+  authorize(role.free, role.premium),
+  celebrate({ query: { keyword: Joi.string() } }),
+  withController(controller.list),
+);
 
 router.post(
   '/',
@@ -18,6 +23,32 @@ router.post(
     }),
   }),
   withController(controller.create),
+);
+
+router.put(
+  '/:id',
+  authorize(role.free, role.premium),
+  celebrate({
+    params: {
+      id: Joi.string().required(),
+    },
+    body: Joi.object().keys({
+      index: Joi.number().allow(null),
+      name: Joi.string().required(),
+    }),
+  }),
+  withController(controller.update),
+);
+
+router.delete(
+  '/:id',
+  authorize(role.free, role.premium),
+  celebrate({
+    params: {
+      id: Joi.string().required(),
+    },
+  }),
+  withController(controller.destroy),
 );
 
 export default router;

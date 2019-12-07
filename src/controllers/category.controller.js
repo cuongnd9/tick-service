@@ -1,7 +1,7 @@
 import service from '../services/category.service';
 
 function list(req) {
-  return service.getCategoryList({ account: req.user.id });
+  return service.getCategoryList({ account: req.user.id, keyword: req.query.keyword });
 }
 
 function create(req) {
@@ -11,7 +11,20 @@ function create(req) {
   });
 }
 
+function update(req) {
+  return service.updateCategory({
+    ...req.body,
+    id: req.params.id,
+  });
+}
+
+function destroy(req) {
+  return service.deleteCategory(req.params.id);
+}
+
 export default {
   list,
   create,
+  update,
+  destroy,
 };
