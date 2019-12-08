@@ -116,7 +116,7 @@ async function getTaskList(data) {
 }
 
 async function createTask(data) {
-  const { account, steps, images, category, ...otherData } = data;
+  const { account, steps = [], images = [], category, ...otherData } = data;
   let currentIndex = 0;
   const taskList = await prisma.tasks({
     where: {
