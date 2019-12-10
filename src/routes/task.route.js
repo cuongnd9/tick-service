@@ -96,9 +96,7 @@ router.put(
       dueDate: Joi.date(),
       reminderDate: Joi.date(),
       doSendMail: Joi.boolean().default(false),
-      category: Joi.string()
-        .guid()
-        .required(),
+      category: Joi.string().guid(),
       steps: Joi.object().keys({
         newSteps: Joi.array().items({
           title: Joi.string().required(),
