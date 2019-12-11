@@ -106,20 +106,17 @@ router.put(
         }),
         deleteSteps: Joi.array().items(
           Joi.string()
-            .guid()
-            .required(),
+            .guid(),
         ),
       }),
       images: Joi.object().keys({
         newImages: Joi.array().items(
           Joi.string()
-            .guid()
-            .required(),
+            .guid(),
         ),
         deleteImages: Joi.array().items(
           Joi.string()
-            .guid()
-            .required(),
+            .guid(),
         ),
       }),
     },
