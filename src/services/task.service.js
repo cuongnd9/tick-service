@@ -231,11 +231,11 @@ async function updateTask(data) {
     .updateTask({
       data: {
         ...otherData,
-        category: {
+        category: category ? {
           connect: {
             id: category,
           },
-        },
+        } : {},
         steps: {
           create: [
             ...newSteps.map((step, index) => ({
