@@ -61,7 +61,7 @@ async function getTaskList(data) {
           id: accountId,
         },
       },
-      orderBy: 'updatedAt_ASC',
+      orderBy: 'dueDate_ASC',
     })
     .$fragment(fragment);
   const olderList = [];
