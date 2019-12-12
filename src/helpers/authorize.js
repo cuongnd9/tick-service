@@ -6,7 +6,7 @@ export default function authorize(...allowed) {
     if (req.user && isAllowed(req.user.role)) {
       next();
     } else {
-      throw Boom.forbidden('Your role is not allowed');
+      next(Boom.forbidden('Your role is not allowed'));
     }
   };
 }
