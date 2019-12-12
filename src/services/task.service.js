@@ -70,7 +70,7 @@ async function getTaskList(data) {
   const nextDaysList = [];
   taskList.forEach(task => {
     if (
-      moment(task.updatedAt, 'YYYY-MM-DD').isBefore(
+      moment(task.dueDate, 'YYYY-MM-DD').isBefore(
         moment()
           .subtract(1, 'days')
           .format('YYYY-MM-DD'),
@@ -79,12 +79,12 @@ async function getTaskList(data) {
       olderList.push(task);
       return;
     }
-    if (moment(task.updatedAt, 'YYYY-MM-DD').isSame(moment().format('YYYY-MM-DD'))) {
+    if (moment(task.dueDate, 'YYYY-MM-DD').isSame(moment().format('YYYY-MM-DD'))) {
       todayList.push(task);
       return;
     }
     if (
-      moment(task.updatedAt, 'YYYY-MM-DD').isSame(
+      moment(task.dueDate, 'YYYY-MM-DD').isSame(
         moment()
           .add(1, 'days')
           .format('YYYY-MM-DD'),
@@ -231,11 +231,13 @@ async function updateTask(data) {
     .updateTask({
       data: {
         ...otherData,
-        category: category ? {
-          connect: {
-            id: category,
-          },
-        } : {},
+        category: category
+          ? {
+              connect: {
+                id: category,
+              },
+            }
+          : {},
         steps: {
           create: [
             ...newSteps.map((step, index) => ({
