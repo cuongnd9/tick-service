@@ -1,6 +1,8 @@
 import Boom from '@hapi/boom';
+import log from 'signale';
 
 export default function handleError(err, req, res, next) {
+  log.watch(err);
   if (err.statusCode) {
     // Error for Celebrate(Joi validation).
     return res.status(err.statusCode).json(err);
