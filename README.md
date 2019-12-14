@@ -1,5 +1,7 @@
 # tick-service
 
+[![Build Status](https://travis-ci.com/500lab/tick-service.svg?branch=master)](https://travis-ci.com/500lab/tick-service)
+
 📒 Tick's service.
 
 <img src="./images/cat.gif" width=400 />
@@ -30,10 +32,9 @@ $ yarn start
 ## Database diagram
 
 ![Database digram](./images/database_diagram.png)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2F500lab%2Ftick-service.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2F500lab%2Ftick-service?ref=badge_shield)
 
 Build with 🙌 and ❤️
 
-
 ## License
+
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2F500lab%2Ftick-service.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2F500lab%2Ftick-service?ref=badge_large)

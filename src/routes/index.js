@@ -11,6 +11,7 @@ import accountRoute from './account.route';
 import imageRoute from './image.route';
 import taskRoute from './task.route';
 import categoryRoute from './category.route';
+import stepRoute from './step.route';
 
 const router = express.Router();
 
@@ -28,6 +29,7 @@ router.use('/account', accountRoute);
 router.use('/image', authenticate, imageRoute);
 router.use('/task', authenticate, taskRoute);
 router.use('/category', authenticate, categoryRoute);
+router.use('/step', authenticate, stepRoute);
 
 // 404 not found.
 router.use((req, res, next) => {
