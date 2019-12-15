@@ -2,14 +2,27 @@ import { prisma } from '../models/prisma-client';
 
 function getCategoryList(data) {
   const { account, keyword } = data;
-  return prisma.categories({
-    where: {
-      name_contains: keyword,
-      account: {
-        id: account,
+  const fragment = `
+  fragment CategoryFullProps on Category {
+    id
+    index
+    name
+    tasks {
+      id
+      status
+    }
+  }
+  `;
+  return prisma
+    .categories({
+      where: {
+        name_contains: keyword,
+        account: {
+          id: account,
+        },
       },
-    },
-  });
+    })
+    .$fragment(fragment);
 }
 
 async function createCategory(data) {
