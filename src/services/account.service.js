@@ -2,37 +2,20 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import _ from 'lodash';
 import { numcode } from 'numcode';
-import nodemailer from 'nodemailer';
 import Boom from '@hapi/boom';
 import fs from 'fs';
 import { JSDOM } from 'jsdom';
 import { promisify } from 'util';
-import { prisma } from '@/models/prisma-client';
-import config from '@/config';
+import { sendEmail } from './mail.service';
+import { prisma } from '../models/prisma-client';
+import config from '../config';
 
-function createMailHtml(codeConfirmation) {
+function createMailHtml(code) {
   const html = fs.readFileSync(`${__dirname}/../templates/codeConfirmation.html`, 'utf8');
   const dom = new JSDOM(html);
-  dom.window.document.getElementById('code').innerHTML = codeConfirmation;
+  dom.window.document.getElementById('code').innerHTML = code;
   dom.serialize();
   return dom.window.document.documentElement.outerHTML;
-}
-
-async function sendEmail(email, codeConfirmation) {
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: config.email,
-      pass: config.emailPassword,
-    },
-  });
-  const mailContent = {
-    from: `"Cuong Duy Nguyen 👻" ${config.email}`,
-    to: email,
-    subject: '[Tick ✔️] Verify your email address',
-    html: createMailHtml(codeConfirmation),
-  };
-  await transporter.sendMail(mailContent);
 }
 
 async function requireCode(redis, data) {
@@ -45,7 +28,13 @@ async function requireCode(redis, data) {
   // Save code confirmation to Redis.
   await redis.set(email, codeConfirmation, 'PX', config.registerExpiration);
   // Send code confirmation by mail.
-  await sendEmail(email, codeConfirmation);
+  const html = createMailHtml(codeConfirmation);
+  await sendEmail({
+    from: `"Cuong Duy Nguyen 👻" ${config.email}`,
+    to: email,
+    subject: '[Tick ✔️] Verify your email address',
+    html,
+  });
   return {
     email,
   };
