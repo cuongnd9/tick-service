@@ -16,7 +16,7 @@ const redisClient = redis.createClient({
 app.locals.redis = redisClient;
 
 // Routes.
-app.get('/', (req, res) => res.send('<p>👋 Xin chào</p>'));
+app.get('/', (req, res) => res.send('<p>👋🇻🇳 Xin chào</p>'));
 app.use('/api', apiRoute);
 
 // Excute cron jobs.
