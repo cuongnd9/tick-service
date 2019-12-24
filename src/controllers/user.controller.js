@@ -1,4 +1,4 @@
-import service from '@/services/user.service';
+import service from '../services/user.service';
 
 function list() {
   return service.getUsers();
