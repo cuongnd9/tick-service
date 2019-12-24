@@ -1,9 +1,9 @@
 import express from 'express';
 import { celebrate, Joi } from 'celebrate';
-import authorize from '@/helpers/authorize';
-import withController from '@/helpers/withController';
-import { role } from '@/config/constants';
-import controller from '@/controllers/user.controller';
+import authorize from '../helpers/authorize';
+import withController from '../helpers/withController';
+import { role } from '../config/constants';
+import controller from '../controllers/user.controller';
 
 const router = express.Router();
 
