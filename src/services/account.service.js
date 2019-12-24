@@ -11,7 +11,7 @@ import { prisma } from '../models/prisma-client';
 import config from '../config';
 
 function createMailHtml(code) {
-  const html = fs.readFileSync(`${__dirname}/../templates/codeConfirmation.html`, 'utf8');
+  const html = fs.readFileSync(`${__dirname}/../templates/requireCode.html`, 'utf8');
   const dom = new JSDOM(html);
   dom.window.document.getElementById('code').innerHTML = code;
   dom.serialize();

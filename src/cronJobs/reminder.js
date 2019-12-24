@@ -1,16 +1,47 @@
 import cron from 'node-cron';
 import moment from 'moment';
+import fs from 'fs';
+import { JSDOM } from 'jsdom';
 import { prisma } from '../models/prisma-client';
 import { sendEmail } from '../services/mail.service';
 import { taskStatus } from '../config/constants';
 import config from '../config';
 
+function createMailHtml(task) {
+  const html = fs.readFileSync(`${__dirname}/../templates/reminder.html`, 'utf8');
+  const dom = new JSDOM(html);
+  const message = `Hello! You have a task - ${task.title} at ${moment(task.reminderDate).format(
+    'MMM Do hh:mm A',
+  )}`;
+  dom.window.document.getElementById('message').innerHTML = message;
+  dom.serialize();
+  return dom.window.document.documentElement.outerHTML;
+}
+
 async function getAllTasks() {
-  const baseList = await prisma.tasks({
-    where: {
-      status_in: [taskStatus.todo, taskStatus.inProcess],
-    },
-  });
+  const fragment = `
+  fragment Props on Task {
+    id
+    index
+    title
+    description
+    status
+    priority
+    isImportant
+    dueDate
+    reminderDate
+    account {
+      email
+    }
+  }
+  `;
+  const baseList = await prisma
+    .tasks({
+      where: {
+        status_in: [taskStatus.todo, taskStatus.inProcess],
+      },
+    })
+    .$fragment(fragment);
   const FROM = moment();
   const TO = moment().add(1, 'hours');
   const list = baseList.filter(item => {
@@ -19,9 +50,9 @@ async function getAllTasks() {
   const promiseList = list.map(async item => {
     await sendEmail({
       from: `"Cuong Duy Nguyen 👻" ${config.email}`,
-      to: 'ndc07.it@gmail.com',
+      to: item.account.email,
       subject: `[Tick ✔️] Remider your task - ${item.title}`,
-      html: `<p>${item.title}</p>`,
+      html: createMailHtml(item),
     });
   });
   await Promise.all(promiseList);
