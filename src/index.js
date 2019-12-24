@@ -3,7 +3,8 @@ import redis from 'redis';
 import signale from 'signale';
 import apiRoute from './routes';
 import config from './config';
-import excuteCron from './cronJobs/reminder';
+import excuteReminder from './cronJobs/reminder';
+import excuteReport from './cronJobs/report';
 
 // Initialize express app
 const app = express();
@@ -18,7 +19,9 @@ app.locals.redis = redisClient;
 app.get('/', (req, res) => res.send('<p>👋 Xin chào</p>'));
 app.use('/api', apiRoute);
 
-excuteCron();
+// Excute cron jobs.
+excuteReminder();
+excuteReport();
 
 // Start server.
 app.listen(config.port, () => signale.watch(`Server started on http://localhost:${config.port}`));

@@ -18,7 +18,7 @@ function createMailHtml(task) {
   return dom.window.document.documentElement.outerHTML;
 }
 
-async function getAllTasks() {
+async function sendAllTasks() {
   const fragment = `
   fragment Props on Task {
     id
@@ -60,7 +60,7 @@ async function getAllTasks() {
 
 function excuteCron() {
   cron.schedule('*/59 0-23 * * *', async () => {
-    await getAllTasks();
+    await sendAllTasks();
   });
 }
 
