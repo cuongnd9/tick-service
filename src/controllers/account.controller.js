@@ -10,6 +10,16 @@ function requireCode(req) {
   return service.requireCode(redis, query);
 }
 
+function checkCode(req) {
+  const {
+    query,
+    app: {
+      locals: { redis },
+    },
+  } = req;
+  return service.checkCode(redis, query);
+}
+
 function register(req) {
   const {
     query,
@@ -27,6 +37,7 @@ function login(req) {
 
 export default {
   requireCode,
+  checkCode,
   register,
   login,
 };

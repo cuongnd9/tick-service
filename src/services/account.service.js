@@ -110,6 +110,7 @@ async function login(data) {
 
 export default {
   requireCode,
+  checkCode,
   register,
   login,
 };

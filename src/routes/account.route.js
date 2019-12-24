@@ -18,6 +18,19 @@ router.get(
   withController(controller.requireCode),
 );
 
+router.get(
+  '/check-code',
+  celebrate({
+    query: Joi.object().keys({
+      code: Joi.number().required(),
+      email: Joi.string()
+        .email()
+        .required(),
+    }),
+  }),
+  withController(controller.checkCode),
+);
+
 router.post(
   '/register',
   celebrate({
