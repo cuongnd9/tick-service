@@ -61,6 +61,7 @@ async function checkCode(redis, data) {
   if (redisCodeConfirmation.toString() !== codeConfirmation.toString()) {
     throw Boom.notFound('code is incorrect');
   }
+  return data;
 }
 
 async function register(redis, query, body) {
