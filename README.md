@@ -1,6 +1,7 @@
 # tick-service
 
 [![Build Status](https://travis-ci.com/500lab/tick-service.svg?branch=master)](https://travis-ci.com/500lab/tick-service)
+[![StackShare](http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/cuongw/tick-service)
 
 📒 Tick's service.
 
