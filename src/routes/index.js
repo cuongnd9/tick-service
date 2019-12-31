@@ -5,8 +5,6 @@ import logger from 'morgan';
 import { errors } from 'celebrate';
 import Boom from '@hapi/boom';
 import authenticate from '../helpers/authenticate';
-import authorize from '../helpers/authorize';
-import { role } from '../config/constants';
 import errorHandler from '../helpers/errorHandler';
 import userRoute from './user.route';
 import accountRoute from './account.route';
@@ -26,9 +24,7 @@ router.use(cors());
 router.use(logger('dev'));
 
 // API routes.
-router.get('/awake', authenticate, authorize(role.free, role.premium), (_, res) =>
-  res.json('Hi, You!'),
-);
+router.get('/awake', (_, res) => res.json('Hi, You!'));
 router.use('/user', authenticate, userRoute);
 router.use('/account', accountRoute);
 router.use('/image', authenticate, imageRoute);
