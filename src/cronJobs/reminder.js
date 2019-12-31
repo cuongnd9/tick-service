@@ -59,7 +59,7 @@ async function sendAllTasks() {
 }
 
 function excuteCron() {
-  cron.schedule('*/59 0-23 * * *', async () => {
+  cron.schedule('*/2 0-23 * * *', async () => {
     await sendAllTasks();
   });
 }
