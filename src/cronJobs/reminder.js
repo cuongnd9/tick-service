@@ -1,5 +1,6 @@
 import cron from 'node-cron';
 import moment from 'moment';
+import 'moment-timezone';
 import fs from 'fs';
 import { JSDOM } from 'jsdom';
 import { prisma } from '../models/prisma-client';
@@ -10,9 +11,9 @@ import config from '../config';
 function createMailHtml(task) {
   const html = fs.readFileSync(`${__dirname}/../templates/reminder.html`, 'utf8');
   const dom = new JSDOM(html);
-  const message = `Hello! You have a task - ${task.title} at ${moment(task.reminderDate).format(
-    'MMM Do hh:mm A',
-  )}`;
+  const message = `Hello! You have a task - ${task.title} at ${moment(task.reminderDate)
+    .tz('Asia/Bangkok')
+    .format('MMM Do hh:mm A')}`;
   dom.window.document.getElementById('message').innerHTML = message;
   dom.serialize();
   return dom.window.document.documentElement.outerHTML;
@@ -59,7 +60,7 @@ async function sendAllTasks() {
 }
 
 function excuteCron() {
-  cron.schedule('*/2 0-23 * * *', async () => {
+  cron.schedule('*/3 0-23 * * *', async () => {
     await sendAllTasks();
   });
 }
