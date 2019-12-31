@@ -12,6 +12,7 @@ import imageRoute from './image.route';
 import taskRoute from './task.route';
 import categoryRoute from './category.route';
 import stepRoute from './step.route';
+import { prisma } from '../models/prisma-client';
 
 const router = express.Router();
 
@@ -24,7 +25,10 @@ router.use(cors());
 router.use(logger('dev'));
 
 // API routes.
-router.get('/awake', (_, res) => res.json('Hi, You!'));
+router.get('/awake', async (_, res) => {
+  await prisma.accounts();
+  return res.json('Hi, You!');
+});
 router.use('/user', authenticate, userRoute);
 router.use('/account', accountRoute);
 router.use('/image', authenticate, imageRoute);
