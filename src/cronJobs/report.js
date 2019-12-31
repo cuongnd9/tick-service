@@ -1,5 +1,6 @@
 import cron from 'node-cron';
 import moment from 'moment';
+import 'moment-timezone';
 import fs from 'fs';
 import { JSDOM } from 'jsdom';
 import { prisma } from '../models/prisma-client';
@@ -33,8 +34,11 @@ function createMailHtml(taskList) {
   const html = fs.readFileSync(`${__dirname}/../templates/report.html`, 'utf8');
   const dom = new JSDOM(html);
   const time = `Hello! This is a report for last week (${moment()
+    .tz('Asia/Bangkok')
     .subtract(7, 'days')
-    .format('MMM Do')} - ${moment().format('MMM Do')})`;
+    .format('MMM Do')} - ${moment()
+    .tz('Asia/Bangkok')
+    .format('MMM Do')})`;
   dom.window.document.getElementById('time').innerHTML = time;
   dom.window.document.getElementById('content').innerHTML = handleCalculateReport(taskList);
   dom.serialize();
