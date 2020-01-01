@@ -44,7 +44,7 @@ async function sendAllTasks() {
     })
     .$fragment(fragment);
   const FROM = moment();
-  const TO = moment().add(1, 'hours');
+  const TO = moment().add(30, 'minutes');
   const list = baseList.filter(item => {
     return moment(item.reminderDate).isBetween(FROM, TO);
   });
@@ -60,7 +60,7 @@ async function sendAllTasks() {
 }
 
 function excuteCron() {
-  cron.schedule('*/59 0-23 * * *', async () => {
+  cron.schedule('0,30 0-23 * * *', async () => {
     await sendAllTasks();
   });
 }
