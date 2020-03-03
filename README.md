@@ -14,6 +14,7 @@
 - Having Basic authentication and authorization.
 - Setup a basic RESTful API.
 - Using Prisma and PostgreSQL.
+- Integrate Nodemailer
 
 ## Prepare
 
