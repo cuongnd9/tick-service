@@ -1,11 +1,11 @@
-import { thinid } from 'thinid';
+import { diana } from 'diana-js';
 import multer from 'multer';
 import path from 'path';
 import Boom from '@hapi/boom';
 
 const storage = multer.diskStorage({
   destination: './uploads/',
-  filename: (req, file, cb) => cb(null, `${thinid()}${file.originalname}`),
+  filename: (req, file, cb) => cb(null, `${diana()}${file.originalname}`),
 });
 
 const upload = multer({

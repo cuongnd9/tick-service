@@ -2177,6 +2177,11 @@ detect-libc@^1.0.2:
   resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
   integrity sha1-+hN8S9aY7fVc1c0CrFWfkaTEups=
 
+diana-js@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/diana-js/-/diana-js-0.7.0.tgz#fe98d634bc41667a2bc2a70df397a3e14c39c762"
+  integrity sha512-o9KJWZOdyKSW3xnLzM2wab9F90EvxPESTjS5gEI1i2okdNpfbHOR+dzV1sqi1nVyZ2POiquX1SkwIi9v64qRjg==
+
 dicer@0.2.5:
   version "0.2.5"
   resolved "https://registry.yarnpkg.com/dicer/-/dicer-0.2.5.tgz#5996c086bb33218c812c090bddc09cd12facb70f"
@@ -6865,11 +6870,6 @@ text-table@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
-
-thinid@^0.5.5:
-  version "0.5.5"
-  resolved "https://registry.yarnpkg.com/thinid/-/thinid-0.5.5.tgz#a5c70a7ef46c4d2bd249285c1479c5ac4ab8b70f"
-  integrity sha512-RkNHRkwYV1ofnCea2Bg7k+Kthdiwkn4ZKoz34rAAzG/MmGBZWJ00QMql9oPyDVMLkjkWDr3GRKEpYLnkkHDoVA==
 
 through2@^2.0.3:
   version "2.0.5"
