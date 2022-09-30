@@ -43,6 +43,7 @@
     "body-parser": "^1.19.0",
     "celebrate": "^10.0.1",
     "cors": "^2.8.5",
+    "diana-js": "^0.7.0",
     "dotenv-cli": "^2.0.1",
     "express": "^4.17.1",
     "form-data": "^3.0.0",
@@ -59,8 +60,7 @@
     "numcode": "^0.1.1",
     "prisma-client-lib": "^1.34.10",
     "redis": "^2.8.0",
-    "signale": "^1.4.0",
-    "thinid": "^0.5.5"
+    "signale": "^1.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
